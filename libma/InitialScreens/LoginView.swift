@@ -2,7 +2,7 @@
 //  LoginView.swift
 //  libma
 //
-//  Created by mathangy on 24/04/24.
+//  Created by pushkar dada on 24/04/24.
 //
 
 import SwiftUI
@@ -18,7 +18,7 @@ struct LoginView: View {
                 Color(hex: 0xF8F8ED) // Beige color with hex code F8F8ED
                                 .edgesIgnoringSafeArea(.all)
                 HStack(spacing: 0) {
-                    // Added Image View
+                    
                     Image("loginwali")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
