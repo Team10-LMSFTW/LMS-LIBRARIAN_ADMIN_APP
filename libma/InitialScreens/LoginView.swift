@@ -13,30 +13,33 @@ struct LoginView: View {
     @State private var password = ""
     
     var body: some View {
-        GeometryReader { geometry in
-            ZStack {
-                Color(hex: 0xF8F8ED) // Beige color with hex code F8F8ED
-                                .edgesIgnoringSafeArea(.all)
-                HStack(spacing: 0) {
-                    
-                    Image("loginwali")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: geometry.size.width * 0.5)
-                    
-                    Spacer()
-                    
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 20)
-                            .fill(Color(red: 0.976, green: 0.969, blue: 0.922))
-                            .frame(width: geometry.size.width * 0.4)
+        
+            GeometryReader { geometry in
+                ZStack {
+                    Color(hex: 0xF8F8ED) // Beige color with hex code F8F8ED
+                        .edgesIgnoringSafeArea(.all)
+                    HStack(spacing: 0) {
                         
-                        Card(selectedSegment: $selectedSegment, email: $email, password: $password)
+                        Image("loginwali")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: geometry.size.width * 0.5)
+                        
+                        Spacer()
+                        
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 20)
+                                .fill(Color(red: 0.976, green: 0.969, blue: 0.922))
+                                .frame(width: geometry.size.width * 0.4)
+                            
+                            Card(selectedSegment: $selectedSegment, email: $email, password: $password)
+                        }
+                        .frame(width: geometry.size.width * 0.4)
+                        .padding(.horizontal,60)
                     }
-                    .frame(width: geometry.size.width * 0.4)
                 }
-            }
-            .edgesIgnoringSafeArea(.all)
+                .edgesIgnoringSafeArea(.all)
+            
         }
     }
     
@@ -73,10 +76,10 @@ struct LoginView: View {
             )
         }
     }
-    
     struct LoginComponents: View {
         @Binding var email: String
         @Binding var password: String
+        @State var navigatedToSignUp = false
         
         var body: some View {
             VStack(alignment: .leading, spacing: 16) {
@@ -125,7 +128,7 @@ struct LoginView: View {
                             .frame(width: 25, height: 25)
                             .padding(.trailing, 0.5)
                     }
-                   
+                    
                     Button(action: {
                         // Google sign-in action
                     }) {
@@ -150,16 +153,22 @@ struct LoginView: View {
                         .frame(height: 1)
                 }
                 
-                Button(action: {
-                   SignUpView()
-                }) {
-                    Text("Sign Up for a New Account")
-                        .foregroundColor(Color(red: 0.33, green: 0.25, blue: 0.55))
+                HStack {
+                    Text("Don't have an account? ")
+                        .foregroundColor(.black) // Change the text color to black
+                        .font(.headline) // Also, change the font to make it more visible
+                    
+                    NavigationLink(destination: SignUpView()) {
+                        Text("Sign Up")
+                            .foregroundColor(.black) // Change the text color to black
+                            .underline()
+                    }
                 }
-                .frame(maxWidth: .infinity, alignment: .center)
-            }
+                
+            }.frame(maxWidth: .infinity, alignment: .center)
         }
     }
+
     
     struct ForgotPasswordView: View {
         var body: some View {
@@ -170,7 +179,7 @@ struct LoginView: View {
     struct LoginView_Previews: PreviewProvider {
         static var previews: some View {
             LoginView()
-                .previewDevice("iPad Pro (12.9-inch)")
+//                .previewDevice("iPad Pro (12.9-inch)")
         }
     }
 }

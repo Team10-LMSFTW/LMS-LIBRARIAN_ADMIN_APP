@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SignUpView: View {
+struct SignUpView:  View {
     @State private var selectedSegment = 0
     @State private var firstName = ""
     @State private var lastName = ""
