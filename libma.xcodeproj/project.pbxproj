@@ -19,6 +19,8 @@
 		984F48EC2BD91AD900B80A75 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 984F48EB2BD91AD900B80A75 /* FirebaseFirestore */; };
 		984F48EE2BD91AD900B80A75 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 984F48ED2BD91AD900B80A75 /* FirebaseFirestoreSwift */; };
 		984F48F02BD91AD900B80A75 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 984F48EF2BD91AD900B80A75 /* FirebaseStorage */; };
+		984F48F32BD928B000B80A75 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984F48F22BD928B000B80A75 /* LoginView.swift */; };
+		984F48F52BD92BCC00B80A75 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984F48F42BD92BCC00B80A75 /* SignUpView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +51,8 @@
 		984F48D32BD91A1400B80A75 /* libmaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = libmaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		984F48D72BD91A1400B80A75 /* libmaUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = libmaUITests.swift; sourceTree = "<group>"; };
 		984F48D92BD91A1400B80A75 /* libmaUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = libmaUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		984F48F22BD928B000B80A75 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		984F48F42BD92BCC00B80A75 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +108,7 @@
 		984F48BB2BD91A1200B80A75 /* libma */ = {
 			isa = PBXGroup;
 			children = (
+				984F48F12BD9288F00B80A75 /* InitialScreens */,
 				984F48BC2BD91A1200B80A75 /* libmaApp.swift */,
 				984F48BE2BD91A1200B80A75 /* ContentView.swift */,
 				984F48C02BD91A1400B80A75 /* Assets.xcassets */,
@@ -135,6 +140,15 @@
 				984F48D92BD91A1400B80A75 /* libmaUITestsLaunchTests.swift */,
 			);
 			path = libmaUITests;
+			sourceTree = "<group>";
+		};
+		984F48F12BD9288F00B80A75 /* InitialScreens */ = {
+			isa = PBXGroup;
+			children = (
+				984F48F22BD928B000B80A75 /* LoginView.swift */,
+				984F48F42BD92BCC00B80A75 /* SignUpView.swift */,
+			);
+			path = InitialScreens;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -277,6 +291,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				984F48F52BD92BCC00B80A75 /* SignUpView.swift in Sources */,
+				984F48F32BD928B000B80A75 /* LoginView.swift in Sources */,
 				984F48BF2BD91A1200B80A75 /* ContentView.swift in Sources */,
 				984F48BD2BD91A1200B80A75 /* libmaApp.swift in Sources */,
 			);
