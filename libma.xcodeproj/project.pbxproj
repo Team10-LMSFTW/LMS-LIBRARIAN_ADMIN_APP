@@ -108,6 +108,7 @@
 		984F48BB2BD91A1200B80A75 /* libma */ = {
 			isa = PBXGroup;
 			children = (
+				988365672BDA11EA00BAF3CC /* LibrarianViews */,
 				984F48F12BD9288F00B80A75 /* InitialScreens */,
 				984F48BC2BD91A1200B80A75 /* libmaApp.swift */,
 				984F48BE2BD91A1200B80A75 /* ContentView.swift */,
@@ -149,6 +150,13 @@
 				984F48F42BD92BCC00B80A75 /* SignUpView.swift */,
 			);
 			path = InitialScreens;
+			sourceTree = "<group>";
+		};
+		988365672BDA11EA00BAF3CC /* LibrarianViews */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = LibrarianViews;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
