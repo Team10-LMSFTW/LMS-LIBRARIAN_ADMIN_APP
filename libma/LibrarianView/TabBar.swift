@@ -48,6 +48,7 @@ struct TabBar: View {
                 .padding()
 
                 VStack(alignment: .leading) {
+                    
                     Button(action: {
                         self.selectedIndex = 0
                     }) {
@@ -141,26 +142,11 @@ struct TabBar: View {
                         .background(selectedIndex == 3 ? Color(hex: 0x54408C) : Color.clear)
                         .cornerRadius(10)
                     }
+                    Spacer()
                 }
                 .padding()
             }
-            
-            VStack {
-                Spacer()
-                Picker(selection: $selectedIndex, label: Text("")) {
-                    Text("Dashboard").tag(0)
-                    Text("Book Status").tag(1)
-                    Text("Inventory").tag(2)
-                    Text("Members").tag(3)
-                }
-                .pickerStyle(SegmentedPickerStyle())
-                .padding()
-                .background(Color.white)
-                .cornerRadius(10)
-                .shadow(radius: 5)
-            }
-            .padding(.horizontal)
-            .padding(.bottom, 20)
+            .padding()
         }
     }
 }
