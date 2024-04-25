@@ -15,7 +15,8 @@ struct SignUpView:  View {
     @State private var password = ""
     @State private var confirmPassword = ""
     @State private var isActiveLoginView = false
-
+    @Binding public var isLoggedIn : Bool
+    @Binding public var category : String
     var body: some View {
         GeometryReader { geometry in
             ZStack {
@@ -45,7 +46,7 @@ struct SignUpView:  View {
             .edgesIgnoringSafeArea(.all)
         }.navigationBarHidden(true)
             .fullScreenCover(isPresented: $isActiveLoginView) {
-               LoginView()
+                LoginView(isLoggedIn : $isLoggedIn , category:$category)
             }
     }
     
@@ -178,14 +179,14 @@ struct SignUpView:  View {
         }
     }
     
-    struct SignUpView_Previews: PreviewProvider {
-        static var previews: some View {
-            SignUpView()
-                .previewDevice("iPad Pro (12.9-inch)")
-        }
-    }
+//    struct SignUpView_Previews: PreviewProvider {
+//        static var previews: some View {
+//            SignUpView()
+//                .previewDevice("iPad Pro (12.9-inch)")
+//        }
+//    }
 }
 
-#Preview {
-    SignUpView()
-}
+//#Preview {
+//    SignUpView()
+//}
