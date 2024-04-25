@@ -129,6 +129,8 @@ struct LoginView: View {
                             .padding(.trailing, 0.5)
                     }
                     
+                    Spacer()
+                    
                     Button(action: {
                         // Google sign-in action
                     }) {
@@ -193,4 +195,8 @@ extension Color {
             opacity: alpha
         )
     }
+}
+
+#Preview {
+    LoginView()
 }
