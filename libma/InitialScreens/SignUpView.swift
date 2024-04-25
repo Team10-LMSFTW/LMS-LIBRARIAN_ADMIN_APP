@@ -15,6 +15,7 @@ struct SignUpView:  View {
     @State private var username = ""
     @State private var password = ""
     @State private var confirmPassword = ""
+    @State private var isActiveSignUpView = false
     
     var body: some View {
         GeometryReader { geometry in
@@ -37,10 +38,14 @@ struct SignUpView:  View {
                         Card(selectedSegment: $selectedSegment, firstName: $firstName, lastName: $lastName, emailAddress: $emailAddress, username: $username, password: $password, confirmPassword: $confirmPassword)
                     }
                     .frame(width: geometry.size.width * 0.4)
+                    .padding(.horizontal,60)
                 }
             }
             .edgesIgnoringSafeArea(.all)
-        }
+        }.navigationBarHidden(true)
+            .fullScreenCover(isPresented: $isActiveSignUpView) {
+                SignUpView()
+            }
     }
     
     struct Card: View {
