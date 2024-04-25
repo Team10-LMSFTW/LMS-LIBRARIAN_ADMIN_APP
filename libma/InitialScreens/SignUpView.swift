@@ -4,7 +4,6 @@
 //
 //  Created by mathangy on 24/04/24.
 //
-
 import SwiftUI
 
 struct SignUpView:  View {
@@ -15,8 +14,8 @@ struct SignUpView:  View {
     @State private var username = ""
     @State private var password = ""
     @State private var confirmPassword = ""
-    @State private var isActiveSignUpView = false
-    
+    @State private var isActiveLoginView = false
+
     var body: some View {
         GeometryReader { geometry in
             ZStack {
@@ -35,7 +34,9 @@ struct SignUpView:  View {
                             .fill(Color(red: 0.976, green: 0.969, blue: 0.922))
                             .frame(width: geometry.size.width * 0.4)
                         
-                        Card(selectedSegment: $selectedSegment, firstName: $firstName, lastName: $lastName, emailAddress: $emailAddress, username: $username, password: $password, confirmPassword: $confirmPassword)
+                        Card(selectedSegment: $selectedSegment, firstName: $firstName, lastName: $lastName, emailAddress: $emailAddress, username: $username, password: $password, confirmPassword: $confirmPassword,onSignUpTap: {
+                            isActiveLoginView = true
+                        })
                     }
                     .frame(width: geometry.size.width * 0.4)
                     .padding(.horizontal,60)
@@ -43,8 +44,8 @@ struct SignUpView:  View {
             }
             .edgesIgnoringSafeArea(.all)
         }.navigationBarHidden(true)
-            .fullScreenCover(isPresented: $isActiveSignUpView) {
-                SignUpView()
+            .fullScreenCover(isPresented: $isActiveLoginView) {
+               LoginView()
             }
     }
     
@@ -56,7 +57,8 @@ struct SignUpView:  View {
         @Binding var username: String
         @Binding var password: String
         @Binding var confirmPassword: String
-        
+        @State private var navigateToLogin = false // Add this line
+        let onSignUpTap: () -> Void // Add this line
         var body: some View {
             VStack(spacing: 16) {
                 Picker("", selection: $selectedSegment) {
@@ -75,7 +77,7 @@ struct SignUpView:  View {
                         .shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 5)
                 )
                 
-                SignUpComponents(firstName: $firstName, lastName: $lastName, emailAddress: $emailAddress, username: $username, password: $password, confirmPassword: $confirmPassword)
+                SignUpComponents(firstName: $firstName, lastName: $lastName, emailAddress: $emailAddress, username: $username, password: $password, confirmPassword: $confirmPassword,onSignUpTap:onSignUpTap)
             }
             .padding()
             .background(
@@ -86,7 +88,6 @@ struct SignUpView:  View {
         }
     }
     
-    
     struct SignUpComponents: View {
         @Binding var firstName: String
         @Binding var lastName: String
@@ -94,6 +95,8 @@ struct SignUpView:  View {
         @Binding var username: String
         @Binding var password: String
         @Binding var confirmPassword: String
+        @State private var navigateToLogin = false // Add this line
+        let onSignUpTap: () -> Void // Add this line
         
         var body: some View {
             VStack(alignment: .leading, spacing: 16) {
@@ -156,13 +159,20 @@ struct SignUpView:  View {
                         .shadow(color: Color(red: 1.0, green: 0.455, blue: 0.008, opacity: 0.3), radius: 12.117, x: 0, y: 12.117)
                 }
                 .padding(.horizontal)
-                
-                Button(action: {
-                    LoginView()
-                }) {
+//                NavigationLink(destination: LoginView(), isActive: $navigateToLogin) {
+//                                    EmptyView()
+//                                }
+                Button(action: onSignUpTap) { // Change this line
+                   
                     Text("If you have an account Log in here")
                         .foregroundColor(Color(red: 0.33, green: 0.25, blue: 0.55))
                 }
+//                Button(action: {
+//                    navigateToLogin = true
+//                }) {
+//                    Text("If you have an account Log in here")
+//                        .foregroundColor(Color(red: 0.33, green: 0.25, blue: 0.55))
+//                }
                 .frame(maxWidth: .infinity, alignment: .center)
             }
         }
