@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		54B994BF2BDA142600FBCB01 /* dashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B994BE2BDA142600FBCB01 /* dashboardView.swift */; };
 		984F48BD2BD91A1200B80A75 /* libmaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984F48BC2BD91A1200B80A75 /* libmaApp.swift */; };
 		984F48BF2BD91A1200B80A75 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984F48BE2BD91A1200B80A75 /* ContentView.swift */; };
 		984F48C12BD91A1400B80A75 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 984F48C02BD91A1400B80A75 /* Assets.xcassets */; };
@@ -41,6 +42,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		54B994BE2BDA142600FBCB01 /* dashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = dashboardView.swift; path = ../../../LibMan2/LibMan2/dashboardView.swift; sourceTree = "<group>"; };
 		984F48B92BD91A1200B80A75 /* libma.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = libma.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		984F48BC2BD91A1200B80A75 /* libmaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = libmaApp.swift; sourceTree = "<group>"; };
 		984F48BE2BD91A1200B80A75 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -155,6 +157,7 @@
 		988365672BDA11EA00BAF3CC /* LibrarianViews */ = {
 			isa = PBXGroup;
 			children = (
+				54B994BE2BDA142600FBCB01 /* dashboardView.swift */,
 			);
 			path = LibrarianViews;
 			sourceTree = "<group>";
@@ -302,6 +305,7 @@
 				984F48F52BD92BCC00B80A75 /* SignUpView.swift in Sources */,
 				984F48F32BD928B000B80A75 /* LoginView.swift in Sources */,
 				984F48BF2BD91A1200B80A75 /* ContentView.swift in Sources */,
+				54B994BF2BDA142600FBCB01 /* dashboardView.swift in Sources */,
 				984F48BD2BD91A1200B80A75 /* libmaApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
