@@ -321,6 +321,8 @@
 				8439381E2BDA10B40096E1D1 /* LibrarianViewGroup.swift in Sources */,
 				8439381C2BDA10A50096E1D1 /* AdminViewGroup.swift in Sources */,
 				984F48F32BD928B000B80A75 /* LoginView.swift in Sources */,
+				54B994C22BDA14A200FBCB01 /* DashboardView.swift in Sources */,
+				54B994C42BDA202700FBCB01 /* TabBar.swift in Sources */,
 				984F48BF2BD91A1200B80A75 /* ContentView.swift in Sources */,
 				984F48BD2BD91A1200B80A75 /* libmaApp.swift in Sources */,
 			);
