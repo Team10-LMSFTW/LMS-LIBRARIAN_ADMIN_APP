@@ -17,8 +17,7 @@ struct ContentView: View {
 
     var body: some View {
         
-            if(!isLoggedIn){
-                LoginView(isLoggedIn:$isLoggedIn ,category:$category)
+        if(!isLoggedIn){                LoginView(globalAppState: app_state, isLoggedIn:$isLoggedIn ,category:$category)
             }else{
                 if(category == "admin"){
                     AdminViewGroup()

@@ -15,6 +15,7 @@ struct LoginView: View {
     @State private var password = ""
     @State private var isActiveSignUpView = false
     @State public var openAdminView = false;
+    @ObservedObject var globalAppState: GlobalAppState
     @Binding public var isLoggedIn : Bool;
     @Binding public var category : String;
     var body: some View {
@@ -50,8 +51,9 @@ struct LoginView: View {
             }
             .navigationBarHidden(true)
             .fullScreenCover(isPresented: $isActiveSignUpView) {
-                SignUpView( isLoggedIn : $isLoggedIn , category:$category)
+                SignUpView(globalAppState: globalAppState, isLoggedIn: $isLoggedIn, category: $category)
             }
+
         }
     
     

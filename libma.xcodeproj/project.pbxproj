@@ -113,7 +113,6 @@
 			children = (
 				8439381B2BDA10A50096E1D1 /* AdminViewGroup.swift */,
 				8439381D2BDA10B40096E1D1 /* LibrarianViewGroup.swift */,
-				843938232BDA31A90096E1D1 /* DataModelUser.swift */,
 			);
 			path = ViewGroups;
 			sourceTree = "<group>";
@@ -141,6 +140,7 @@
 		984F48BB2BD91A1200B80A75 /* libma */ = {
 			isa = PBXGroup;
 			children = (
+				98D2EF672BDB5E1F00FED407 /* Datamodels */,
 				54B994FB2BDAE2BD00FBCB01 /* LibrarianView1 */,
 				843938212BDA14A60096E1D1 /* GoogleService-Info.plist */,
 				8439381A2BDA10830096E1D1 /* ViewGroups */,
@@ -186,6 +186,14 @@
 				8439381F2BDA12910096E1D1 /* ForgotPasswordView.swift */,
 			);
 			path = InitialScreens;
+			sourceTree = "<group>";
+		};
+		98D2EF672BDB5E1F00FED407 /* Datamodels */ = {
+			isa = PBXGroup;
+			children = (
+				843938232BDA31A90096E1D1 /* DataModelUser.swift */,
+			);
+			path = Datamodels;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -502,7 +510,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"libma/Preview Content\"";
-				DEVELOPMENT_TEAM = 55PHBRM2M4;
+				DEVELOPMENT_TEAM = 4NZCYY46NY;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -515,7 +523,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = in.edu.srmist.libma;
+				PRODUCT_BUNDLE_IDENTIFIER = in.edu.srmist.libmgmtftw;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -531,7 +539,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"libma/Preview Content\"";
-				DEVELOPMENT_TEAM = 55PHBRM2M4;
+				DEVELOPMENT_TEAM = 4NZCYY46NY;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -544,7 +552,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = in.edu.srmist.libma;
+				PRODUCT_BUNDLE_IDENTIFIER = in.edu.srmist.libmgmtftw;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
