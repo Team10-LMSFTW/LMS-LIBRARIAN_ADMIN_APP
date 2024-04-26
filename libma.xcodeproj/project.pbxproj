@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		54A72D4C2BDBD3CE00758DC7 /* AssignRolesAdmin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A72D4B2BDBD3CE00758DC7 /* AssignRolesAdmin.swift */; };
 		54B994FD2BDAE31A00FBCB01 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B994FC2BDAE31A00FBCB01 /* DashboardView.swift */; };
 		54B994FF2BDAE34700FBCB01 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B994FE2BDAE34700FBCB01 /* TabBar.swift */; };
 		8439381C2BDA10A50096E1D1 /* AdminViewGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8439381B2BDA10A50096E1D1 /* AdminViewGroup.swift */; };
@@ -48,6 +49,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		54A72D4B2BDBD3CE00758DC7 /* AssignRolesAdmin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignRolesAdmin.swift; sourceTree = "<group>"; };
 		54B994FC2BDAE31A00FBCB01 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
 		54B994FE2BDAE34700FBCB01 /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
 		8439381B2BDA10A50096E1D1 /* AdminViewGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminViewGroup.swift; sourceTree = "<group>"; };
@@ -113,6 +115,7 @@
 			children = (
 				8439381B2BDA10A50096E1D1 /* AdminViewGroup.swift */,
 				8439381D2BDA10B40096E1D1 /* LibrarianViewGroup.swift */,
+				54A72D4B2BDBD3CE00758DC7 /* AssignRolesAdmin.swift */,
 			);
 			path = ViewGroups;
 			sourceTree = "<group>";
@@ -339,6 +342,7 @@
 			files = (
 				843938242BDA31A90096E1D1 /* DataModelUser.swift in Sources */,
 				984F48F52BD92BCC00B80A75 /* SignUpView.swift in Sources */,
+				54A72D4C2BDBD3CE00758DC7 /* AssignRolesAdmin.swift in Sources */,
 				843938202BDA12910096E1D1 /* ForgotPasswordView.swift in Sources */,
 				8439381E2BDA10B40096E1D1 /* LibrarianViewGroup.swift in Sources */,
 				8439381C2BDA10A50096E1D1 /* AdminViewGroup.swift in Sources */,
