@@ -373,6 +373,33 @@ struct ColorSwatch: View {
     }
 }
 
+struct TableView: View {
+    var body: some View {
+        HStack {
+            Text("1234567")
+                .frame(width: 80, alignment: .leading)
+            Text("ZULMA CARY")
+                .frame(width: 100, alignment: .leading)
+            Text("QUANTUM COMPUT...")
+                .frame(width: 150, alignment: .leading)
+            Text("CHRIS BERNHARDT")
+                .frame(width: 150, alignment: .leading)
+            Text("XXXXXX")
+                .frame(width: 90, alignment: .leading)
+            Text("2 days")
+                .frame(width: 90, alignment: .leading)
+            Text("Mar 15")
+                .frame(width: 70, alignment: .leading)
+            Text("Mar 17")
+                .frame(width: 80, alignment: .leading)
+            Image(systemName: "eye")
+                .frame(width: 50, alignment: .center)
+        }
+        .padding(.vertical, 5)
+        .padding()
+    }
+}
+
 
 #Preview {
     DashboardView()
