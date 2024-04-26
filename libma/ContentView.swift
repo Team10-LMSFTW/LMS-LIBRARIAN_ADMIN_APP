@@ -8,28 +8,29 @@
 import SwiftUI
 
 struct ContentView: View {
-//    @AppStorage("login_status") var loginStatus : Bool = false
-    
-    @State var  isLoggedIn : Bool = false;
-    @State var category : String = "none"
-    
-    @StateObject public var app_state = GlobalAppState()
+    @State var isLoggedIn: Bool = false
+    @State var category: String = "none"
+    @StateObject var app_state = GlobalAppState()
 
     var body: some View {
-        
-            if(!isLoggedIn){
-                LoginView(isLoggedIn:$isLoggedIn ,category:$category)
-            }else{
-                if(category == "admin"){
-                    AdminViewGroup()
-                }else{
-                    LibrarianViewGroup()
-                }
+        if !isLoggedIn {
+            LoginView(globalAppState: app_state, isLoggedIn: $isLoggedIn, category: $category)
+        } else {
+            if category == "Admin" {
+                AdminViewGroup()
+            } else {
+                LibrarianViewGroup()
             }
         }
-    
+    }
 }
 
-#Preview {
-    ContentView()
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
+    }
 }
+
+//#Preview {
+//    ContentView()
+//}
