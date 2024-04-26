@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		54B994FD2BDAE31A00FBCB01 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B994FC2BDAE31A00FBCB01 /* DashboardView.swift */; };
 		54B994FF2BDAE34700FBCB01 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B994FE2BDAE34700FBCB01 /* TabBar.swift */; };
+		54B995042BDBA7AB00FBCB01 /* TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B995032BDBA7AB00FBCB01 /* TableView.swift */; };
 		8439381C2BDA10A50096E1D1 /* AdminViewGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8439381B2BDA10A50096E1D1 /* AdminViewGroup.swift */; };
 		8439381E2BDA10B40096E1D1 /* LibrarianViewGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8439381D2BDA10B40096E1D1 /* LibrarianViewGroup.swift */; };
 		843938202BDA12910096E1D1 /* ForgotPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8439381F2BDA12910096E1D1 /* ForgotPasswordView.swift */; };
@@ -50,6 +51,7 @@
 /* Begin PBXFileReference section */
 		54B994FC2BDAE31A00FBCB01 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
 		54B994FE2BDAE34700FBCB01 /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
+		54B995032BDBA7AB00FBCB01 /* TableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TableView.swift; path = ../../../../Documents/TableView.swift; sourceTree = "<group>"; };
 		8439381B2BDA10A50096E1D1 /* AdminViewGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminViewGroup.swift; sourceTree = "<group>"; };
 		8439381D2BDA10B40096E1D1 /* LibrarianViewGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibrarianViewGroup.swift; sourceTree = "<group>"; };
 		8439381F2BDA12910096E1D1 /* ForgotPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordView.swift; sourceTree = "<group>"; };
@@ -104,6 +106,7 @@
 			children = (
 				54B994FC2BDAE31A00FBCB01 /* DashboardView.swift */,
 				54B994FE2BDAE34700FBCB01 /* TabBar.swift */,
+				54B995032BDBA7AB00FBCB01 /* TableView.swift */,
 			);
 			path = LibrarianView1;
 			sourceTree = "<group>";
@@ -346,6 +349,7 @@
 				984F48BF2BD91A1200B80A75 /* ContentView.swift in Sources */,
 				54B994FD2BDAE31A00FBCB01 /* DashboardView.swift in Sources */,
 				984F48BD2BD91A1200B80A75 /* libmaApp.swift in Sources */,
+				54B995042BDBA7AB00FBCB01 /* TableView.swift in Sources */,
 				54B994FF2BDAE34700FBCB01 /* TabBar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
