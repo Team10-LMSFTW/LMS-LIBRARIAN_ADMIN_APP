@@ -35,7 +35,9 @@ struct SignUpView: View {
                             .fill(Color(red: 0.976, green: 0.969, blue: 0.922))
                             .frame(width: geometry.size.width * 0.4)
 
-                        Card(selectedSegment: $selectedSegment, firstName: $firstName, lastName: $lastName, emailAddress: $emailAddress, username: $username, password: $password, confirmPassword: $confirmPassword, globalAppState: globalAppState, onSignUpTap: registerUser)
+                        Card(selectedSegment: $selectedSegment, firstName: $firstName, lastName: $lastName, emailAddress: $emailAddress, username: $username, password: $password, confirmPassword: $confirmPassword, globalAppState: globalAppState, onSignUpTap: {
+                            isActiveLoginView = true
+                        }, registerUserfunc: registerUser)
                     }
                     .frame(width: geometry.size.width * 0.4)
                     .padding(.horizontal, 60)
@@ -60,7 +62,7 @@ struct SignUpView: View {
         @State private var navigateToLogin = false // Add this line
         @ObservedObject var globalAppState: GlobalAppState
         let onSignUpTap: () -> Void // Add this line
-
+        let  registerUserfunc: () -> Void
         var body: some View {
             VStack(spacing: 16) {
                 Picker("", selection: $selectedSegment) {
@@ -79,7 +81,7 @@ struct SignUpView: View {
                         .shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 5)
                 )
 
-                SignUpComponents(firstName: $firstName, lastName: $lastName, emailAddress: $emailAddress, username: $username, password: $password, confirmPassword: $confirmPassword, onSignUpTap: onSignUpTap)
+                SignUpComponents(firstName: $firstName, lastName: $lastName, emailAddress: $emailAddress, username: $username, password: $password, confirmPassword: $confirmPassword, onSignUpTap: onSignUpTap, registerUserfunc: registerUserfunc)
             }
             .padding()
             .background(
@@ -98,6 +100,7 @@ struct SignUpView: View {
         @Binding var password: String
         @Binding var confirmPassword: String
         let onSignUpTap: () -> Void // Add this line
+        let registerUserfunc : () -> Void
 
         var body: some View {
             VStack(alignment: .leading, spacing: 16) {
@@ -149,7 +152,7 @@ struct SignUpView: View {
                     .background(Color(red: 0.945, green: 0.949, blue: 0.965))
                     .cornerRadius(8.078)
 
-                Button(action: onSignUpTap) {
+                Button(action: registerUserfunc) {
                     Text("Get Started")
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity, maxHeight: 50.486)

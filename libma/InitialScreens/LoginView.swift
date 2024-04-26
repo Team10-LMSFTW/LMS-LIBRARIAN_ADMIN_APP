@@ -105,50 +105,37 @@ struct LoginView: View {
         @StateObject public var app_state = GlobalAppState()
         func login(){
             let db = Firestore.firestore()
-             category = segment == 0 ? "admin" : "librarian"
+            category = segment == 0 ? "admin" : "librarian"
             Auth.auth().signIn(withEmail: email, password: password) { result, error in
                 if let error = error {
                     print("Sign-in error:", error.localizedDescription)
-                } else {
+                } else if let result = result {
                     print("User signed in successfully!")
-                    db.collection("users").document(result!.user.uid).getDocument { (documentSnapshot, error) in
+                    db.collection("users").document(result.user.uid).getDocument { (documentSnapshot, error) in
                         if let error = error {
                             print(error)
                             return
-                        }else{
-                            let cat = documentSnapshot!.data()!["category_type"]! as! String
-                            let fn = documentSnapshot!.data()!["first_name"]! as! String
-                            let ln =  documentSnapshot!.data()!["last_name"]! as! String
-                            let library_id = documentSnapshot!.data()!["library_id"]! as! String
-                            app_state.isLoggedIn = true
-                            app_state.category = cat
-                            app_state.first_name = fn
-                            app_state.last_name = ln
-                            app_state.library_id = library_id
-                            print(fn,ln,library_id,cat)
-                            print(app_state.isLoggedIn)
-                            isLoggedIn = true
-//                            if(cat == "admin"){
-//                                NavigationLink(destination: AdminViewGroup()) {
-//                                                Text("Go to Admin View")
-//                                              }
-////                                            adminlms10@yopmail.com
-//
-//                            }else{
-//                                NavigationLink(destination: LibrarianViewGroup()) {
-//                                                Text("Go to Lobrarian View")
-//                                              }
-//
-//                            }
-                            
+                        } else if let documentSnapshot = documentSnapshot {
+                            let data = documentSnapshot.data()
+                            if let cat = data?["category_type"] as? String,
+                               let fn = data?["first_name"] as? String,
+                               let ln = data?["last_name"] as? String,
+                               let library_id = data?["library_id"] as? String {
+                                app_state.isLoggedIn = true
+                                app_state.category = cat
+                                app_state.first_name = fn
+                                app_state.last_name = ln
+                                app_state.library_id = library_id
+                                print(fn,ln,library_id,cat)
+                                print(app_state.isLoggedIn)
+                                isLoggedIn = true
+                            }
                         }
-                        
                     }
-                    
-                    
                 }
             }
         }
+
         var body: some View {
             
                 VStack(alignment: .leading, spacing: 16) {
@@ -197,7 +184,7 @@ struct LoginView: View {
                        
 //                            if(app_state.category == "admin"){
 //                                //                NavigationLink(destination: AdminViewGroup() , label: {})
-//                                
+//
 ////                                NavigationLink(destination: AdminViewGroup(), label: {Text("jyfyhvhjvhj")})
 //                                NavigationView{
 //                                    AdminViewGroup()
@@ -258,7 +245,7 @@ struct LoginView: View {
 //            Text("Forgot Password View")
 //        }
 //    }
-//    
+//
 //    struct LoginView_Previews: PreviewProvider {
 //        static var previews: some View {
 //            LoginView()
@@ -278,4 +265,3 @@ extension Color {
         )
     }
 }
-
