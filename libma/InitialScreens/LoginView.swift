@@ -169,10 +169,10 @@ struct LoginView: View {
                     Button(action: {
                         // Login action
                         login()
-                        
-                        
-                        //                    adminlms10@yopmail.com
-                        //                    adminlms10
+                        DispatchQueue.main.async {
+                            self.isLoggedIn = true
+                            self.category = app_state.category // set this to the user's category
+                        }
                     }) {
                         Text("Login")
                             .foregroundColor(.white)
@@ -180,7 +180,8 @@ struct LoginView: View {
                             .background(Color(red: 0.33, green: 0.25, blue: 0.55))
                             .cornerRadius(8.078)
                             .shadow(color: Color(red: 1.0, green: 0.455, blue: 0.008, opacity: 0.3), radius: 12.117, x: 0, y: 12.117)
-                        
+                    
+
                        
 //                            if(app_state.category == "admin"){
 //                                //                NavigationLink(destination: AdminViewGroup() , label: {})
