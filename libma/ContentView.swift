@@ -52,13 +52,14 @@ struct ContentView: View {
                     if category == "admin" {
                         AdminViewGroup()
                     } else {
-                        LibrarianViewGroup()
+//                        LibrarianViewGroup()
+                        AddBookView()
                     }
                 }
             }
         }
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+       ContentView()
     }
 }
