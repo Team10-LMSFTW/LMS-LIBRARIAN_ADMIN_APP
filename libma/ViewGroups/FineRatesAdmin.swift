@@ -1,21 +1,23 @@
 import SwiftUI
 
-struct AssignRolesAdmin: View {
+struct FineRatesAdmin: View {
     @Binding var isLoggedIn: Bool
-    @State private var username = ""
+    @State private var fineRatePerWeek = ""
     @State private var emailAddress = ""
     @State private var firstName = ""
     @State private var lastName = ""
     @State private var selectedCategory = "admin"
-
+    @State private var selectedLibrary = "Library 1"
+    
     let librarians = ["Librarian 1", "Librarian 2", "Librarian 3", "Librarian 4", "Librarian 5", "Librarian 6"]
+    let libraries = ["Library 1", "Library 2", "Library 3"]
 
     var body: some View {
         ZStack {
             VStack {
                 HStack {
-                    AssignRolesView(username: $username, emailAddress: $emailAddress, firstName: $firstName, lastName: $lastName, category: $selectedCategory) // Updated to use $selectedCategory
-                    LibrarianView(librarians: librarians)
+                    FineRatesView(fineRatePerWeek: $fineRatePerWeek, emailAddress: $emailAddress, firstName: $firstName, lastName: $lastName, category: $selectedCategory, library: $selectedLibrary, libraries: libraries)
+                    ExistingLibrariansView(librarians: librarians)
                 }
                 .padding()
                 .background(
@@ -34,16 +36,18 @@ struct AssignRolesAdmin: View {
     }
 }
 
-struct AssignRolesView: View {
-    @Binding var username: String
+struct FineRatesView: View {
+    @Binding var fineRatePerWeek: String
     @Binding var emailAddress: String
     @Binding var firstName: String
     @Binding var lastName: String
     @Binding var category: String
+    @Binding var library: String
+    let libraries: [String]
 
     var body: some View {
         VStack(spacing: 16) {
-            Text("Assign Roles")
+            Text("Fine Rates")
                 .font(.headline)
                 .padding(.bottom)
 
@@ -60,8 +64,21 @@ struct AssignRolesView: View {
                     .shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 5)
             )
 
-            TextField("Username", text: $username)
-                .frame(width: 200) // Adjust the width as needed
+            Picker("Libraries", selection: $library) {
+                ForEach(libraries, id: \.self) { lib in
+                    Text(lib)
+                }
+            }
+            .pickerStyle(MenuPickerStyle())
+            .padding()
+            .background(
+                RoundedRectangle(cornerRadius: 8)
+                    .fill(Color.white)
+                    .shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 5)
+            )
+
+            TextField("Fine Rate per week", text: $fineRatePerWeek)
+                .frame(width: 200)
                 .padding()
                 .background(Color(red: 0.945, green: 0.949, blue: 0.965))
                 .cornerRadius(8.078)
@@ -86,19 +103,15 @@ struct AssignRolesView: View {
                 .fill(Color.white)
                 .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 5)
         )
-        
-        
     }
-    
 }
 
-
-struct LibrarianView: View {
+struct ExistingLibrariansView: View {
     let librarians: [String]
 
     var body: some View {
         VStack(spacing: 16) {
-            Text("Existing Librarians")
+            Text("Existing Libraries")
                 .font(.headline)
                 .padding(.bottom)
 
@@ -125,12 +138,12 @@ struct LibrarianView: View {
                 .fill(Color.white)
                 .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 5)
         )
-        .frame(height: 275)
+        .frame(height: 350)
     }
 }
 
-struct AssignRolesAdmin_Previews: PreviewProvider {
+struct FineRatesAdmin_Previews: PreviewProvider {
     static var previews: some View {
-        AssignRolesAdmin(isLoggedIn: .constant(true))
+        FineRatesAdmin(isLoggedIn: .constant(true))
     }
 }

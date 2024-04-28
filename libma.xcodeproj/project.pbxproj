@@ -29,6 +29,8 @@
 		984F48F02BD91AD900B80A75 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 984F48EF2BD91AD900B80A75 /* FirebaseStorage */; };
 		984F48F32BD928B000B80A75 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984F48F22BD928B000B80A75 /* LoginView.swift */; };
 		984F48F52BD92BCC00B80A75 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984F48F42BD92BCC00B80A75 /* SignUpView.swift */; };
+		A23320862BDE261E001DDA2F /* FineRatesAdmin.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23320852BDE261E001DDA2F /* FineRatesAdmin.swift */; };
+		A23320882BDE273D001DDA2F /* CreateLibraryAdmin.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23320872BDE273D001DDA2F /* CreateLibraryAdmin.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +71,8 @@
 		984F48D92BD91A1400B80A75 /* libmaUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = libmaUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		984F48F22BD928B000B80A75 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		984F48F42BD92BCC00B80A75 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
+		A23320852BDE261E001DDA2F /* FineRatesAdmin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FineRatesAdmin.swift; sourceTree = "<group>"; };
+		A23320872BDE273D001DDA2F /* CreateLibraryAdmin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateLibraryAdmin.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +120,8 @@
 				8439381B2BDA10A50096E1D1 /* AdminViewGroup.swift */,
 				8439381D2BDA10B40096E1D1 /* LibrarianViewGroup.swift */,
 				54A72D4B2BDBD3CE00758DC7 /* AssignRolesAdmin.swift */,
+				A23320872BDE273D001DDA2F /* CreateLibraryAdmin.swift */,
+				A23320852BDE261E001DDA2F /* FineRatesAdmin.swift */,
 			);
 			path = ViewGroups;
 			sourceTree = "<group>";
@@ -340,6 +346,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A23320882BDE273D001DDA2F /* CreateLibraryAdmin.swift in Sources */,
 				843938242BDA31A90096E1D1 /* DataModelUser.swift in Sources */,
 				984F48F52BD92BCC00B80A75 /* SignUpView.swift in Sources */,
 				54A72D4C2BDBD3CE00758DC7 /* AssignRolesAdmin.swift in Sources */,
@@ -349,6 +356,7 @@
 				984F48F32BD928B000B80A75 /* LoginView.swift in Sources */,
 				984F48BF2BD91A1200B80A75 /* ContentView.swift in Sources */,
 				54B994FD2BDAE31A00FBCB01 /* DashboardView.swift in Sources */,
+				A23320862BDE261E001DDA2F /* FineRatesAdmin.swift in Sources */,
 				984F48BD2BD91A1200B80A75 /* libmaApp.swift in Sources */,
 				54B994FF2BDAE34700FBCB01 /* TabBar.swift in Sources */,
 			);

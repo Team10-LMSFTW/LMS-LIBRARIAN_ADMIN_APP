@@ -1,21 +1,20 @@
 import SwiftUI
 
-struct AssignRolesAdmin: View {
+struct CreateLibraryAdmin: View {
     @Binding var isLoggedIn: Bool
-    @State private var username = ""
+    @State private var libID = ""
     @State private var emailAddress = ""
     @State private var firstName = ""
     @State private var lastName = ""
-    @State private var selectedCategory = "admin"
 
-    let librarians = ["Librarian 1", "Librarian 2", "Librarian 3", "Librarian 4", "Librarian 5", "Librarian 6"]
+    let libraries = ["Library 1", "Library 2", "Library 3", "Library 4", "Library 5", "Library 6"]
 
     var body: some View {
         ZStack {
             VStack {
                 HStack {
-                    AssignRolesView(username: $username, emailAddress: $emailAddress, firstName: $firstName, lastName: $lastName, category: $selectedCategory) // Updated to use $selectedCategory
-                    LibrarianView(librarians: librarians)
+                    CreateLibraryView(libID: $libID, emailAddress: $emailAddress, firstName: $firstName, lastName: $lastName)
+                    ExistingLibrariesView(libraries: libraries)
                 }
                 .padding()
                 .background(
@@ -34,34 +33,20 @@ struct AssignRolesAdmin: View {
     }
 }
 
-struct AssignRolesView: View {
-    @Binding var username: String
+struct CreateLibraryView: View {
+    @Binding var libID: String
     @Binding var emailAddress: String
     @Binding var firstName: String
     @Binding var lastName: String
-    @Binding var category: String
 
     var body: some View {
         VStack(spacing: 16) {
-            Text("Assign Roles")
+            Text("Create Your Library")
                 .font(.headline)
                 .padding(.bottom)
 
-            Picker("User Category", selection: $category) {
-                Text("Admin").tag("admin")
-                Text("Librarian").tag("librarian")
-                Text("User").tag("user")
-            }
-            .pickerStyle(MenuPickerStyle())
-            .padding()
-            .background(
-                RoundedRectangle(cornerRadius: 8)
-                    .fill(Color.white)
-                    .shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 5)
-            )
-
-            TextField("Username", text: $username)
-                .frame(width: 200) // Adjust the width as needed
+            TextField("LIB_ID", text: $libID)
+                .frame(width: 200)
                 .padding()
                 .background(Color(red: 0.945, green: 0.949, blue: 0.965))
                 .cornerRadius(8.078)
@@ -71,7 +56,7 @@ struct AssignRolesView: View {
             Button(action: {
                 // Assign action
             }) {
-                Text("Assign")
+                Text("Create")
                     .foregroundColor(.white)
                     .frame(maxWidth:.infinity, maxHeight: 40)
                     .background(Color(red: 0.33, green: 0.25, blue: 0.55))
@@ -86,32 +71,28 @@ struct AssignRolesView: View {
                 .fill(Color.white)
                 .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 5)
         )
-        
-        
     }
-    
 }
 
-
-struct LibrarianView: View {
-    let librarians: [String]
+struct ExistingLibrariesView: View {
+    let libraries: [String]
 
     var body: some View {
         VStack(spacing: 16) {
-            Text("Existing Librarians")
+            Text("Existing Libraries")
                 .font(.headline)
                 .padding(.bottom)
 
             ScrollView {
                 VStack(spacing: 16) {
-                    ForEach(librarians, id: \.self) { librarian in
+                    ForEach(libraries, id: \.self) { library in
                         HStack {
-                            Image(systemName: "person.crop.circle.fill")
+                            Image(systemName: "building.columns.fill")
                                 .resizable()
                                 .aspectRatio(contentMode:.fit)
                                 .frame(width: 50, height: 50)
                                 .foregroundColor(.gray)
-                            Text(librarian)
+                            Text(library)
                                 .font(.subheadline)
                         }
                     }
@@ -125,12 +106,12 @@ struct LibrarianView: View {
                 .fill(Color.white)
                 .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 5)
         )
-        .frame(height: 275)
+        .frame(height: 200)
     }
 }
 
-struct AssignRolesAdmin_Previews: PreviewProvider {
+struct CreateYourLibrary_Previews: PreviewProvider {
     static var previews: some View {
-        AssignRolesAdmin(isLoggedIn: .constant(true))
+        CreateLibraryAdmin(isLoggedIn: .constant(true))
     }
 }
