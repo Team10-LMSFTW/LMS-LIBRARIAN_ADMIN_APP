@@ -6,7 +6,7 @@
 //
 
 import Foundation
-struct Book: Encodable {
+struct Book: Encodable,Decodable {
     var authorName: String
     var bookName: String
     var category: String

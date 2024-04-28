@@ -31,6 +31,9 @@
 		984F48F52BD92BCC00B80A75 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984F48F42BD92BCC00B80A75 /* SignUpView.swift */; };
 		986C0C032BDECB060030626B /* DatamodelBooks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986C0C022BDECB060030626B /* DatamodelBooks.swift */; };
 		986C0C052BDECB430030626B /* AddBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986C0C042BDECB430030626B /* AddBookView.swift */; };
+		986C0C072BDECE530030626B /* BooksInventoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986C0C062BDECE530030626B /* BooksInventoryView.swift */; };
+		986C0C0A2BDECEDA0030626B /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 986C0C092BDECEDA0030626B /* SDWebImageSwiftUI */; };
+		986C0C0C2BDED47C0030626B /* BookDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986C0C0B2BDED47C0030626B /* BookDetailView.swift */; };
 		A23320862BDE261E001DDA2F /* FineRatesAdmin.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23320852BDE261E001DDA2F /* FineRatesAdmin.swift */; };
 		A23320882BDE273D001DDA2F /* CreateLibraryAdmin.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23320872BDE273D001DDA2F /* CreateLibraryAdmin.swift */; };
 /* End PBXBuildFile section */
@@ -75,6 +78,8 @@
 		984F48F42BD92BCC00B80A75 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		986C0C022BDECB060030626B /* DatamodelBooks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatamodelBooks.swift; sourceTree = "<group>"; };
 		986C0C042BDECB430030626B /* AddBookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddBookView.swift; sourceTree = "<group>"; };
+		986C0C062BDECE530030626B /* BooksInventoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooksInventoryView.swift; sourceTree = "<group>"; };
+		986C0C0B2BDED47C0030626B /* BookDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookDetailView.swift; sourceTree = "<group>"; };
 		A23320852BDE261E001DDA2F /* FineRatesAdmin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FineRatesAdmin.swift; sourceTree = "<group>"; };
 		A23320872BDE273D001DDA2F /* CreateLibraryAdmin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateLibraryAdmin.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -84,6 +89,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				986C0C0A2BDECEDA0030626B /* SDWebImageSwiftUI in Frameworks */,
 				984F48E82BD91AD900B80A75 /* FirebaseAnalytics in Frameworks */,
 				984F48EA2BD91AD900B80A75 /* FirebaseAuth in Frameworks */,
 				984F48EC2BD91AD900B80A75 /* FirebaseFirestore in Frameworks */,
@@ -127,6 +133,8 @@
 				A23320872BDE273D001DDA2F /* CreateLibraryAdmin.swift */,
 				A23320852BDE261E001DDA2F /* FineRatesAdmin.swift */,
 				986C0C042BDECB430030626B /* AddBookView.swift */,
+				986C0C062BDECE530030626B /* BooksInventoryView.swift */,
+				986C0C0B2BDED47C0030626B /* BookDetailView.swift */,
 			);
 			path = ViewGroups;
 			sourceTree = "<group>";
@@ -233,6 +241,7 @@
 				984F48EB2BD91AD900B80A75 /* FirebaseFirestore */,
 				984F48ED2BD91AD900B80A75 /* FirebaseFirestoreSwift */,
 				984F48EF2BD91AD900B80A75 /* FirebaseStorage */,
+				986C0C092BDECEDA0030626B /* SDWebImageSwiftUI */,
 			);
 			productName = libma;
 			productReference = 984F48B92BD91A1200B80A75 /* libma.app */;
@@ -308,6 +317,7 @@
 			mainGroup = 984F48B02BD91A1200B80A75;
 			packageReferences = (
 				984F48E62BD91AD900B80A75 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				986C0C082BDECEDA0030626B /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
 			);
 			productRefGroup = 984F48BA2BD91A1200B80A75 /* Products */;
 			projectDirPath = "";
@@ -362,9 +372,11 @@
 				986C0C052BDECB430030626B /* AddBookView.swift in Sources */,
 				984F48F32BD928B000B80A75 /* LoginView.swift in Sources */,
 				984F48BF2BD91A1200B80A75 /* ContentView.swift in Sources */,
+				986C0C072BDECE530030626B /* BooksInventoryView.swift in Sources */,
 				54B994FD2BDAE31A00FBCB01 /* DashboardView.swift in Sources */,
 				A23320862BDE261E001DDA2F /* FineRatesAdmin.swift in Sources */,
 				984F48BD2BD91A1200B80A75 /* libmaApp.swift in Sources */,
+				986C0C0C2BDED47C0030626B /* BookDetailView.swift in Sources */,
 				986C0C032BDECB060030626B /* DatamodelBooks.swift in Sources */,
 				54B994FF2BDAE34700FBCB01 /* TabBar.swift in Sources */,
 			);
@@ -706,6 +718,14 @@
 				minimumVersion = 10.24.0;
 			};
 		};
+		986C0C082BDECEDA0030626B /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.2;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -733,6 +753,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 984F48E62BD91AD900B80A75 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseStorage;
+		};
+		986C0C092BDECEDA0030626B /* SDWebImageSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 986C0C082BDECEDA0030626B /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
+			productName = SDWebImageSwiftUI;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

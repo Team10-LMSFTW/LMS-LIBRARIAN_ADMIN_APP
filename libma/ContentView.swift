@@ -53,7 +53,8 @@ struct ContentView: View {
                         AdminViewGroup()
                     } else {
 //                        LibrarianViewGroup()
-                        AddBookView()
+                       BooksInventoryView()
+//                        AddBookView()
                     }
                 }
             }

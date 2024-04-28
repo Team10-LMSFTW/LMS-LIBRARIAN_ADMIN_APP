@@ -17,7 +17,8 @@ struct AddBookView: View {
     @State private var loanID = ""
     @State private var quantity = ""
     @State private var thumbnailURL = ""
-    
+    @State private var showingAlert = false
+
     var body: some View {
         Form {
             Section(header: Text("Book Details")) {
@@ -40,6 +41,9 @@ struct AddBookView: View {
             }
         }
         .navigationTitle("Add Book")
+        .alert(isPresented: $showingAlert) {
+            Alert(title: Text("Success!!"), message: Text("Book added successfully"), dismissButton: .default(Text("OK")))
+        }
     }
     
     private func addBook() {
@@ -57,10 +61,13 @@ struct AddBookView: View {
         do {
             _ = try db.collection("books").addDocument(from: newBook)
             clearFields()
+            showingAlert = true
         } catch {
             print("Error adding document: \(error)")
         }
     }
+    
+    
     
     private func clearFields() {
         authorName = ""
