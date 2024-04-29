@@ -7,13 +7,16 @@
 
 import Foundation
 struct Book: Encodable,Decodable {
-    var authorName: String
-    var bookName: String
+    var author_name: String
+    var book_name: String
     var category: String
-    var coverURL: String
+    var cover_url: String
     var isbn: String
-    var libraryID: String
-    var loanID: String
+    var library_id: String
+    var loan_id: String
     var quantity: Int
-//    var thumbnailURL: String
+    var thumbnail_url: String
 }
+//author_name book_name
+//category cover_url
+//isbn library_id loan_id quantity thumbnail_url 
