@@ -17,7 +17,7 @@ struct BooksInventoryView: View {
 //        NavigationView {
 //            List(books, id: \.isbn) { book in
 //                VStack(alignment: .leading) {
-//                    WebImage(url: URL(string: book.coverURL))
+//                    WebImage(url: URL(string: book.cover_url))
 //                        .resizable()
 //                        .aspectRatio(contentMode: .fit)
 //                        .frame(width: 100, height: 100)
@@ -41,15 +41,15 @@ struct BooksInventoryView: View {
                 List(books, id: \.isbn) { book in
                     NavigationLink(destination: BookDetailView(book: book)) {
                         VStack(alignment: .leading) {
-                            WebImage(url: URL(string: book.coverURL))
+                            WebImage(url: URL(string: book.cover_url))
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 100, height: 100)
 
                             VStack(alignment: .leading) {
-                                Text(book.bookName)
+                                Text(book.book_name)
                                     .font(.headline)
-                                Text(book.authorName)
+                                Text(book.author_name)
                                     .font(.subheadline)
                                     .foregroundColor(.gray)
                             }

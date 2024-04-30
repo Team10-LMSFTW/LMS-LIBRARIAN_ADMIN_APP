@@ -1,9 +1,3 @@
-//
-//  AddingBookView.swift
-//  libma
-//
-//  Created by mathangy on 28/04/24.
-//
 import SwiftUI
 import FirebaseFirestore
 
@@ -11,12 +5,10 @@ struct AddBookView: View {
     @State private var authorName = ""
     @State private var bookName = ""
     @State private var category = ""
-    @State private var coverURL = ""
     @State private var isbn = ""
     @State private var libraryID = ""
     @State private var loanID = ""
     @State private var quantity = ""
-    @State private var thumbnailURL = ""
     @State private var showingAlert = false
 
     var body: some View {
@@ -25,13 +17,11 @@ struct AddBookView: View {
                 TextField("Author Name", text: $authorName)
                 TextField("Book Name", text: $bookName)
                 TextField("Category", text: $category)
-                TextField("Cover URL", text: $coverURL)
                 TextField("ISBN", text: $isbn)
                 TextField("Library ID", text: $libraryID)
                 TextField("Loan ID", text: $loanID)
                 TextField("Quantity", text: $quantity)
                     .keyboardType(.numberPad)
-//                TextField("Thumbnail URL", text: $thumbnailURL)
             }
             
             Section {
@@ -47,16 +37,27 @@ struct AddBookView: View {
     }
     
     private func addBook() {
+        guard let isbnNumber = Int(isbn) else {
+            print("Invalid ISBN")
+            return
+        }
+        
+        let coverURL = "https://covers.openlibrary.org/b/isbn/\(isbnNumber)-L.jpg"
+        let thumbnailURL = "https://covers.openlibrary.org/b/isbn/\(isbnNumber)-S.jpg"
+        
         let db = Firestore.firestore()
         
-        let newBook = Book(authorName: authorName,
-                           bookName: bookName,
-                           category: category,
-                           coverURL: coverURL,
-                           isbn: isbn,
-                           libraryID: libraryID,
-                           loanID: loanID,
-                           quantity: Int(quantity) ?? 0)
+        let newBook = Book(
+            author_name: authorName,
+            book_name: bookName,
+            category: category,
+            cover_url: coverURL,
+            isbn: isbn,
+            library_id: libraryID,
+            loan_id: loanID,
+            quantity: Int(quantity) ?? 0,
+            thumbnail_url: thumbnailURL
+        )
         
         do {
             _ = try db.collection("books").addDocument(from: newBook)
@@ -67,18 +68,14 @@ struct AddBookView: View {
         }
     }
     
-    
-    
     private func clearFields() {
         authorName = ""
         bookName = ""
         category = ""
-        coverURL = ""
         isbn = ""
         libraryID = ""
         loanID = ""
         quantity = ""
-//        thumbnailURL = ""
     }
 }
 
@@ -87,4 +84,3 @@ struct AddBookView_Previews: PreviewProvider {
         AddBookView()
     }
 }
-
