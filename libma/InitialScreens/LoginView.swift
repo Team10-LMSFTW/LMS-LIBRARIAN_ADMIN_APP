@@ -105,7 +105,7 @@ struct LoginView: View {
         @StateObject public var app_state = GlobalAppState()
         func login(){
             let db = Firestore.firestore()
-            category = segment == 0 ? "admin" : "librarian"
+            category = segment == 0 ? "Admin" : "librarian"
             Auth.auth().signIn(withEmail: email, password: password) { result, error in
                 if let error = error {
                     print("Sign-in error:", error.localizedDescription)
@@ -121,14 +121,27 @@ struct LoginView: View {
                                let fn = data?["first_name"] as? String,
                                let ln = data?["last_name"] as? String,
                                let library_id = data?["library_id"] as? String {
-                                app_state.isLoggedIn = true
                                 app_state.category = cat
                                 app_state.first_name = fn
                                 app_state.last_name = ln
                                 app_state.library_id = library_id
                                 print(fn,ln,library_id,cat)
                                 print(app_state.isLoggedIn)
+                                print(app_state.category)
+
+                                // store data to user defaults
+                                
+                                UserDefaults.standard.set(true, forKey: "isloggedIn")
+                                UserDefaults.standard.set(result.user.uid, forKey: "firebaseAuthId")
+                                UserDefaults.standard.set(cat, forKey: "category")
+                                UserDefaults.standard.set(fn, forKey: "first_name")
+                                UserDefaults.standard.set(ln, forKey: "last_name")
+                                UserDefaults.standard.set(library_id, forKey: "library_id")
+                                
                                 isLoggedIn = true
+                                app_state.isLoggedIn = true
+
+
                             }
                         }
                     }
@@ -146,7 +159,10 @@ struct LoginView: View {
                         .padding()
                         .frame(height: 50.486)
                         .background(Color(red: 0.945, green: 0.949, blue: 0.965))
-                        .cornerRadius(8.078)
+                        .cornerRadius(8.078).onTapGesture(perform: {
+                            UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.endEditing(true)
+
+                        })
                     
                     Text("Password")
                         .font(.headline)
@@ -155,7 +171,10 @@ struct LoginView: View {
                         .padding()
                         .frame(height: 50.486)
                         .background(Color(red: 0.945, green: 0.949, blue: 0.965))
-                        .cornerRadius(8.078)
+                        .cornerRadius(8.078).onTapGesture {
+                            UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.endEditing(true)
+
+                        }
                     
                     HStack {
                         Spacer()
@@ -169,10 +188,13 @@ struct LoginView: View {
                     Button(action: {
                         // Login action
                         login()
-                        DispatchQueue.main.async {
-                            self.isLoggedIn = true
-                            self.category = app_state.category // set this to the user's category
-                        }
+
+//                        DispatchQueue.main.async {
+
+//                            self.category = app_state.category // set this to the user's category
+//                            self.isLoggedIn = true
+
+//                        }
                     }) {
                         Text("Login")
                             .foregroundColor(.white)
