@@ -76,19 +76,19 @@ struct BooksInventoryView: View {
         }
     }
     
-    private func deleteBook(_ book: Book) {
-            let db = Firestore.firestore()
-
-            // Assuming `book` has an `id` property
-            db.collection("books").document(book.id).delete { error in
-                if let error = error {
-                    print("Error removing document: \(error)")
-                } else {
-                    print("Document successfully removed!")
-                    fetchBooks()
-                }
-            }
-        }
+//    private func deleteBook(_ book: Book) {
+//            let db = Firestore.firestore()
+//
+//            // Assuming `book` has an `id` property
+//            db.collection("books").document(book.id).delete { error in
+//                if let error = error {
+//                    print("Error removing document: \(error)")
+//                } else {
+//                    print("Document successfully removed!")
+//                    fetchBooks()
+//                }
+//            }
+//        }
 }
 
 struct BooksInventoryView_Previews: PreviewProvider {

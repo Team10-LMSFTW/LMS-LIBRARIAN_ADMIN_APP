@@ -104,10 +104,18 @@ struct DashboardView: View {
                             .padding(.leading, 180)
                             .padding(.top, -200)
                         }
+                        
+                        Text("Trending Now")
+                            .font(
+                                Font.custom("SF Pro Rounded", size: 28)
+                                    .weight(.medium)
+                            )
+                            .foregroundColor(Color(red: 0.13, green: 0.13, blue: 0.13))
+                            .padding(.top)
+                            .padding(.leading, 10)
                     }
                     .padding(.leading, 40)
                     .frame(width: 900, alignment: .leading)
-                    .cornerRadius(Constants.unnamed)
                 }
                 
                 HStack {
