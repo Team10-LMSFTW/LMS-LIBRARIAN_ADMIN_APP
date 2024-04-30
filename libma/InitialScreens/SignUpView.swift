@@ -195,7 +195,15 @@ struct SignUpView: View {
         newUser.first_name = firstName
         newUser.last_name = lastName
         newUser.category = selectedSegment == 0 ? "Admin" : "Librarian"
+        
+        UserDefaults.standard.set(true, forKey: "isloggedIn")
+        UserDefaults.standard.set(userID, forKey: "firebaseAuthId")
+        UserDefaults.standard.set(selectedSegment == 0 ? "Admin" : "Librarian", forKey: "category")
+        UserDefaults.standard.set(firstName, forKey: "first_name")
+        UserDefaults.standard.set(lastName, forKey: "last_name")
+        UserDefaults.standard.set("", forKey: "library_id")
 
+        
         do {
             try Firestore.firestore().collection("users").document(userID).setData(from: newUser)
             print("User data saved to Firestore successfully")

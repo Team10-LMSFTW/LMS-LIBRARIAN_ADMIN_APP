@@ -51,7 +51,7 @@ public class FirestoreManager{
     public func login(email : String , password : String  , segment : Int , isLoggedIn : Binding<Bool>  ) {
         
         
-        let category : String = segment == 0 ? "admin" : "librarian"
+        let category : String = segment == 0 ? "Admin" : "librarian"
         print(email,password , category)
         
         Auth.auth().signIn(withEmail: email, password: password) { [self] result, error in

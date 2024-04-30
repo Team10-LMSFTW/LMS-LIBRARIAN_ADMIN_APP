@@ -22,6 +22,8 @@
 		843938202BDA12910096E1D1 /* ForgotPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8439381F2BDA12910096E1D1 /* ForgotPasswordView.swift */; };
 		843938222BDA14A60096E1D1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 843938212BDA14A60096E1D1 /* GoogleService-Info.plist */; };
 		843938242BDA31A90096E1D1 /* DataModelUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843938232BDA31A90096E1D1 /* DataModelUser.swift */; };
+		843DD1062BE0E97E005196A1 /* SwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843DD1052BE0E97E005196A1 /* SwiftUIView.swift */; };
+		980DE2182BE1056E00149F3B /* InventoryBooksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 980DE2172BE1056E00149F3B /* InventoryBooksView.swift */; };
 		984F48BD2BD91A1200B80A75 /* libmaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984F48BC2BD91A1200B80A75 /* libmaApp.swift */; };
 		984F48BF2BD91A1200B80A75 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984F48BE2BD91A1200B80A75 /* ContentView.swift */; };
 		984F48C12BD91A1400B80A75 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 984F48C02BD91A1400B80A75 /* Assets.xcassets */; };
@@ -78,6 +80,8 @@
 		8439381F2BDA12910096E1D1 /* ForgotPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordView.swift; sourceTree = "<group>"; };
 		843938212BDA14A60096E1D1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		843938232BDA31A90096E1D1 /* DataModelUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModelUser.swift; sourceTree = "<group>"; };
+		843DD1052BE0E97E005196A1 /* SwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIView.swift; sourceTree = "<group>"; };
+		980DE2172BE1056E00149F3B /* InventoryBooksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InventoryBooksView.swift; sourceTree = "<group>"; };
 		984F48B92BD91A1200B80A75 /* libma.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = libma.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		984F48BC2BD91A1200B80A75 /* libmaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = libmaApp.swift; sourceTree = "<group>"; };
 		984F48BE2BD91A1200B80A75 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -156,8 +160,17 @@
 				986C0C042BDECB430030626B /* AddBookView.swift */,
 				986C0C062BDECE530030626B /* BooksInventoryView.swift */,
 				986C0C0B2BDED47C0030626B /* BookDetailView.swift */,
+				980DE2172BE1056E00149F3B /* InventoryBooksView.swift */,
 			);
 			path = ViewGroups;
+			sourceTree = "<group>";
+		};
+		843DD1042BE0E96E005196A1 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				843DD1052BE0E97E005196A1 /* SwiftUIView.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 		984F48B02BD91A1200B80A75 = {
@@ -183,6 +196,7 @@
 		984F48BB2BD91A1200B80A75 /* libma */ = {
 			isa = PBXGroup;
 			children = (
+				843DD1042BE0E96E005196A1 /* Utils */,
 				98D2EF672BDB5E1F00FED407 /* Datamodels */,
 				54B994FB2BDAE2BD00FBCB01 /* LibrarianView1 */,
 				843938212BDA14A60096E1D1 /* GoogleService-Info.plist */,
@@ -400,10 +414,12 @@
 				54B994FD2BDAE31A00FBCB01 /* DashboardView.swift in Sources */,
 				A23320862BDE261E001DDA2F /* FineRatesAdmin.swift in Sources */,
 				984F48BD2BD91A1200B80A75 /* libmaApp.swift in Sources */,
+				843DD1062BE0E97E005196A1 /* SwiftUIView.swift in Sources */,
 				986C0C0C2BDED47C0030626B /* BookDetailView.swift in Sources */,
 				542545A72BE10B4100F02AF6 /* BookStatusPage.swift in Sources */,
 				542545AD2BE10B9500F02AF6 /* NotificationsPage.swift in Sources */,
 				986C0C032BDECB060030626B /* DatamodelBooks.swift in Sources */,
+				980DE2182BE1056E00149F3B /* InventoryBooksView.swift in Sources */,
 				54B994FF2BDAE34700FBCB01 /* TabBar.swift in Sources */,
 				544CEE992BE0187A0005A146 /* TabBarButton.swift in Sources */,
 				544CEE962BE00EA90005A146 /* DashboardPage.swift in Sources */,
