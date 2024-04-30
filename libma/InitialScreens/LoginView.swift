@@ -105,7 +105,7 @@ struct LoginView: View {
         @StateObject public var app_state = GlobalAppState()
         func login(){
             let db = Firestore.firestore()
-            category = segment == 0 ? "Admin" : "librarian"
+            category = segment == 0 ? "Admin" : "Librarian"
             Auth.auth().signIn(withEmail: email, password: password) { result, error in
                 if let error = error {
                     print("Sign-in error:", error.localizedDescription)
@@ -117,29 +117,32 @@ struct LoginView: View {
                             return
                         } else if let documentSnapshot = documentSnapshot {
                             let data = documentSnapshot.data()
-                            if let cat = data?["category_type"] as? String,
-                               let fn = data?["first_name"] as? String,
-                               let ln = data?["last_name"] as? String,
-                               let library_id = data?["library_id"] as? String {
-                                app_state.category = cat
-                                app_state.first_name = fn
-                                app_state.last_name = ln
-                                app_state.library_id = library_id
-                                print(fn,ln,library_id,cat)
-                                print(app_state.isLoggedIn)
-                                print(app_state.category)
+                            print(data!["category_type"] as! String)
+                            if(data!["category_type"] as! String == category){
+                                
+                                let cat = data?["category_type"] as? String
+                                   let fn = data?["first_name"] as? String
+                                   let ln = data?["last_name"] as? String
+                                   let library_id = data?["library_id"] as? String
+                                    app_state.category = cat!
+                                    app_state.first_name = fn!
+                                    app_state.last_name = ln!
+                                    app_state.library_id = library_id!
+                                    print(fn,ln,library_id,cat)
+                                    print(app_state.isLoggedIn)
+                                    print(app_state.category)
 
-                                // store data to user defaults
-                                
-                                UserDefaults.standard.set(true, forKey: "isloggedIn")
-                                UserDefaults.standard.set(result.user.uid, forKey: "firebaseAuthId")
-                                UserDefaults.standard.set(cat, forKey: "category")
-                                UserDefaults.standard.set(fn, forKey: "first_name")
-                                UserDefaults.standard.set(ln, forKey: "last_name")
-                                UserDefaults.standard.set(library_id, forKey: "library_id")
-                                
-                                isLoggedIn = true
-                                app_state.isLoggedIn = true
+                                    // store data to user defaults
+                                    
+                                    UserDefaults.standard.set(true, forKey: "isloggedIn")
+                                    UserDefaults.standard.set(result.user.uid, forKey: "firebaseAuthId")
+                                    UserDefaults.standard.set(cat, forKey: "category")
+                                    UserDefaults.standard.set(fn, forKey: "first_name")
+                                    UserDefaults.standard.set(ln, forKey: "last_name")
+                                    UserDefaults.standard.set(library_id, forKey: "library_id")
+                                    
+                                    isLoggedIn = true
+                                    app_state.isLoggedIn = true
 
 
                             }
