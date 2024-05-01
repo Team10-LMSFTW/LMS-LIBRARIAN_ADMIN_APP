@@ -54,7 +54,8 @@ struct ContentView: View {
                     if category == "Admin" {
                         AdminViewGroup()
                     } else {
-                            LibrarianViewGroup()
+//                            LibrarianViewGroup()
+                        InventoryBookView()
     //                   BooksInventoryView()
     //                        DashboardView()
     //                        AddBookView()

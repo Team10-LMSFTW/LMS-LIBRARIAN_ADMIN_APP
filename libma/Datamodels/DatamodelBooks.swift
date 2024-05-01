@@ -6,7 +6,9 @@
 //
 
 import Foundation
-struct Book: Encodable,Decodable {
+
+struct Book: Encodable, Decodable, Identifiable {
+    var id: String { isbn } //added to give ref integrity 
     var author_name: String
     var book_name: String
     var category: String
@@ -17,6 +19,7 @@ struct Book: Encodable,Decodable {
     var quantity: Int
     var thumbnail_url: String
 }
+
 //author_name book_name
 //category cover_url
 //isbn library_id loan_id quantity thumbnail_url 

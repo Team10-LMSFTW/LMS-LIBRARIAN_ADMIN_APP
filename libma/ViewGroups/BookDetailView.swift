@@ -3,7 +3,7 @@ import SDWebImageSwiftUI
 
 struct BookDetailView: View {
     let book: Book
-
+//    @Binding var isPresented: Bool
     var body: some View {
         VStack(alignment: .leading) {
             WebImage(url: URL(string: book.cover_url))
@@ -31,6 +31,9 @@ struct BookDetailView: View {
             Text("Quantity: \(book.quantity)")
                 .font(.subheadline)
                 .foregroundColor(.gray)
+//            Button("Back") {
+//                            self.isPresented = false
+//                        }
         }
         .padding()
         .navigationTitle(book.book_name)
