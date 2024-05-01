@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		542545A72BE10B4100F02AF6 /* BookStatusPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 542545A62BE10B4100F02AF6 /* BookStatusPage.swift */; };
+		542545A92BE10B6100F02AF6 /* InventoryPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 542545A82BE10B6100F02AF6 /* InventoryPage.swift */; };
+		542545AB2BE10B7B00F02AF6 /* MembersPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 542545AA2BE10B7B00F02AF6 /* MembersPage.swift */; };
+		542545AD2BE10B9500F02AF6 /* NotificationsPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 542545AC2BE10B9500F02AF6 /* NotificationsPage.swift */; };
+		542545AF2BE10BAB00F02AF6 /* SettingsPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 542545AE2BE10BAB00F02AF6 /* SettingsPage.swift */; };
 		544CEE962BE00EA90005A146 /* DashboardPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544CEE952BE00EA90005A146 /* DashboardPage.swift */; };
 		544CEE992BE0187A0005A146 /* TabBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544CEE982BE0187A0005A146 /* TabBarButton.swift */; };
 		54A72D4C2BDBD3CE00758DC7 /* AssignRolesAdmin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A72D4B2BDBD3CE00758DC7 /* AssignRolesAdmin.swift */; };
@@ -60,6 +65,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		542545A62BE10B4100F02AF6 /* BookStatusPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookStatusPage.swift; sourceTree = "<group>"; };
+		542545A82BE10B6100F02AF6 /* InventoryPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InventoryPage.swift; sourceTree = "<group>"; };
+		542545AA2BE10B7B00F02AF6 /* MembersPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembersPage.swift; sourceTree = "<group>"; };
+		542545AC2BE10B9500F02AF6 /* NotificationsPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsPage.swift; sourceTree = "<group>"; };
+		542545AE2BE10BAB00F02AF6 /* SettingsPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPage.swift; sourceTree = "<group>"; };
 		544CEE952BE00EA90005A146 /* DashboardPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardPage.swift; sourceTree = "<group>"; };
 		544CEE982BE0187A0005A146 /* TabBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarButton.swift; sourceTree = "<group>"; };
 		54A72D4B2BDBD3CE00758DC7 /* AssignRolesAdmin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignRolesAdmin.swift; sourceTree = "<group>"; };
@@ -128,8 +138,13 @@
 			children = (
 				54B994FC2BDAE31A00FBCB01 /* DashboardView.swift */,
 				54B994FE2BDAE34700FBCB01 /* TabBar.swift */,
-				544CEE952BE00EA90005A146 /* DashboardPage.swift */,
 				544CEE982BE0187A0005A146 /* TabBarButton.swift */,
+				544CEE952BE00EA90005A146 /* DashboardPage.swift */,
+				542545A62BE10B4100F02AF6 /* BookStatusPage.swift */,
+				542545A82BE10B6100F02AF6 /* InventoryPage.swift */,
+				542545AA2BE10B7B00F02AF6 /* MembersPage.swift */,
+				542545AC2BE10B9500F02AF6 /* NotificationsPage.swift */,
+				542545AE2BE10BAB00F02AF6 /* SettingsPage.swift */,
 			);
 			path = LibrarianView1;
 			sourceTree = "<group>";
@@ -382,11 +397,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				542545A92BE10B6100F02AF6 /* InventoryPage.swift in Sources */,
 				A23320882BDE273D001DDA2F /* CreateLibraryAdmin.swift in Sources */,
 				843938242BDA31A90096E1D1 /* DataModelUser.swift in Sources */,
+				542545AF2BE10BAB00F02AF6 /* SettingsPage.swift in Sources */,
 				984F48F52BD92BCC00B80A75 /* SignUpView.swift in Sources */,
 				54A72D4C2BDBD3CE00758DC7 /* AssignRolesAdmin.swift in Sources */,
 				843938202BDA12910096E1D1 /* ForgotPasswordView.swift in Sources */,
+				542545AB2BE10B7B00F02AF6 /* MembersPage.swift in Sources */,
 				8439381E2BDA10B40096E1D1 /* LibrarianViewGroup.swift in Sources */,
 				8439381C2BDA10A50096E1D1 /* AdminViewGroup.swift in Sources */,
 				986C0C052BDECB430030626B /* AddBookView.swift in Sources */,
@@ -398,6 +416,8 @@
 				984F48BD2BD91A1200B80A75 /* libmaApp.swift in Sources */,
 				843DD1062BE0E97E005196A1 /* SwiftUIView.swift in Sources */,
 				986C0C0C2BDED47C0030626B /* BookDetailView.swift in Sources */,
+				542545A72BE10B4100F02AF6 /* BookStatusPage.swift in Sources */,
+				542545AD2BE10B9500F02AF6 /* NotificationsPage.swift in Sources */,
 				986C0C032BDECB060030626B /* DatamodelBooks.swift in Sources */,
 				980DE2182BE1056E00149F3B /* InventoryBooksView.swift in Sources */,
 				54B994FF2BDAE34700FBCB01 /* TabBar.swift in Sources */,
