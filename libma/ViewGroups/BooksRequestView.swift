@@ -57,91 +57,89 @@ struct BookRequestCardView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text(book.book_name)
-                .font(.largeTitle)
-                .padding()
+            
             HStack {
-                HStack(/*alignment: .leading,*/ spacing: 250) {
-                    // Book cover image
-                    
-                    VStack {
-                        
-                            
-                        HStack (spacing: 50) {
-                            
-                            AsyncImage(url: URL(string: book.cover_url)) { phase in
-                                switch phase {
-                                case .success(let image):
-                                    image
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fill)
-                                        .frame(width: 100, height: 150)
-                                        .cornerRadius(8)
-                                case .failure(_):
-                                    Image(systemName: "book")
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(width: 100, height: 150)
-                                        .foregroundColor(.gray)
-                                case .empty:
-                                    ProgressView()
-                                        .frame(width: 100, height: 150)
-                                @unknown default:
-                                    EmptyView()
-                                }
-                            }.padding()
-                            VStack(alignment: .leading,spacing: 30) {
+                VStack(alignment: .leading){
+                    Text(book.book_name)
+                        .font(.largeTitle)
+                        .padding()
+                    HStack(spacing: 150) {
+                        // Book cover image
+
+                            HStack (spacing: 50) {
                                 
-                                Text("ISBN: \(book.isbn)")
-                                Text("Lending Date: \(request.lendingDate)")
-                                Spacer()
+                                AsyncImage(url: URL(string: book.cover_url)) { phase in
+                                    switch phase {
+                                    case .success(let image):
+                                        image
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fill)
+                                            .frame(width: 100, height: 150)
+                                            .cornerRadius(8)
+                                    case .failure(_):
+                                        Image(systemName: "book")
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(width: 100, height: 150)
+                                            .foregroundColor(.gray)
+                                    case .empty:
+                                        ProgressView()
+                                            .frame(width: 100, height: 150)
+                                    @unknown default:
+                                        EmptyView()
+                                    }
+                                }.padding()
+                                VStack(alignment: .leading,spacing: 30) {
+                                    
+                                    Text("ISBN: \(book.isbn)")
+                                    Text("Lending Date: \(request.lendingDate)")
+                                    Spacer()
+                                    
+                                }
+                                .padding()
+                                VStack(alignment: .leading, spacing: 20){
+                                    // User details
+                                    Text("Requested by: \(request.requesterName)")
+                                    Text("User ID: \(request.requesterID)")
+                                    
+                                    // Dates
+                                    
+                                    Text("Return Date: \(request.returnDate)")
+                                    Spacer()
+                                    // Buttons for accepting and rejecting the request
+                                    HStack {
+                                        Button(action: {
+                                            // Action for accepting request
+                                        }) {
+                                            Text("Accept")
+                                                .padding()
+                                                .foregroundColor(.white)
+                                                .background(Color.green)
+                                                .cornerRadius(8)
+                                        }
+                                        Button(action: {
+                                            // Action for rejecting request
+                                        }) {
+                                            Text("Reject")
+                                                .padding()
+                                                .foregroundColor(.white)
+                                                .background(Color.red)
+                                                .cornerRadius(8)
+                                        }
+                                    }
+                                }.padding()
                                 
                             }
-                            
-                        }
                     }
                     
-                    VStack(alignment: .leading, spacing: 20){
-                    // User details
-                    Text("Requested by: \(request.requesterName)")
-                    Text("User ID: \(request.requesterID)")
-                    
-                    // Dates
-                    
-                    Text("Return Date: \(request.returnDate)")
-                    Spacer()
-                    // Buttons for accepting and rejecting the request
-                        HStack {
-                            Button(action: {
-                                // Action for accepting request
-                            }) {
-                                Text("Accept")
-                                    .padding()
-                                    .foregroundColor(.white)
-                                    .background(Color.green)
-                                    .cornerRadius(8)
-                            }
-                            Button(action: {
-                                // Action for rejecting request
-                            }) {
-                                Text("Reject")
-                                    .padding()
-                                    .foregroundColor(.white)
-                                    .background(Color.red)
-                                    .cornerRadius(8)
-                            }
-                        }
-                    }.padding()
                 }
-                
-            
-            }
+            }.padding()
             
         }
         .padding()
-        .background(Color(red: 245/255, green: 243/255, blue: 247/255))
+        .background(Color(Color(red: 0.94, green: 0.92, blue: 1)))
         .cornerRadius(12)
-        .shadow(radius: 3)
+        .shadow(radius: 0)
     }
 }
 
