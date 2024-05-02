@@ -167,9 +167,7 @@
 				A23320872BDE273D001DDA2F /* CreateLibraryAdmin.swift */,
 				A23320852BDE261E001DDA2F /* FineRatesAdmin.swift */,
 				986C0C042BDECB430030626B /* AddBookView.swift */,
-				84C5BC292BE34D0500CF2851 /* BooksLendingRequestView.swift */,
-				84C5BC2D2BE3890D00CF2851 /* BooksReturnRequestView.swift */,
-				84C5BC2B2BE37DD900CF2851 /* BooksRenewableRequestView.swift */,
+				84C5BC2F2BE38B5000CF2851 /* BooksRequests */,
 				986C0C062BDECE530030626B /* BooksInventoryView.swift */,
 				986C0C0B2BDED47C0030626B /* BookDetailView.swift */,
 				980DE2172BE1056E00149F3B /* InventoryBooksView.swift */,
@@ -183,6 +181,16 @@
 				843DD1052BE0E97E005196A1 /* SwiftUIView.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		84C5BC2F2BE38B5000CF2851 /* BooksRequests */ = {
+			isa = PBXGroup;
+			children = (
+				84C5BC292BE34D0500CF2851 /* BooksLendingRequestView.swift */,
+				84C5BC2D2BE3890D00CF2851 /* BooksReturnRequestView.swift */,
+				84C5BC2B2BE37DD900CF2851 /* BooksRenewableRequestView.swift */,
+			);
+			path = BooksRequests;
 			sourceTree = "<group>";
 		};
 		984F48B02BD91A1200B80A75 = {
