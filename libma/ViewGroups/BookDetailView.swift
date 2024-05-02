@@ -39,3 +39,4 @@ struct BookDetailView: View {
         .navigationTitle(book.book_name)
     }
 }
+

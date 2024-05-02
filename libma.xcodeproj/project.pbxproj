@@ -23,6 +23,7 @@
 		843938222BDA14A60096E1D1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 843938212BDA14A60096E1D1 /* GoogleService-Info.plist */; };
 		843938242BDA31A90096E1D1 /* DataModelUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843938232BDA31A90096E1D1 /* DataModelUser.swift */; };
 		843DD1062BE0E97E005196A1 /* SwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843DD1052BE0E97E005196A1 /* SwiftUIView.swift */; };
+		84C5BC2A2BE34D0500CF2851 /* BooksRequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C5BC292BE34D0500CF2851 /* BooksRequestView.swift */; };
 		980DE2182BE1056E00149F3B /* InventoryBooksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 980DE2172BE1056E00149F3B /* InventoryBooksView.swift */; };
 		984F48BD2BD91A1200B80A75 /* libmaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984F48BC2BD91A1200B80A75 /* libmaApp.swift */; };
 		984F48BF2BD91A1200B80A75 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984F48BE2BD91A1200B80A75 /* ContentView.swift */; };
@@ -81,6 +82,7 @@
 		843938212BDA14A60096E1D1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		843938232BDA31A90096E1D1 /* DataModelUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModelUser.swift; sourceTree = "<group>"; };
 		843DD1052BE0E97E005196A1 /* SwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIView.swift; sourceTree = "<group>"; };
+		84C5BC292BE34D0500CF2851 /* BooksRequestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooksRequestView.swift; sourceTree = "<group>"; };
 		980DE2172BE1056E00149F3B /* InventoryBooksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InventoryBooksView.swift; sourceTree = "<group>"; };
 		984F48B92BD91A1200B80A75 /* libma.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = libma.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		984F48BC2BD91A1200B80A75 /* libmaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = libmaApp.swift; sourceTree = "<group>"; };
@@ -158,6 +160,7 @@
 				A23320872BDE273D001DDA2F /* CreateLibraryAdmin.swift */,
 				A23320852BDE261E001DDA2F /* FineRatesAdmin.swift */,
 				986C0C042BDECB430030626B /* AddBookView.swift */,
+				84C5BC292BE34D0500CF2851 /* BooksRequestView.swift */,
 				986C0C062BDECE530030626B /* BooksInventoryView.swift */,
 				986C0C0B2BDED47C0030626B /* BookDetailView.swift */,
 				980DE2172BE1056E00149F3B /* InventoryBooksView.swift */,
@@ -409,6 +412,7 @@
 				8439381C2BDA10A50096E1D1 /* AdminViewGroup.swift in Sources */,
 				986C0C052BDECB430030626B /* AddBookView.swift in Sources */,
 				984F48F32BD928B000B80A75 /* LoginView.swift in Sources */,
+				84C5BC2A2BE34D0500CF2851 /* BooksRequestView.swift in Sources */,
 				984F48BF2BD91A1200B80A75 /* ContentView.swift in Sources */,
 				986C0C072BDECE530030626B /* BooksInventoryView.swift in Sources */,
 				54B994FD2BDAE31A00FBCB01 /* DashboardView.swift in Sources */,

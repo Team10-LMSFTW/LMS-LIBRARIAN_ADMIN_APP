@@ -66,3 +66,8 @@ struct InventoryBookView: View {
         }
     }
 }
+struct AddBookView_Previews4: PreviewProvider {
+    static var previews: some View {
+        InventoryBookView()
+    }
+}
