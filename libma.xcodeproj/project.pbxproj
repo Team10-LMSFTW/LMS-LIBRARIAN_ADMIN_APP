@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2382F4EF2BE36EA2009BE7B8 /* BookdetailviewNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2382F4EE2BE36EA2009BE7B8 /* BookdetailviewNew.swift */; };
 		542545A72BE10B4100F02AF6 /* BookStatusPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 542545A62BE10B4100F02AF6 /* BookStatusPage.swift */; };
 		542545A92BE10B6100F02AF6 /* InventoryPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 542545A82BE10B6100F02AF6 /* InventoryPage.swift */; };
 		542545AB2BE10B7B00F02AF6 /* MembersPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 542545AA2BE10B7B00F02AF6 /* MembersPage.swift */; };
@@ -66,6 +67,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2382F4EE2BE36EA2009BE7B8 /* BookdetailviewNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookdetailviewNew.swift; sourceTree = "<group>"; };
 		542545A62BE10B4100F02AF6 /* BookStatusPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookStatusPage.swift; sourceTree = "<group>"; };
 		542545A82BE10B6100F02AF6 /* InventoryPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InventoryPage.swift; sourceTree = "<group>"; };
 		542545AA2BE10B7B00F02AF6 /* MembersPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembersPage.swift; sourceTree = "<group>"; };
@@ -154,6 +156,7 @@
 		8439381A2BDA10830096E1D1 /* ViewGroups */ = {
 			isa = PBXGroup;
 			children = (
+				2382F4EE2BE36EA2009BE7B8 /* BookdetailviewNew.swift */,
 				8439381B2BDA10A50096E1D1 /* AdminViewGroup.swift */,
 				8439381D2BDA10B40096E1D1 /* LibrarianViewGroup.swift */,
 				54A72D4B2BDBD3CE00758DC7 /* AssignRolesAdmin.swift */,
@@ -401,6 +404,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				542545A92BE10B6100F02AF6 /* InventoryPage.swift in Sources */,
+				2382F4EF2BE36EA2009BE7B8 /* BookdetailviewNew.swift in Sources */,
 				A23320882BDE273D001DDA2F /* CreateLibraryAdmin.swift in Sources */,
 				843938242BDA31A90096E1D1 /* DataModelUser.swift in Sources */,
 				542545AF2BE10BAB00F02AF6 /* SettingsPage.swift in Sources */,
