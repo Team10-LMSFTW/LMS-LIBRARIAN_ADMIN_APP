@@ -25,6 +25,7 @@
 		843938242BDA31A90096E1D1 /* DataModelUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843938232BDA31A90096E1D1 /* DataModelUser.swift */; };
 		843DD1062BE0E97E005196A1 /* SwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843DD1052BE0E97E005196A1 /* SwiftUIView.swift */; };
 		84C5BC2A2BE34D0500CF2851 /* BooksRequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C5BC292BE34D0500CF2851 /* BooksRequestView.swift */; };
+		84C5BC2C2BE37DD900CF2851 /* BooksRenewableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C5BC2B2BE37DD900CF2851 /* BooksRenewableView.swift */; };
 		980DE2182BE1056E00149F3B /* InventoryBooksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 980DE2172BE1056E00149F3B /* InventoryBooksView.swift */; };
 		984F48BD2BD91A1200B80A75 /* libmaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984F48BC2BD91A1200B80A75 /* libmaApp.swift */; };
 		984F48BF2BD91A1200B80A75 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984F48BE2BD91A1200B80A75 /* ContentView.swift */; };
@@ -85,6 +86,7 @@
 		843938232BDA31A90096E1D1 /* DataModelUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModelUser.swift; sourceTree = "<group>"; };
 		843DD1052BE0E97E005196A1 /* SwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIView.swift; sourceTree = "<group>"; };
 		84C5BC292BE34D0500CF2851 /* BooksRequestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooksRequestView.swift; sourceTree = "<group>"; };
+		84C5BC2B2BE37DD900CF2851 /* BooksRenewableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooksRenewableView.swift; sourceTree = "<group>"; };
 		980DE2172BE1056E00149F3B /* InventoryBooksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InventoryBooksView.swift; sourceTree = "<group>"; };
 		984F48B92BD91A1200B80A75 /* libma.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = libma.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		984F48BC2BD91A1200B80A75 /* libmaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = libmaApp.swift; sourceTree = "<group>"; };
@@ -164,6 +166,7 @@
 				A23320852BDE261E001DDA2F /* FineRatesAdmin.swift */,
 				986C0C042BDECB430030626B /* AddBookView.swift */,
 				84C5BC292BE34D0500CF2851 /* BooksRequestView.swift */,
+				84C5BC2B2BE37DD900CF2851 /* BooksRenewableView.swift */,
 				986C0C062BDECE530030626B /* BooksInventoryView.swift */,
 				986C0C0B2BDED47C0030626B /* BookDetailView.swift */,
 				980DE2172BE1056E00149F3B /* InventoryBooksView.swift */,
@@ -411,6 +414,7 @@
 				984F48F52BD92BCC00B80A75 /* SignUpView.swift in Sources */,
 				54A72D4C2BDBD3CE00758DC7 /* AssignRolesAdmin.swift in Sources */,
 				843938202BDA12910096E1D1 /* ForgotPasswordView.swift in Sources */,
+				84C5BC2C2BE37DD900CF2851 /* BooksRenewableView.swift in Sources */,
 				542545AB2BE10B7B00F02AF6 /* MembersPage.swift in Sources */,
 				8439381E2BDA10B40096E1D1 /* LibrarianViewGroup.swift in Sources */,
 				8439381C2BDA10A50096E1D1 /* AdminViewGroup.swift in Sources */,
