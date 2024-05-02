@@ -25,7 +25,7 @@ struct BooksRequest: Identifiable {
     }
 }
 
-struct BooksRequestView: View {
+struct BooksLendingRequestView: View {
     let requests: [BooksRequest]
     let books: [Book]
     
@@ -39,7 +39,7 @@ struct BooksRequestView: View {
                 VStack(spacing: 20) {
                     ForEach(requests) { request in
                         if let book = books.first(where: { $0.isbn == request.bookISBN }) {
-                            BookRequestCardView(book: book, request: request)
+                            BookLendingRequestCardView(book: book, request: request)
                         }
                     }
                 }
@@ -51,7 +51,7 @@ struct BooksRequestView: View {
     }
 }
 
-struct BookRequestCardView: View {
+struct BookLendingRequestCardView: View {
     let book: Book
     let request: BooksRequest
     
@@ -143,7 +143,7 @@ struct BookRequestCardView: View {
     }
 }
 
-struct BooksRequestView_Previews: PreviewProvider {
+struct BooksLendingRequestView_Previews: PreviewProvider {
     static var previews: some View {
         let books: [Book] = [
             Book(author_name: "Author 1", book_name: "Book 1", category: "Category 1", cover_url: "cover1.png", isbn: "123456789", library_id: "Library 1", loan_id: "Loan 1", quantity: 1, thumbnail_url: "thumbnail1.png"),
@@ -165,6 +165,6 @@ struct BooksRequestView_Previews: PreviewProvider {
             BooksRequest(id: UUID(), bookISBN: "123456782", requesterName: "Emma Garcia", requesterID: "212223", lendingDate: "2024-05-07", returnDate: "2024-06-07")
         ]
 
-        return BooksRequestView(requests: requests, books: books)
+        return BooksLendingRequestView(requests: requests, books: books)
     }
 }
