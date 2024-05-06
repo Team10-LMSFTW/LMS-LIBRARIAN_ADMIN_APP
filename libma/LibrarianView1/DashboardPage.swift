@@ -83,7 +83,7 @@ struct DashboardPage: View {
                                                 .foregroundColor(Color(red: 0.33, green: 0.25, blue: 0.55))
                                                 .bold()
                                                 .onAppear {
-                                                    fetchCategoryOfUsers()
+                                                  //  fetchCategoryOfUsers()
                                                     fetchNumberOfUsers()
                                                     fetchPenaltyAmount()
                                                     fetchRequestCount()
