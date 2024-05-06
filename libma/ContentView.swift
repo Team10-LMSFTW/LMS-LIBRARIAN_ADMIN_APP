@@ -1,41 +1,6 @@
-//
-//  ContentView.swift
-//  libma
-//
-//  Created by mathangy on 24/04/24.
-//
-
-//import SwiftUI
-//
-//struct ContentView: View {
-//    @State var isLoggedIn: Bool = false
-//    @State var category: String = "none"
-//    @StateObject var app_state = GlobalAppState()
-//
-//    var body: some View {
-//        if !isLoggedIn {
-//            LoginView(globalAppState: app_state, isLoggedIn: $isLoggedIn, category: $category)
-//        } else {
-//            if category == "Admin" {
-//                AdminViewGroup()
-//            } else {
-//                LibrarianViewGroup()
-//            }
-//        }
-//    }
-//}
-//
-//struct ContentView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ContentView()
-//    }
-//}
-
-//#Preview {
-//    ContentView()
-//}
-
 import SwiftUI
+import Firebase
+import FirebaseFirestore
 
 struct ContentView: View {
     @AppStorage("login_status") var loginStatus: Bool = false
@@ -44,36 +9,47 @@ struct ContentView: View {
     @StateObject var app_state = GlobalAppState()
 
     var body: some View {
-    
-        VStack{
+        Group {
             if !isLoggedIn {
                 LoginView(globalAppState: app_state, isLoggedIn: $isLoggedIn, category: $category)
                     .environmentObject(app_state)
             } else {
                 if category.count > 0 {
                     if category == "Admin" {
-                        AdminViewGroup()
+                        TabBar()// Show AdminFunctionsFinal directly
                     } else {
-//                            LibrarianViewGroup()
-                        InventoryBookView()
-    //                   BooksInventoryView()
-    //                        DashboardView()
-    //                        AddBookView()
+                        let loan = Loan(
+                            id: nil,
+                            book_ref_id: "123",
+                            lending_date: Timestamp(date: Date()),
+                            due_date: Timestamp(date: Date()),
+                            user_id: "user123",
+                            penalty_amount: 10,
+                            library_id: 1,
+                            loan_status: "Active"
+                        )
+                                
+                        // Pass the mock instance to TabBar2
+                        TabBar2(requests: loan)
+                        // Show other views for non-admin users
+                        // You can add code here if needed
                     }
                 }
             }
-        }.onAppear(perform: {
+        }
+        .onAppear {
             isLoggedIn = UserDefaults.standard.bool(forKey: "isLoggedIn")
-            if(isLoggedIn){
+            if isLoggedIn {
                 category = UserDefaults.standard.string(forKey: "category") ?? ""
                 print("on appear")
                 print(category)
             }
-        })
+        }
     }
 }
+
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-       ContentView()
+        ContentView()
     }
 }

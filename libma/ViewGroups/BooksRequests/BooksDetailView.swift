@@ -41,7 +41,7 @@
 //}
 
 import SwiftUI
-
+import SDWebImageSwiftUI
 struct BookDetailView: View {
     var book: Book
     
@@ -97,21 +97,12 @@ struct BookDetailView: View {
                 .frame(maxWidth: .infinity)
             }
             
-            if let image = UIImage(named: book.cover_url) {
-                Image(uiImage: image)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(maxWidth: 500, maxHeight: 600)
-                    .cornerRadius(8)
-            } else {
-                Image("book22")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(maxWidth: 500, maxHeight: 600)
-                    .foregroundColor(.red)
-                    .cornerRadius(8)
+            VStack(alignment: .leading){
+                WebImage(url: URL(string: book.cover_url))
+                               .resizable()
+                               .aspectRatio(contentMode: .fit)
+                               .frame(width: 200, height: 200)
             }
-            
             HStack(spacing: 80) {
                 VStack(alignment: .leading, spacing: 50) {
                     Text("Author:")
@@ -129,6 +120,9 @@ struct BookDetailView: View {
                     Text("Borrowed Quantity:")
                         .font(.title3)
                         .foregroundColor(.black)
+                    Text("Status:")
+                        .font(.title3)
+                        .foregroundColor(.black)
                 }
                 
                 VStack(alignment: .leading, spacing: 50) {
@@ -141,12 +135,15 @@ struct BookDetailView: View {
                     Text(book.category)
                         .font(.title3)
                         .foregroundColor(.black)
-                    Text("\(book.quantity)")
+                    Text("\(book.total_quantity)")
                         .font(.title3)
                         .foregroundColor(.black)
                     Text("\(book.quantity)")
                         .font(.title3)
                         .foregroundColor(.black)
+                    Text(book.quantity > 0 ? "Available" : "Unavailable")
+                        .font(.title3)
+                        .foregroundColor(book.quantity > 0 ? .green : .red)
                 }
             }
             .padding(.horizontal, 20)
@@ -160,18 +157,18 @@ struct BookDetailView: View {
     }
 }
 
-struct BookDetailView_Previews: PreviewProvider {
-    static var previews: some View {
-        let book = Book(author_name: "Author Name",
-                        book_name: "Book Title",
-                        category: "Fiction",
-                        cover_url: "bookCover",
-                        isbn: "1234567890",
-                        library_id: "Library ID",
-                        loan_id: "Loan ID",
-                        quantity: 5,
-                        thumbnail_url: "thumbnailURL")
-        BookDetailView(book: book)
-            .previewDevice("iPad Pro (12.9-inch) (5th generation)")
-    }
-}
+//struct BookDetailView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        let book = Book(author_name: "Author Name",
+//                        book_name: "Book Title",
+//                        category: "Fiction",
+//                        cover_url: "bookCover",
+//                        isbn: "1234567890",
+//                        library_id: "Library ID",
+//                        loan_id: "Loan ID",
+//                        quantity: 5,
+//                        thumbnail_url: "thumbnailURL")
+//        BookDetailView(book: book)
+//            .previewDevice("iPad Pro (12.9-inch) (5th generation)")
+//    }
+//}

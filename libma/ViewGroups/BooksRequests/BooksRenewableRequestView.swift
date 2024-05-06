@@ -1,33 +1,14 @@
-//
-//  BooksRequestView.swift
-//  libma
-//
-//  Created by admin on 02/05/24.
-//
-
 import SwiftUI
+import FirebaseFirestore
+import Firebase
+import FirebaseFirestoreSwift
 
-struct BooksRenewalsRequest: Identifiable {
-    let id: UUID
-    var bookISBN: String
-    var requesterName: String
-    var requesterID: String
-    var lendingDate: String
-    var returnDate: String
-    
-    init(id: UUID = UUID(), bookISBN: String, requesterName: String, requesterID: String, lendingDate: String, returnDate: String) {
-        self.id = id
-        self.bookISBN = bookISBN
-        self.requesterName = requesterName
-        self.requesterID = requesterID
-        self.lendingDate = lendingDate
-        self.returnDate = returnDate
-    }
-}
+
 
 struct BooksRenewalsRequestView: View {
-    let requests: [BooksRequest]
-    let books: [Book]
+    @State var requests: [Loan] = []
+    let books: Book
+//    let request: Loan
     
     var body: some View {
         
@@ -38,9 +19,7 @@ struct BooksRenewalsRequestView: View {
             ScrollView {
                 VStack(spacing: 20) {
                     ForEach(requests) { request in
-                        if let book = books.first(where: { $0.isbn == request.bookISBN }) {
-                            BookRenewalsRequestCardView(book: book, request: request)
-                        }
+                        BookRenewalsRequestCardView(book: books, request: request)
                     }
                 }
                 .padding()
@@ -48,90 +27,125 @@ struct BooksRenewalsRequestView: View {
             .navigationTitle("Book Requests")
             Spacer()
         }
+        .onAppear {
+            fetchData()
+        }
+    }
+    
+    private func fetchData() {
+        let db = Firestore.firestore()
+        db.collection("loans")
+            .whereField("loan_status", isEqualTo: "accepted")
+            .getDocuments { querySnapshot, error in
+                if let error = error {
+                    print("Error fetching documents: \(error)")
+                    return
+                }
+                
+                guard let documents = querySnapshot?.documents else {
+                    print("No documents found.")
+                    return
+                }
+                
+                var allLoans: [Loan] = []
+                
+                for document in documents {
+                    let data = document.data()
+                    print(data)
+                    guard let bookRefID = data["book_ref_id"] as? String,
+                          let lendingDateTimestamp = data["lending_date"] as? Timestamp,
+                          let dueDateStamp = data["due_date"] as? Timestamp,
+                          let user_id = data["user_id"] as? String,
+                          let penaltyAmt  = data["penalty_amount"] as? Int,
+                          let libID  = data["library_id"] as? Int
+                    else {
+                        continue
+                    }
+                    
+                    let loan = Loan(id: document.documentID, book_ref_id: bookRefID, lending_date: lendingDateTimestamp, due_date: dueDateStamp, user_id: user_id, penalty_amount: penaltyAmt, library_id: libID, loan_status: "accepted")
+                    print(loan)
+                    allLoans.append(loan)
+                    print("all loans hai")
+                    print(allLoans)
+                }
+                
+                allLoans.sort(by: { $0.lending_date.dateValue() > $1.lending_date.dateValue() })
+                self.requests = allLoans
+            }
     }
 }
 
 struct BookRenewalsRequestCardView: View {
     let book: Book
-    let request: BooksRequest
-    
+    @State var request: Loan
+    @State var extended: Bool = false
+    @StateObject var bookViewModel = BookViewModel()
     var body: some View {
         VStack(alignment: .leading) {
-            
             HStack {
                 VStack(alignment: .leading){
                     Text(book.book_name)
                         .font(.largeTitle)
                         .padding()
-                    HStack(spacing: 150) {
-                        // Book cover image
-
-                            HStack (spacing: 50) {
-                                AsyncImage(url: URL(string: book.cover_url)) { phase in
-                                    switch phase {
-                                    case .success(let image):
-                                        image
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fill)
-                                            .frame(width: 100, height: 150)
-                                            .cornerRadius(8)
-                                    case .failure(_):
-                                        Image(systemName: "book")
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fit)
-                                            .frame(width: 100, height: 150)
-                                            .foregroundColor(.gray)
-                                    case .empty:
-                                        ProgressView()
-                                            .frame(width: 100, height: 150)
-                                    @unknown default:
-                                        EmptyView()
-                                    }
-                                }.padding()
-                                VStack(alignment: .leading,spacing: 30) {
-                                    
-                                    Text("ISBN: \(book.isbn)")
-                                    
-                                    Text("Lending Date: \(request.lendingDate)")
-                                    Spacer()
-                                    
-                                }
-                                .padding()
-                                VStack(alignment: .leading, spacing: 20){
-                                    // User details
-                                    Text("Requested by: \(request.requesterName)")
-                                    Text("User ID: \(request.requesterID)")
-                                    
-                                    // Dates
-                                    
-                                    Text("Return Date: \(request.returnDate)")
-                                    Spacer()
-                                    // Buttons for accepting and rejecting the request
-                                    HStack {
-                                        Button(action: {
-                                            // Action for accepting request
-                                        }) {
-                                            Text("Extend")
-                                                .padding()
-                                                .foregroundColor(.white)
-                                                .background(Color.green)
-                                                .cornerRadius(8)
-                                        }
-                                        Button(action: {
-                                            // Action for rejecting request
-                                        }) {
-                                            Text("Reject")
-                                                .padding()
-                                                .foregroundColor(.white)
-                                                .background(Color.red)
-                                                .cornerRadius(8)
-                                        }
-                                    }
-                                }//.padding()
-                                
+                    HStack(spacing: 50) {
+                        AsyncImage(url: URL(string: book.cover_url)) { phase in
+                            switch phase {
+                            case .success(let image):
+                                image
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(width: 100, height: 150)
+                                    .cornerRadius(8)
+                            case .failure(_):
+                                Image(systemName: "book")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 100, height: 150)
+                                    .foregroundColor(.gray)
+                            case .empty:
+                                ProgressView()
+                                    .frame(width: 100, height: 150)
+                            @unknown default:
+                                EmptyView()
                             }
-                        
-                        
+                        }.padding()
+                        VStack(alignment: .leading,spacing: 30) {
+                            
+                            Text("ISBN: \(book.isbn)")
+                            
+                            Text("Lending Date: \(request.lending_date)")
+                            Spacer()
+                            
+                        }
+                        .padding()
+                        VStack(alignment: .leading, spacing: 20){
+                            Text("Requested by: \(request.user_id)")
+                            Text("User ID: \(request.user_id)")
+                            
+                            Text("Return Date: \(request.due_date)")
+                            Spacer()
+                            
+                            HStack {
+                                Button(action: {
+                                    extendReturnDate()
+                                }) {
+                                    Text("Extend")
+                                        .padding()
+                                        .foregroundColor(.white)
+                                        .background(Color.green)
+                                        .cornerRadius(8)
+                                }
+//                                Button(action: {
+//                                    // Action for rejecting request
+//                                }) {
+//                                    Text("Reject")
+//                                        .padding()
+//                                        .foregroundColor(.white)
+//                                        .background(Color.red)
+//                                        .cornerRadius(8)
+//                                }
+                            }
+                        }//.padding()
                         
                     }
                     
@@ -139,36 +153,31 @@ struct BookRenewalsRequestCardView: View {
             }
             
         }
+        .onAppear {
+            bookViewModel.fetchBook(for: request.book_ref_id)
+        }
         .padding()
         .background(Color(Color(red: 0.94, green: 0.92, blue: 1)))
         .cornerRadius(12)
         .shadow(radius: 0)
         
     }
-}
-
-struct BooksRenewalsRequestView_Previews: PreviewProvider {
-    static var previews: some View {
-        let books: [Book] = [
-            Book(author_name: "Author 1", book_name: "Book 1", category: "Category 1", cover_url: "cover1.png", isbn: "123456789", library_id: "Library 1", loan_id: "Loan 1", quantity: 1, thumbnail_url: "thumbnail1.png"),
-            Book(author_name: "Author 2", book_name: "Book 2", category: "Category 2", cover_url: "cover2.png", isbn: "987654321", library_id: "Library 2", loan_id: "Loan 2", quantity: 1, thumbnail_url: "thumbnail2.png"),
-            Book(author_name: "Author 3", book_name: "Book 3", category: "Category 3", cover_url: "cover3.png", isbn: "123456780", library_id: "Library 3", loan_id: "Loan 3", quantity: 1, thumbnail_url: "thumbnail3.png"),
-            Book(author_name: "Author 4", book_name: "Book 4", category: "Category 4", cover_url: "cover4.png", isbn: "987654322", library_id: "Library 4", loan_id: "Loan 4", quantity: 1, thumbnail_url: "thumbnail4.png"),
-            Book(author_name: "Author 5", book_name: "Book 5", category: "Category 5", cover_url: "cover5.png", isbn: "123456781", library_id: "Library 5", loan_id: "Loan 5", quantity: 1, thumbnail_url: "thumbnail5.png"),
-            Book(author_name: "Author 6", book_name: "Book 6", category: "Category 6", cover_url: "cover6.png", isbn: "987654323", library_id: "Library 6", loan_id: "Loan 6", quantity: 1, thumbnail_url: "thumbnail6.png"),
-            Book(author_name: "Author 7", book_name: "Book 7", category: "Category 7", cover_url: "cover7.png", isbn: "123456782", library_id: "Library 7", loan_id: "Loan 7", quantity: 1, thumbnail_url: "thumbnail7.png")
-        ]
-
-        let requests: [BooksRequest] = [
-            BooksRequest(id: UUID(), bookISBN: "123456789", requesterName: "John Doe", requesterID: "1234", lendingDate: "2024-05-01", returnDate: "2024-06-01"),
-            BooksRequest(id: UUID(), bookISBN: "987654321", requesterName: "Alice Smith", requesterID: "5678", lendingDate: "2024-05-02", returnDate: "2024-06-02"),
-            BooksRequest(id: UUID(), bookISBN: "123456780", requesterName: "Bob Johnson", requesterID: "91011", lendingDate: "2024-05-03", returnDate: "2024-06-03"),
-            BooksRequest(id: UUID(), bookISBN: "987654322", requesterName: "Emily Brown", requesterID: "121314", lendingDate: "2024-05-04", returnDate: "2024-06-04"),
-            BooksRequest(id: UUID(), bookISBN: "123456781", requesterName: "Michael Wilson", requesterID: "151617", lendingDate: "2024-05-05", returnDate: "2024-06-05"),
-            BooksRequest(id: UUID(), bookISBN: "987654323", requesterName: "Sophia Taylor", requesterID: "181920", lendingDate: "2024-05-06", returnDate: "2024-06-06"),
-            BooksRequest(id: UUID(), bookISBN: "123456782", requesterName: "Emma Garcia", requesterID: "212223", lendingDate: "2024-05-07", returnDate: "2024-06-07")
-        ]
-
-        return BooksRenewalsRequestView(requests: requests, books: books)
+    
+    private func extendReturnDate() {
+        // Get current due date
+        guard var dueDate = Calendar.current.date(byAdding: .weekOfYear, value: 1, to: request.due_date.dateValue()) else {
+            return
+        }
+       
+        request.due_date = Timestamp(date: dueDate)
+        
+        let db = Firestore.firestore()
+        db.collection("loans").document(request.id ?? "").setData(["due_date": request.due_date], merge: true) { error in
+            if let error = error {
+                print("Error updating document: \(error)")
+            } else {
+                print("Document successfully updated")
+            }
+        }
     }
 }

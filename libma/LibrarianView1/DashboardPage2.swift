@@ -3,8 +3,8 @@ import Charts
 import FirebaseAuth
 import Firebase
 
-struct DashboardPage: View {
-    
+struct DashboardPage2: View {
+   
     @State private var progress: CGFloat = 0.7
     @State private var numberOfUsers: Int = 0
     @State private var penaltyAmount: Int = 0
@@ -14,14 +14,14 @@ struct DashboardPage: View {
     @State private var isActiveBookFine: Bool = false
     @State private var isActiveMembers: Bool = false
     @State private var TotalBooks: Bool = false
-    
+   
     var body: some View {
         HStack {
-            
+           
             ZStack {
                 Color(hex: 0xFFFFFF)
                     .edgesIgnoringSafeArea(.all)
-                
+               
                 ScrollView {
                     VStack(alignment: .leading) {
                         Text("Dashboard")
@@ -31,7 +31,7 @@ struct DashboardPage: View {
                             )
                             .foregroundColor(.black)
                             .padding()
-                        
+                       
                         HStack(spacing: 35) {
                             Button(action: {
                                 self.isActiveBookFine = true
@@ -43,11 +43,11 @@ struct DashboardPage: View {
                                     .cornerRadius(20)
                                     .overlay(
                                         VStack (spacing: 20) {
-                                            Text("Book Fines")
+                                            Text("Fines Collected")
                                                 .font(.system(size: 20))
                                                 .foregroundColor(.black)
-                                            
-                                            Text("Rs.\(penaltyAmount)")
+                                           
+                                            Text("Rs. \(penaltyAmount)")
                                                 .font(.system(size: 50))
                                                 .foregroundColor(Color(red: 0.33, green: 0.25, blue: 0.55))
                                                 .bold()
@@ -63,7 +63,7 @@ struct DashboardPage: View {
                                         })
                                 }
                             })
-                            
+                           
                             Button(action: {
                                 self.isActiveMembers = true
                             }) {
@@ -74,16 +74,16 @@ struct DashboardPage: View {
                                     .cornerRadius(20)
                                     .overlay(
                                         VStack (spacing: 20) {
-                                            Text("Members")
+                                            Text("User Info")
                                                 .font(.system(size: 20))
                                                 .foregroundColor(.black)
-                                            
+                                           
                                             Text("\(numberOfUsers)")
                                                 .font(.system(size: 50))
                                                 .foregroundColor(Color(red: 0.33, green: 0.25, blue: 0.55))
                                                 .bold()
                                                 .onAppear {
-                                                    fetchCategoryOfUsers()
+                                        //            fetchCategoryOfUsers()
                                                     fetchNumberOfUsers()
                                                     fetchPenaltyAmount()
                                                     fetchRequestCount()
@@ -91,7 +91,7 @@ struct DashboardPage: View {
                                                 }
                                         }
                                             .padding()
-                                        
+                                       
                                     )
                             }
                             .fullScreenCover(isPresented: $isActiveMembers, content: {
@@ -103,8 +103,8 @@ struct DashboardPage: View {
                                 }
                             })
 
-                            
-                            
+                           
+                           
                             Button(action: {
                                 self.TotalBooks = true
                             }) {
@@ -115,10 +115,10 @@ struct DashboardPage: View {
                                     .cornerRadius(20)
                                     .overlay(
                                         VStack (spacing: 20) {
-                                            Text("Total Books")
+                                            Text("Books List")
                                                 .font(.system(size: 20))
                                                 .foregroundColor(.black)
-                                            
+                                           
                                             Text("\(totalQuantityText)")
                                                 .font(.system(size: 50))
                                                 .foregroundColor(Color(red: 0.33, green: 0.25, blue: 0.55))
@@ -135,7 +135,7 @@ struct DashboardPage: View {
                                         })
                                 }
                             })
-                            
+                           
                             Button(action: {
                                 // Action to perform when the button is tapped
                                 // You can put your action here
@@ -150,7 +150,7 @@ struct DashboardPage: View {
                                             Text("Requests Raised")
                                                 .font(.system(size: 20))
                                                 .foregroundColor(.black)
-                                            
+                                           
                                             Text("\(numberOfRequests)")
                                                 .font(.system(size: 50))
                                                 .foregroundColor(Color(red: 0.33, green: 0.25, blue: 0.55))
@@ -159,24 +159,24 @@ struct DashboardPage: View {
                                             .padding()
                                     )
                             }
-                            
-                            
+                           
+                           
                             Spacer()
                             Spacer()
                         }
                         .padding()
-                        
+                       
                         // Your other content here
                         HStack {
                             VStack(alignment: .leading) {
-                                Text("Book Ratio")
+                                Text("Active Book List")
                                     .font(
                                         Font.custom("SF Pro", size: 35)
                                             .weight(.bold)
                                     )
                                     .foregroundColor(.black)
                                     .padding()
-                                
+                               
                                 Button(action: {
                                     self.TotalBooks = true
                                 }) {
@@ -202,9 +202,9 @@ struct DashboardPage: View {
                                 })
                             }
 
-                            
+                           
                             Spacer()
-                            
+                           
                             VStack(alignment: .leading) {
                                 HStack (spacing: 350) {
                                     Text("Top Books")
@@ -214,7 +214,7 @@ struct DashboardPage: View {
                                         )
                                         .foregroundColor(.black)
                                         .padding()
-                                    
+                                   
                                     Button(action: {
                                         self.TotalBooks = true
                                     }) {
@@ -235,7 +235,7 @@ struct DashboardPage: View {
                                         }
                                     })
                                 }
-                                
+                               
                                 Button(action: {
                                     self.TotalBooks = true
                                 }) {
@@ -311,7 +311,7 @@ struct DashboardPage: View {
                             }
                         }
                         .padding()
-                        
+                       
                         VStack(alignment: .leading) {
                             Text("Analysis")
                                 .font(
@@ -320,11 +320,11 @@ struct DashboardPage: View {
                                 )
                                 .foregroundColor(.black)
                                 .padding(.leading, 35)
-                            
+                           
                             VStack {
                                 HStack {
                                     HStack {
-                                        
+                                       
                                         Rectangle()
                                             .foregroundColor(.clear)
                                             .frame(width: 542, height: 317)
@@ -335,17 +335,17 @@ struct DashboardPage: View {
                                                     Text("New Member")
                                                         .font(.system(size: 20))
                                                         .foregroundColor(.black)
-                                                    
+                                                   
                                                     GraphCardView(title: " ", data: sampleData)
                                                 }
                                                     .padding()
                                             )
-                                        
+                                       
                                     }
                                     .padding()
-                                    
+                                   
                                     HStack {
-                                        
+                                       
                                         Rectangle()
                                             .foregroundColor(.clear)
                                             .frame(width: 542, height: 317)
@@ -356,22 +356,22 @@ struct DashboardPage: View {
                                                     Text("New Books")
                                                         .font(.system(size: 20))
                                                         .foregroundColor(.black)
-                                                    
+                                                   
                                                     GraphCardView(title: " ", data: sampleData)
                                                 }
                                                     .padding()
                                             )
-                                        
+                                       
                                     }
                                     .padding()
-                                    
-                                    
+                                   
+                                   
                                 }
                                 .padding()
-                                
+                               
                                 HStack {
                                     HStack {
-                                        
+                                       
                                         Rectangle()
                                             .foregroundColor(.clear)
                                             .frame(width: 542, height: 317)
@@ -382,17 +382,17 @@ struct DashboardPage: View {
                                                     Text("Fines Overdue")
                                                         .font(.system(size: 20))
                                                         .foregroundColor(.black)
-                                                    
+                                                   
                                                     GraphCardView(title: " ", data: sampleData)
                                                 }
                                                     .padding()
                                             )
-                                        
+                                       
                                     }
                                     .padding()
-                                    
+                                   
                                     HStack {
-                                        
+                                       
                                         Rectangle()
                                             .foregroundColor(.clear)
                                             .frame(width: 542, height: 317)
@@ -403,22 +403,22 @@ struct DashboardPage: View {
                                                     Text("Membership Rate")
                                                         .font(.system(size: 20))
                                                         .foregroundColor(.black)
-                                                    
+                                                   
                                                     GraphCardView(title: " ", data: sampleData)
                                                 }
                                                     .padding()
                                             )
-                                        
+                                       
                                     }
                                     .padding()
-                                    
-                                    
+                                   
+                                   
                                 }
                                 .padding()
-                                
+                               
                             }
-                            
-                            
+                           
+                           
                         }
                     }
                 }
@@ -427,7 +427,7 @@ struct DashboardPage: View {
     }
     func fetchNumberOfUsers() {
         let db = Firestore.firestore()
-        
+       
         db.collection("users")
             .whereField("category_type", isEqualTo: "Member")
             .getDocuments { (snapshot, error) in
@@ -435,53 +435,53 @@ struct DashboardPage: View {
                     print("Error fetching user count: \(error.localizedDescription)")
                     return
                 }
-                
+               
                 if let snapshot = snapshot {
                     self.numberOfUsers = snapshot.documents.count
                 }
             }
     }
-    
+   
     func fetchCategoryOfUsers() {
         let db = Firestore.firestore()
-        
+       
         db.collection("users")
             .getDocuments { (snapshot, error) in
                 if let error = error {
                     print("Error fetching users: \(error.localizedDescription)")
                     return
                 }
-                
+               
                 guard let snapshot = snapshot else {
                     print("Snapshot is nil")
                     return
                 }
-                
+               
                 var membershipTypesSet: Set<String> = Set()
-                
+               
                 for document in snapshot.documents {
                     if let membershipType = document.data()["membership_type"] as? String {
                         membershipTypesSet.insert(membershipType)
                     }
                 }
-                
+               
                 // Print the unique membership types
                 print("Unique Membership Types:")
                 for membershipType in membershipTypesSet {
                     print(membershipType)
                     print(membershipType.count)
                 }
-                
+               
                 // Assign the count to numberOfUsers
-                
+               
                 self.numberOfUsers = membershipTypesSet.count
-                
+               
             }
     }
-    
+   
     private func fetchTotalQuantity() {
         let db = Firestore.firestore()
-        
+       
         db.collection("books")
             .whereField("library_id", isEqualTo: "1")
             .getDocuments { snapshot, error in
@@ -489,17 +489,17 @@ struct DashboardPage: View {
                     print("Error fetching documents: \(error)")
                     return
                 }
-                
+               
                 guard let documents = snapshot?.documents else {
                     print("No documents found")
                     return
                 }
-                
+               
                 var totalQuantity = 0
                 var available_quantity = 0
-                
+               
                 for document in documents {
-                    
+                   
                     if let total_quantity = document.data()["total_quantity"] as? Int {
                         totalQuantity += total_quantity
                     }
@@ -507,40 +507,40 @@ struct DashboardPage: View {
                         available_quantity += quantity
                     }
                 }
-                
+               
                 totalQuantityText = totalQuantity
                 progress = CGFloat(available_quantity) / CGFloat(totalQuantity)
-                
-                
+               
+               
             }
     }
-    
-    
+   
+   
     private func fetchRequestCount() {
         let db = Firestore.firestore()
-        
+       
         db.collection("requests").getDocuments { snapshot, error in
             if let error = error {
                 print("Error fetching documents: \(error)")
                 return
             }
-            
+           
             guard let documents = snapshot?.documents else {
                 print("No documents found")
                 return
             }
-            
+           
             let requestCount = documents.count
-            
+           
             // Update the state variable to display the number of requests
             numberOfRequests = requestCount
         }
     }
-    
-    
+   
+   
     private func fetchPenaltyAmount() {
         let db = Firestore.firestore()
-        
+       
         db.collection("loans")
             .whereField("library_id", isEqualTo: 1)
             .getDocuments { snapshot, error in
@@ -548,96 +548,32 @@ struct DashboardPage: View {
                     print("Error fetching documents: \(error)")
                     return
                 }
-                
+               
                 guard let documents = snapshot?.documents else {
                     print("No documents found")
                     return
                 }
-                
+               
                 var totalPenalty: Double = 0
-                
+               
                 for document in documents {
-                    
+                   
                     if let penalty = document.data()["penalty_amount"] as? Double {
                         totalPenalty += penalty
                     }
                 }
-                
+               
                 // Convert total penalty amount to an integer
                 let totalPenaltyInt = Int(totalPenalty)
-                
+               
                 // Update the stae variable to display the total penalty amount
                 penaltyAmount = (totalPenaltyInt)
             }
     }
-    
-    
+   
+   
 }
-
-struct CircularProgress: View {
-    var progress: CGFloat
-    
-    var body: some View {
-        ZStack {
-            Circle()
-                .stroke(Color.gray.opacity(0.3), style: StrokeStyle(lineWidth: 30))
-                .frame(width: 200, height: 200)
-            
-            Circle()
-                .trim(from: 0, to: progress)
-                .stroke(LinearGradient(gradient: Gradient(colors: [Color.purple, Color.blue]), startPoint: .topTrailing, endPoint: .bottomLeading), style: StrokeStyle(lineWidth: 30, lineCap: .round))
-                .frame(width: 200, height: 200)
-                .rotationEffect(.degrees(-90))
-            
-            Text("\(Int(progress * 100))%")
-                .font(.system(size: 30))
-                .foregroundColor(.black)
-                .bold()
-        }
-    }
-}
-
-struct GraphCardView: View {
-    var title: String
-    var data: [ChartData]
-    
-    var body: some View {
-        VStack {
-            Text(title)
-                .font(.headline)
-                .fontWeight(.semibold)
-                .foregroundColor(.primary)
-            Chart {
-                ForEach(data, id: \.id) { data in
-                    LineMark(
-                        x: .value("Date", data.date),
-                        y: .value("Value", data.value)
-                    )
-                    .foregroundStyle(.blue)
-                }
-            }
-            .frame(height: 100)
-        }
-        .padding()
-        .background(Color(UIColor.secondarySystemBackground))
-        .cornerRadius(10)
-    }
-}
-
-struct ChartData {
-    let id: Int
-    let date: Date
-    let value: Double
-}
-
-let sampleData: [ChartData] = [
-    ChartData(id: 0, date: Date().addingTimeInterval(-2400 * 5), value: 1),
-    ChartData(id: 1, date: Date().addingTimeInterval(-2400 * 4), value: 3),
-    ChartData(id: 2, date: Date().addingTimeInterval(-2400 * 3), value: 2),
-    ChartData(id: 3, date: Date().addingTimeInterval(-2400 * 2), value: 5),
-    ChartData(id: 4, date: Date().addingTimeInterval(-2400 * 1), value: 4)
-]
 
 #Preview {
-    DashboardPage()
+    DashboardPage2()
 }
