@@ -2,6 +2,7 @@ import SwiftUI
 import FirebaseFirestore
 import Firebase
 import FirebaseFirestoreSwift
+import Neumorphic
 
 
 struct Loan: Identifiable, Codable, Hashable {
@@ -26,9 +27,18 @@ struct BooksLendingRequestView: View {
                 .font(.largeTitle)
                 
             ScrollView {
-                VStack(spacing: 30) {
+                VStack(spacing: 40) {
                     ForEach(requests) { request in
-                        BookLendingRequestCardView(request: request)
+                        ZStack(alignment: .topLeading) {
+                            RoundedRectangle(cornerRadius: 20)
+                                                            .fill(Color(red: 0.94, green: 0.92, blue: 1)) // Set the background color
+                                                            .frame(maxWidth: .infinity)
+                                                            .shadow(color: Color.gray.opacity(0.5), radius: 5, x: 5, y: 5)
+                                                            .shadow(color: Color.white.opacity(0.7), radius: 5, x: -5, y: -5)
+
+                            BookLendingRequestCardView(request: request)
+                        }
+                        
                     }
                 }
                 .padding()
@@ -89,90 +99,103 @@ struct BookLendingRequestCardView: View {
     @State private var userName = ""
     @State private var lendingDate = ""
     @State private var returnDate = ""
+    
     let request: Loan
     
+    
     var body: some View {
-        VStack(alignment: .leading) {
+        HStack(spacing: 20) {
             if let book = bookViewModel.book {
-                HStack {
-                    VStack(alignment: .leading){
-                        Text(book.book_name)
-                            .font(.largeTitle)
-                        
-                        HStack(spacing: 5) {
-                            AsyncImage(url: URL(string: book.cover_url)) { phase in
-                                switch phase {
-                                case .success(let image):
-                                    image
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fill)
-                                        .frame(width: 120, height: 120)
-                                        .cornerRadius(8)
-                                case .failure(_):
-                                    Image(systemName: "book")
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(width: 120, height: 120)
-                                        .foregroundColor(.gray)
-                                case .empty:
-                                    ProgressView()
-                                        .frame(width: 120, height: 120)
-                                @unknown default:
-                                    EmptyView()
-                                }
-                            }.padding()
-                            VStack(alignment: .leading,spacing: 5) {
-                                
-                                Text("ISBN: \(book.isbn)")
-                                Text("Lending Date: \(lendingDate)")
-                                Text("Return Date: \(returnDate)")
-                                Spacer()
-                                
-                                
+                VStack(alignment: .leading, spacing: 0){
+                    Text(book.book_name)
+                        .font(.title)
+                        .foregroundColor(Color(.black))
+                    
+                    HStack(spacing: 5) {
+                        AsyncImage(url: URL(string: book.cover_url)) { phase in
+                            switch phase {
+                            case .success(let image):
+                                image
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 200, height: 250) // Increased image size
+                                    .cornerRadius(8)
+                            case .failure(_):
+                                Image(systemName: "book")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 120, height: 120)
+                                    .foregroundColor(.gray)
+                            case .empty:
+                                ProgressView()
+                                    .frame(width: 120, height: 120)
+                            @unknown default:
+                                EmptyView()
                             }
-                            .padding()
-                            VStack(alignment: .leading, spacing: 5){
-                                Text("Requested by: \(userName)")
-                                
-                                Spacer()
-                                
-                                HStack {
-                                    Button(action: {
-                                        updateLoanStatus(status: "accepted")
-                                    }) {
-                                        Text("Accept")
-                                            .padding()
-                                            .foregroundColor(.white)
-                                            .background(Color.green)
-                                            .cornerRadius(8)
-                                    }
-                                    Button(action: {
-                                        updateLoanStatus(status: "rejected")
-                                    }) {
-                                        Text("Reject")
-                                            .padding()
-                                            .foregroundColor(.white)
-                                            .background(Color.red)
-                                            .cornerRadius(8)
-                                    }
-                                }
-                            }.padding()
-                            
+                        }.padding()
+
+                        VStack(alignment: .leading,spacing: 5) {
+                            Text("ISBN: \(book.isbn)")
+                                .padding()
+                            Text("User ID: \(request.user_id)")
+                                .padding()
+                            Text("Requested by: \(userName)")
+                                .padding()
+                            Spacer()
                         }
-                        
+                        .padding()
                     }
-                }.padding()
+                }
+                Spacer()
             }
+            VStack(alignment: .leading, spacing: 5){
+                if let book = bookViewModel.book {
+                    Text("Lending Date: \(lendingDate)")
+                        .font(.subheadline)
+                    Text("Return Date: \(returnDate)")
+                        .font(.subheadline)
+                        .padding(.vertical, 30)
+                }
+                
+                HStack{
+                    
+                    Button(action: {
+                        updateLoanStatus(status: "accepted")
+                    }) {
+                        Text("Accept")
+                            .padding(.vertical, 10)
+                            .padding(.horizontal, 20)
+                            .foregroundColor(.white)
+                            .background(Color.green)
+                            .cornerRadius(8)
+                    }
+                    
+                    Button(action: {
+                        updateLoanStatus(status: "rejected")
+                    }) {
+                        Text("Reject")
+                            .padding(.vertical, 10)
+                            .padding(.horizontal, 20)
+                            .foregroundColor(.white)
+                            .background(Color.red)
+                            .cornerRadius(8)
+                    }
+                }
+            }.padding()
+            
         }
+
         .onAppear {
             bookViewModel.fetchBook(for: request.book_ref_id)
             fetchUserName()
             formatDates()
         }
-        .padding()
-        .background(Color(red: 0.94, green: 0.92, blue: 1))
-        .cornerRadius(12)
-        .shadow(radius: 0).frame(height: 300)
+        .padding(10)
+                .background(Color("CardBackground"))
+                .cornerRadius(20)
+                .shadow(color: Color("Shadow"), radius: 10, x: 5, y: 5)
+                .shadow(color: Color.white, radius: 10, x: -5, y: -5)
+
     }
     
     private func fetchUserName() {
@@ -202,34 +225,19 @@ struct BookLendingRequestCardView: View {
                     print("Error updating document: \(error)")
                 } else {
                     print("Document successfully updated")
-                    if status == "accepted" {
-                        updateBookQuantity()
-                    }
                 }
             }
     }
     
-    private func updateBookQuantity() {
-        guard let book = bookViewModel.book else { return }
-        let db = Firestore.firestore()
-        let borrowedQuantity = book.quantity + 1
-        db.collection("books").document(book.id ?? "")
-            .updateData(["quantity": borrowedQuantity]) { error in
-                if let error = error {
-                    print("Error updating book quantity: \(error)")
-                } else {
-                    print("Book quantity updated successfully")
-                }
-            }
-    }
     private func formatDates() {
-           let dateFormatter = DateFormatter()
-           dateFormatter.dateFormat = "MMM d, yyyy"
-           
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMM d, yyyy"
+        
         lendingDate = dateFormatter.string(from: request.lending_date.dateValue())
         returnDate = dateFormatter.string(from: request.due_date.dateValue())
-       }
+    }
 }
+
 
 
 class BookViewModel: ObservableObject {
@@ -258,4 +266,7 @@ class BookViewModel: ObservableObject {
                 }
             }
     }
+}
+#Preview {
+    BooksLendingRequestView()
 }
