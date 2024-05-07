@@ -42,15 +42,19 @@
 
 import SwiftUI
 import SDWebImageSwiftUI
+import FirebaseFirestore
+
 struct BookDetailView: View {
+    @Environment(\.presentationMode) var presentationMode
     var book: Book
+    @State private var showingAlert = false
     
     var body: some View {
         VStack(spacing: 20) {
             
             HStack {
                 Button(action: {
-                    // Action for back button
+                    presentationMode.wrappedValue.dismiss()
                 }) {
                     HStack{
                         Image(systemName: "chevron.left")
@@ -69,22 +73,9 @@ struct BookDetailView: View {
                     .padding()
                     .frame(maxWidth: .infinity)
                 
-                
                 HStack{
                     Button(action: {
-                        
-                    }) {
-                        HStack{
-                            Spacer()
-                            Text("Cancel")
-                                .font(.title3)
-                                .foregroundColor(.black)
-                        }
-                    }
-                    .padding(.trailing, 20)
-                    
-                    Button(action: {
-                    
+                        showingAlert = true
                     }) {
                         HStack{
                             Text("Delete")
@@ -104,7 +95,7 @@ struct BookDetailView: View {
                                .frame(width: 200, height: 200)
             }
             HStack(spacing: 80) {
-                VStack(alignment: .leading, spacing: 50) {
+                VStack(alignment: .leading, spacing: 30) {
                     Text("Author:")
                         .font(.title3)
                         .foregroundColor(.black)
@@ -117,7 +108,7 @@ struct BookDetailView: View {
                     Text("Quantity Available:")
                         .font(.title3)
                         .foregroundColor(.black)
-                    Text("Borrowed Quantity:")
+                    Text("Available Quantity:")
                         .font(.title3)
                         .foregroundColor(.black)
                     Text("Status:")
@@ -125,7 +116,7 @@ struct BookDetailView: View {
                         .foregroundColor(.black)
                 }
                 
-                VStack(alignment: .leading, spacing: 50) {
+                VStack(alignment: .leading, spacing: 30) {
                     Text(book.author_name)
                         .font(.title3)
                         .foregroundColor(.black)
@@ -154,6 +145,23 @@ struct BookDetailView: View {
             Spacer()
         }
         .padding()
+        .alert(isPresented: $showingAlert) {
+            Alert(title: Text("Are you sure you want to delete this book?"), message: Text("This action cannot be undone."), primaryButton: .destructive(Text("Delete")) {
+                deleteBook()
+            }, secondaryButton: .cancel())
+        }
+    }
+    
+    func deleteBook() {
+        let db = Firestore.firestore()
+        db.collection("books").document(book.id ?? "").delete { error in
+            if let error = error {
+                print("Error removing document: \(error)")
+            } else {
+                print("Document successfully removed!")
+                self.presentationMode.wrappedValue.dismiss()
+            }
+        }
     }
 }
 

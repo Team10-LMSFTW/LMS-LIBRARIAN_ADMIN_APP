@@ -81,6 +81,15 @@ struct AddBookView: View {
 //        
 //    }
     private func addBook() {
+        
+//        private func addBook() {
+//                guard let isbnNumber = extractISBN(from: isbn),
+//                      let quantityInt = Int(quantity),
+//                      let totalQuantityInt = Int(totalquantity),
+//                      quantityInt == totalQuantityInt else {
+//                    print("Invalid input")
+//                    return
+//                }
         guard let isbnNumber = extractISBN(from: isbn) else {
             print("Invalid ISBN")
             return
@@ -99,9 +108,10 @@ struct AddBookView: View {
             isbn: isbnNumber,
             library_id: libraryID,
             loan_id: loanID,
-            quantity: Int(quantity) ?? 0,
+            quantity: Int(totalquantity) ?? 0,
             thumbnail_url: thumbnailURL,
-            total_quantity: Int(totalquantity) ?? 0
+            total_quantity: Int(totalquantity) ?? 0,
+            created_at: Timestamp(date: Date())
         )
         
         do {

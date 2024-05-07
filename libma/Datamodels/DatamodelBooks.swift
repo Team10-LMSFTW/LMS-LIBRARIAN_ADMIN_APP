@@ -21,6 +21,7 @@ struct Book: Encodable, Decodable, Identifiable {
     var quantity: Int
     var thumbnail_url: String
     var total_quantity : Int
+    var created_at : Timestamp
 }
 
 //author_name book_name
