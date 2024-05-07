@@ -2,7 +2,7 @@ import SwiftUI
 import FirebaseFirestore
 import Firebase
 import FirebaseFirestoreSwift
-
+import Neumorphic
 
 
 struct BooksRenewalsRequestView: View {
@@ -17,9 +17,17 @@ struct BooksRenewalsRequestView: View {
                 .font(.largeTitle)
                 
             ScrollView {
-                VStack(spacing: 20) {
+                VStack(spacing: 30) {
                     ForEach(requests) { request in
-                        BookRenewalsRequestCardView(book: books, request: request)
+                        ZStack{
+                            RoundedRectangle(cornerRadius: 20)
+                                                            .fill(Color(red: 0.94, green: 0.92, blue: 1)) // Set the background color
+                                                            .frame(maxWidth: .infinity)
+                                                            .shadow(color: Color.gray.opacity(0.5), radius: 5, x: 5, y: 5)
+                                                            .shadow(color: Color.white.opacity(0.7), radius: 5, x: -5, y: -5)
+
+                            BookRenewalsRequestCardView(book: books, request: request)
+                        }
                     }
                 }
                 .padding()
@@ -156,10 +164,16 @@ struct BookRenewalsRequestCardView: View {
         .onAppear {
             bookViewModel.fetchBook(for: request.book_ref_id)
         }
-        .padding()
-        .background(Color(Color(red: 0.94, green: 0.92, blue: 1)))
-        .cornerRadius(12)
-        .shadow(radius: 0)
+        .padding(10)
+                .background(Color("CardBackground"))
+                .cornerRadius(20)
+                .shadow(color: Color("Shadow"), radius: 10, x: 5, y: 5)
+                .shadow(color: Color.white, radius: 10, x: -5, y: -5)
+
+//        .padding()
+//        .background(Color(Color(red: 0.94, green: 0.92, blue: 1)))
+//        .cornerRadius(12)
+//        .shadow(radius: 0)
         
     }
     
@@ -179,5 +193,13 @@ struct BookRenewalsRequestCardView: View {
                 print("Document successfully updated")
             }
         }
+    }
+}
+struct BooksRenewalsRequestView_Previews: PreviewProvider {
+    static var previews: some View {
+        let sampleBook = Book(author_name: "Author", book_name: "Sample Book", category: "Sample Category", cover_url: "", isbn: "1234567890", library_id: "library1", loan_id: "loan1", quantity: 1, thumbnail_url: "", total_quantity: 1, created_at: Timestamp())
+        let sampleLoan = Loan(id: "loan1", book_ref_id: "1234567890", lending_date: Timestamp(), due_date: Timestamp(), user_id: "user1", penalty_amount: 0, library_id: 1, loan_status: "accepted")
+        
+        return BooksRenewalsRequestView(requests: [sampleLoan], books: sampleBook)
     }
 }
