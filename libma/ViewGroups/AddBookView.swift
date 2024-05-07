@@ -37,8 +37,51 @@ struct AddBookView: View {
         }
     }
     
+//    private func addBook() {
+//        guard let isbnNumber = Int(isbn) else {
+//            print("Invalid ISBN")
+//            return
+//        }
+//        
+//        let coverURL = "https://covers.openlibrary.org/b/isbn/\(isbnNumber)-L.jpg"
+//        let thumbnailURL = "https://covers.openlibrary.org/b/isbn/\(isbnNumber)-S.jpg"
+//        
+//        let db = Firestore.firestore()
+//        
+//        let newBook = Book(
+//            author_name: authorName,
+//            book_name: bookName,
+//            category: category,
+//            cover_url: coverURL,
+//            isbn: isbn,
+//            library_id: libraryID,
+//            loan_id: loanID,
+//            quantity: Int(quantity) ?? 0,
+//            thumbnail_url: thumbnailURL,
+//            total_quantity: Int(totalquantity) ?? 0
+//        )
+//        
+//        do {
+//            _ = try db.collection("books").addDocument(from: newBook)
+//            clearFields()
+//            showingAlert = true
+//        } catch {
+//            print("Error adding document: \(error)")
+//        }
+//    }
+//    
+//    private func clearFields() {
+//        authorName = ""
+//        bookName = ""
+//        category = ""
+//        isbn = ""
+//        libraryID = ""
+//        loanID = ""
+//        totalquantity = ""
+//        
+//    }
     private func addBook() {
-        guard let isbnNumber = Int(isbn) else {
+        guard let isbnNumber = extractISBN(from: isbn) else {
             print("Invalid ISBN")
             return
         }
@@ -53,7 +96,7 @@ struct AddBookView: View {
             book_name: bookName,
             category: category,
             cover_url: coverURL,
-            isbn: isbn,
+            isbn: isbnNumber,
             library_id: libraryID,
             loan_id: loanID,
             quantity: Int(quantity) ?? 0,
@@ -69,7 +112,15 @@ struct AddBookView: View {
             print("Error adding document: \(error)")
         }
     }
-    
+
+    private func extractISBN(from isbnString: String) -> String? {
+        let regex = try! NSRegularExpression(pattern: #"^\d{10}|\d{13}$"#)
+        guard let match = regex.firstMatch(in: isbnString, range: NSRange(isbnString.startIndex..., in: isbnString)) else {
+            return nil
+        }
+        return String(isbnString[Range(match.range, in: isbnString)!])
+    }
+
     private func clearFields() {
         authorName = ""
         bookName = ""
@@ -77,8 +128,9 @@ struct AddBookView: View {
         isbn = ""
         libraryID = ""
         loanID = ""
-        quantity = ""
+        totalquantity = ""
     }
+
 }
 
 struct AddBookView_Previews: PreviewProvider {
