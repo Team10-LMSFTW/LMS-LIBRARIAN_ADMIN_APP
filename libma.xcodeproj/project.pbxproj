@@ -41,6 +41,7 @@
 		986C0C052BDECB430030626B /* AddBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986C0C042BDECB430030626B /* AddBookView.swift */; };
 		986C0C072BDECE530030626B /* BooksInventoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986C0C062BDECE530030626B /* BooksInventoryView.swift */; };
 		986C0C0A2BDECEDA0030626B /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 986C0C092BDECEDA0030626B /* SDWebImageSwiftUI */; };
+		98848FD32BEA34D500173F37 /* Neumorphic in Frameworks */ = {isa = PBXBuildFile; productRef = 98848FD22BEA34D500173F37 /* Neumorphic */; };
 		A215D63F2BE4A40700152C7A /* AdminFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A215D63E2BE4A40700152C7A /* AdminFunctions.swift */; };
 		A215D6412BE6604700152C7A /* CreateUserPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A215D6402BE6604700152C7A /* CreateUserPage.swift */; };
 		A215D6452BE88C1700152C7A /* NewBookRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A215D6442BE88C1700152C7A /* NewBookRequests.swift */; };
@@ -119,6 +120,7 @@
 				984F48E82BD91AD900B80A75 /* FirebaseAnalytics in Frameworks */,
 				984F48EA2BD91AD900B80A75 /* FirebaseAuth in Frameworks */,
 				984F48EC2BD91AD900B80A75 /* FirebaseFirestore in Frameworks */,
+				98848FD32BEA34D500173F37 /* Neumorphic in Frameworks */,
 				984F48F02BD91AD900B80A75 /* FirebaseStorage in Frameworks */,
 				984F48EE2BD91AD900B80A75 /* FirebaseFirestoreSwift in Frameworks */,
 			);
@@ -297,6 +299,7 @@
 				984F48ED2BD91AD900B80A75 /* FirebaseFirestoreSwift */,
 				984F48EF2BD91AD900B80A75 /* FirebaseStorage */,
 				986C0C092BDECEDA0030626B /* SDWebImageSwiftUI */,
+				98848FD22BEA34D500173F37 /* Neumorphic */,
 			);
 			productName = libma;
 			productReference = 984F48B92BD91A1200B80A75 /* libma.app */;
@@ -373,6 +376,7 @@
 			packageReferences = (
 				984F48E62BD91AD900B80A75 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				986C0C082BDECEDA0030626B /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
+				98848FD12BEA34D500173F37 /* XCRemoteSwiftPackageReference "neumorphic" */,
 			);
 			productRefGroup = 984F48BA2BD91A1200B80A75 /* Products */;
 			projectDirPath = "";
@@ -794,6 +798,14 @@
 				minimumVersion = 3.0.2;
 			};
 		};
+		98848FD12BEA34D500173F37 /* XCRemoteSwiftPackageReference "neumorphic" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/costachung/neumorphic/";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -826,6 +838,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 986C0C082BDECEDA0030626B /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
 			productName = SDWebImageSwiftUI;
+		};
+		98848FD22BEA34D500173F37 /* Neumorphic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 98848FD12BEA34D500173F37 /* XCRemoteSwiftPackageReference "neumorphic" */;
+			productName = Neumorphic;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

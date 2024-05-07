@@ -127,11 +127,11 @@ struct InventoryBookViewNew: View {
                                     .resizable()
                                     .aspectRatio(contentMode: .fill)
                             case .failure(_):
-                                Color.red // Placeholder for error state
+                                Color.red
                             case .empty:
-                                Color.gray // Placeholder for loading state
+                                Color.gray
                             @unknown default:
-                                Color.gray // Placeholder for loading state
+                                Color.gray 
                             }
                         }
                         .frame(width: 120, height: 180)

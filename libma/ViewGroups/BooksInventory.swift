@@ -19,8 +19,8 @@ struct BookModel: Identifiable, Codable, Hashable {
     var libraryID: String
 }
 
-// Create a SwiftUI view to display the list of books in a table format
-// Create a SwiftUI view to display the list of books in a table format
+
+
 struct BookTableView: View {
     @State private var books: [BookModel] = []
     
