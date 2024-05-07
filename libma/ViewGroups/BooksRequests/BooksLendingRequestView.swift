@@ -191,7 +191,7 @@ struct BookLendingRequestCardView: View {
             formatDates()
         }
         .padding(10)
-                .background(Color("CardBackground"))
+                .background(Color(red: 0.94, green: 0.92, blue: 1))
                 .cornerRadius(20)
                 .shadow(color: Color("Shadow"), radius: 10, x: 5, y: 5)
                 .shadow(color: Color.white, radius: 10, x: -5, y: -5)
@@ -240,6 +240,32 @@ struct BookLendingRequestCardView: View {
 
 
 
+//class BookViewModel: ObservableObject {
+//    @Published var book: Book?
+//    
+//    func fetchBook(for bookRefID: String) {
+//        let db = Firestore.firestore()
+//        db.collection("books").document(bookRefID)
+//            .getDocument { document, error in
+//                if let error = error {
+//                    print("Error fetching book: \(error)")
+//                    return
+//                }
+//                
+//                if let document = document, document.exists {
+//                    do {
+//                        let book = try document.data(as: Book.self)
+//                        DispatchQueue.main.async {
+//                            self.book = book
+//                        }
+//                    } catch {
+//                        print("Error decoding book: \(error)")
+//                    }
+//                } else {
+//                    print("Book does not exist")
+//                }
+//            }
+//    }
 class BookViewModel: ObservableObject {
     @Published var book: Book?
     
@@ -252,21 +278,24 @@ class BookViewModel: ObservableObject {
                     return
                 }
                 
-                if let document = document, document.exists {
-                    do {
-                        let book = try document.data(as: Book.self)
-                        DispatchQueue.main.async {
-                            self.book = book
-                        }
-                    } catch {
-                        print("Error decoding book: \(error)")
-                    }
-                } else {
+                guard let document = document, document.exists else {
                     print("Book does not exist")
+                    return // Exit if book does not exist
+                }
+                
+                do {
+                    let book = try document.data(as: Book.self)
+                    DispatchQueue.main.async {
+                        self.book = book
+                    }
+                } catch {
+                    print("Error decoding book: \(error)")
                 }
             }
     }
 }
+
+//}
 #Preview {
     BooksLendingRequestView()
 }
