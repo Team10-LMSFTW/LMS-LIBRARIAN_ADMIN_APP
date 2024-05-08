@@ -124,7 +124,7 @@ struct BooksReturnRequestCardView: View {
                                 EmptyView()
                             }
                         }.padding()
-
+                        
                         VStack(alignment: .leading,spacing: 5) {
                             Text("ISBN: \(book.isbn)")
                                 .padding()
@@ -142,7 +142,7 @@ struct BooksReturnRequestCardView: View {
             VStack(alignment: .leading, spacing: 5){
                 if let book = bookModel.book {
                     
-                  
+                    
                     Text("Lending Date: \(dateFormatter.string(from: request.lending_date.dateValue()))")
                         .font(.subheadline)
                     
@@ -150,12 +150,12 @@ struct BooksReturnRequestCardView: View {
                         .font(.subheadline)
                         .padding(.vertical, 30)
                 }
-                    
+                
                 
                 HStack{
                     
                     Button(action: {
-                        updateLoanStatus(status: "returned")
+                        updateLoanStatus(status: "inactive")
                     }) {
                         Text("Accept")
                             .padding(.vertical, 10)
@@ -178,7 +178,7 @@ struct BooksReturnRequestCardView: View {
             }.padding()
             
         }
-
+        
         .onAppear {
             bookModel.fetchBook(for: request.book_ref_id)
         }
@@ -188,19 +188,69 @@ struct BooksReturnRequestCardView: View {
         .shadow(color: Color("Shadow"), radius: 10, x: 5, y: 5)
         .shadow(color: Color.white, radius: 10, x: -5, y: -5)
     }
-    
     private func updateLoanStatus(status: String) {
         let db = Firestore.firestore()
+        
+        // Update loan status
         db.collection("loans").document(request.id ?? "")
             .updateData(["loan_status": status]) { error in
                 if let error = error {
-                    print("Error updating document: \(error)")
+                    print("Error updating loan document: \(error)")
                 } else {
-                    print("Document successfully updated")
+                    print("Loan document successfully updated")
+                    
+                    if status == "inactive" {
+                        // Fetch the book document
+                        let bookRef = db.collection("books").document(request.book_ref_id)
+                        bookRef.getDocument { snapshot, error in
+                            if let error = error {
+                                print("Error fetching book document: \(error)")
+                            } else if let document = snapshot, document.exists {
+                                // Update book quantity
+                                db.runTransaction({ (transaction, errorPointer) -> Any? in
+                                    do {
+                                        let bookDoc = try transaction.getDocument(bookRef)
+                                        guard var bookData = bookDoc.data() else { return nil }
+                                        if var quantity = bookData["quantity"] as? Int {
+                                            quantity += 1
+                                            bookData["quantity"] = quantity
+                                            transaction.setData(bookData, forDocument: bookRef)
+                                        }
+                                    } catch let fetchError as NSError {
+                                        errorPointer?.pointee = fetchError
+                                        return nil
+                                    }
+                                    return nil
+                                }) { (object, error) in
+                                    if let error = error {
+                                        print("Error updating book quantity: \(error)")
+                                    } else {
+                                        print("Book quantity successfully updated")
+                                    }
+                                }
+                            } else {
+                                print("Book document not found")
+                            }
+                        }
+                    }
                 }
             }
     }
 }
+
+    
+//    private func updateLoanStatus(status: String) {
+//        let db = Firestore.firestore()
+//        db.collection("loans").document(request.id ?? "")
+//            .updateData(["loan_status": status]) { error in
+//                if let error = error {
+//                    print("Error updating document: \(error)")
+//                } else {
+//                    print("Document successfully updated")
+//                }
+//            }
+//    }
+//}
 
 class BookVModel: ObservableObject {
     @Published var book: Book?

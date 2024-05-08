@@ -20,19 +20,27 @@ struct Loan: Identifiable, Codable, Hashable {
 
 struct BooksLendingRequestView: View {
     @State var requests: [Loan] = []
-    
+    @State private var selectedStatus = "All"
+       
+    let statuses = ["All", "accepted", "rejected", "active"]
     var body: some View {
         VStack {
-            Text("Requests")
+            Text("Lending Requests")
                 .font(.largeTitle)
-                
+            Picker("Status", selection: $selectedStatus) {
+                           ForEach(statuses, id: \.self) {
+                               Text($0)
+                           }
+                       }
+                       .pickerStyle(SegmentedPickerStyle())
+                       .padding()
             ScrollView {
                 VStack(spacing: 40) {
-                    ForEach(requests) { request in
+                    ForEach(requests.filter { $0.loan_status == selectedStatus || selectedStatus == "All" }) { request in
                         ZStack(alignment: .topLeading) {
                             RoundedRectangle(cornerRadius: 20)
                                                             .fill(Color(red: 0.94, green: 0.92, blue: 1)) // Set the background color
-                                                            .frame(maxWidth: .infinity)
+                                                             .frame(maxWidth: .infinity)
                                                             .shadow(color: Color.gray.opacity(0.5), radius: 5, x: 5, y: 5)
                                                             .shadow(color: Color.white.opacity(0.7), radius: 5, x: -5, y: -5)
 
