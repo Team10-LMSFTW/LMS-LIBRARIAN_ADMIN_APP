@@ -162,7 +162,7 @@ struct SignUpView: View {
                 }
                 .padding(.horizontal)
                 Button(action: onSignUpTap) {
-                    Text("If you have an account Log in here")
+                    Text("Already Have An Account? SignIn")
                         .foregroundColor(Color(red: 0.33, green: 0.25, blue: 0.55))
                 }
                 .frame(maxWidth: .infinity, alignment: .center)
