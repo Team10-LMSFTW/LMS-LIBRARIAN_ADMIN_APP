@@ -53,6 +53,7 @@ struct TabBar: View {
                 }
             }
             .padding(.leading, -45)
+            .padding(.trailing, -56)
             Spacer()
             
             GeometryReader{_ in
