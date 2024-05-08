@@ -56,8 +56,8 @@ struct NewbookRequestView: View {
                     .padding(.vertical, 5)
                     .background(Color.gray.opacity(0.2))
 
-                    ForEach(requests) { request in
-                        RequestRow(request: request)
+                    ForEach(requests.indices, id: \.self) { index in
+                        RequestRow(request: requests[index], index: index)
                     }
                 }
                 .padding(.vertical, 10)
@@ -99,6 +99,7 @@ struct NewbookRequestView: View {
 
 struct RequestRow: View {
     let request: BookRequest
+    let index: Int
 
     var body: some View {
         HStack(spacing: 0) {
@@ -125,7 +126,7 @@ struct RequestRow: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
         }
         .padding(.vertical, 5)
-        .background(Color.white)
+        .background(index % 2 == 0 ? Color.white : Color(red: 188/255, green: 188/255, blue: 189/255).opacity(0.2)) // Alternating row colors
         .cornerRadius(5)
         .shadow(color: Color.gray.opacity(0.5), radius: 5, x: 0, y: 2)
         .padding(.horizontal, 10)

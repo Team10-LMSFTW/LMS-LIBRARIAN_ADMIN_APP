@@ -22,6 +22,7 @@
 		84C5BC312BE3C1A700CF2851 /* MembersActionScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C5BC302BE3C1A700CF2851 /* MembersActionScreen.swift */; };
 		84C5BC352BE3C22700CF2851 /* BooksInventory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C5BC342BE3C22700CF2851 /* BooksInventory.swift */; };
 		84C5BC372BE3C26300CF2851 /* LoanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C5BC362BE3C26300CF2851 /* LoanView.swift */; };
+		84E65C702BEB36D9006DA3E1 /* Neumorphic in Frameworks */ = {isa = PBXBuildFile; productRef = 84E65C6F2BEB36D9006DA3E1 /* Neumorphic */; };
 		980DE2182BE1056E00149F3B /* InventoryBooksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 980DE2172BE1056E00149F3B /* InventoryBooksView.swift */; };
 		984F48BD2BD91A1200B80A75 /* libmaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984F48BC2BD91A1200B80A75 /* libmaApp.swift */; };
 		984F48BF2BD91A1200B80A75 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984F48BE2BD91A1200B80A75 /* ContentView.swift */; };
@@ -119,6 +120,7 @@
 				984F48E82BD91AD900B80A75 /* FirebaseAnalytics in Frameworks */,
 				984F48EA2BD91AD900B80A75 /* FirebaseAuth in Frameworks */,
 				984F48EC2BD91AD900B80A75 /* FirebaseFirestore in Frameworks */,
+				84E65C702BEB36D9006DA3E1 /* Neumorphic in Frameworks */,
 				984F48F02BD91AD900B80A75 /* FirebaseStorage in Frameworks */,
 				984F48EE2BD91AD900B80A75 /* FirebaseFirestoreSwift in Frameworks */,
 			);
@@ -297,6 +299,7 @@
 				984F48ED2BD91AD900B80A75 /* FirebaseFirestoreSwift */,
 				984F48EF2BD91AD900B80A75 /* FirebaseStorage */,
 				986C0C092BDECEDA0030626B /* SDWebImageSwiftUI */,
+				84E65C6F2BEB36D9006DA3E1 /* Neumorphic */,
 			);
 			productName = libma;
 			productReference = 984F48B92BD91A1200B80A75 /* libma.app */;
@@ -373,6 +376,7 @@
 			packageReferences = (
 				984F48E62BD91AD900B80A75 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				986C0C082BDECEDA0030626B /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
+				84E65C6E2BEB36D9006DA3E1 /* XCRemoteSwiftPackageReference "neumorphic" */,
 			);
 			productRefGroup = 984F48BA2BD91A1200B80A75 /* Products */;
 			projectDirPath = "";
@@ -778,6 +782,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		84E65C6E2BEB36D9006DA3E1 /* XCRemoteSwiftPackageReference "neumorphic" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/costachung/neumorphic/";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		984F48E62BD91AD900B80A75 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -797,6 +809,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		84E65C6F2BEB36D9006DA3E1 /* Neumorphic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 84E65C6E2BEB36D9006DA3E1 /* XCRemoteSwiftPackageReference "neumorphic" */;
+			productName = Neumorphic;
+		};
 		984F48E72BD91AD900B80A75 /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 984F48E62BD91AD900B80A75 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
