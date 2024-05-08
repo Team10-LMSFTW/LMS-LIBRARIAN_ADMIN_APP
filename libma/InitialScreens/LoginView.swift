@@ -232,6 +232,7 @@ struct LoginView: View {
                                 .frame(width: 25, height: 25)
                                 .padding(.trailing, 0.5)
                         }
+                        Spacer()
                         
                         Button(action: {
                             // Google sign-in action

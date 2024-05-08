@@ -10,6 +10,7 @@ struct AddBookView: View {
     @State private var loanID = ""
     @State private var quantity = ""
     @State private var showingAlert = false
+    @State private var totalquantity = ""
 
     var body: some View {
         Form {
@@ -20,7 +21,7 @@ struct AddBookView: View {
                 TextField("ISBN", text: $isbn)
                 TextField("Library ID", text: $libraryID)
                 TextField("Loan ID", text: $loanID)
-                TextField("Quantity", text: $quantity)
+                TextField("Quantity", text: $totalquantity)
                     .keyboardType(.numberPad)
             }
             
@@ -56,7 +57,8 @@ struct AddBookView: View {
             library_id: libraryID,
             loan_id: loanID,
             quantity: Int(quantity) ?? 0,
-            thumbnail_url: thumbnailURL
+            thumbnail_url: thumbnailURL,
+            total_quantity: Int(totalquantity) ?? 0
         )
         
         do {

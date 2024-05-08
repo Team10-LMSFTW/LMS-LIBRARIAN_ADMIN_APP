@@ -1,28 +1,20 @@
-//
-//  BooksReturnRequestView.swift
-//  libma
-//
-//  Created by admin on 02/05/24.
-//
-
 import SwiftUI
+import FirebaseFirestore
+import Firebase
+import FirebaseFirestoreSwift
 
 struct BooksReturnRequestView: View {
-    let requests: [BooksRequest]
-    let books: [Book]
+    @State var requests: [Loan] = []
     
     var body: some View {
-        
         VStack {
             Text("Return Requests")
                 .font(.largeTitle)
                 
             ScrollView {
-                VStack(spacing: 20) {
+                VStack(spacing: 30) {
                     ForEach(requests) { request in
-                        if let book = books.first(where: { $0.isbn == request.bookISBN }) {
-                            BookReturnRequestCardView(book: book, request: request)
-                        }
+                        BookLendingRequestCardView(request: request)
                     }
                 }
                 .padding()
@@ -30,124 +22,170 @@ struct BooksReturnRequestView: View {
             .navigationTitle("Book Requests")
             Spacer()
         }
+        .onAppear {
+            fetchData()
+        }
+    }
+    
+    private func fetchData() {
+        let db = Firestore.firestore()
+        db.collection("loans")
+            .whereField("loan_status", isEqualTo: "accepted")
+            .getDocuments { querySnapshot, error in
+                if let error = error {
+                    print("Error fetching documents: \(error)")
+                    return
+                }
+                
+                guard let documents = querySnapshot?.documents else {
+                    print("No documents found.")
+                    return
+                }
+                
+                var allLoans: [Loan] = []
+                
+                for document in documents {
+                    let data = document.data()
+                    print(data)
+                    guard let bookRefID = data["book_ref_id"] as? String,
+                          let lendingDateTimestamp = data["lending_date"] as? Timestamp,
+                          let dueDateStamp = data["due_date"] as? Timestamp,
+                          let loanStatus = data["loan_status"] as? String,
+                          let user_id = data["user_id"] as? String,
+                          let penaltyAmt  = data["penalty_amount"] as? Int,
+                          let libID  = data["library_id"] as? Int
+                    else {
+                        continue
+                    }
+                    
+                    let loan = Loan(id: document.documentID, book_ref_id: bookRefID, lending_date: lendingDateTimestamp, due_date: dueDateStamp, user_id: user_id, penalty_amount: penaltyAmt, library_id: libID, loan_status: loanStatus)
+                    print(loan)
+                    allLoans.append(loan)
+                    print("all loans hai")
+                    print(allLoans)
+                }
+                
+                allLoans.sort(by: { $0.lending_date.dateValue() > $1.lending_date.dateValue() })
+                self.requests = allLoans
+            }
     }
 }
 
-struct BookReturnRequestCardView: View {
-    let book: Book
-    let request: BooksRequest
+struct BooksReturnRequestCardView: View {
+    @StateObject var bookModel = BookViewModel()
+    let request: Loan
     
     var body: some View {
         VStack(alignment: .leading) {
-            
-            HStack {
-                VStack(alignment: .leading){
-                    Text(book.book_name)
-                        .font(.largeTitle)
-                        .padding()
-                    HStack(spacing: 150) {
-                        // Book cover image
-
-                            HStack (spacing: 50) {
-                                AsyncImage(url: URL(string: book.cover_url)) { phase in
-                                    switch phase {
-                                    case .success(let image):
-                                        image
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fill)
-                                            .frame(width: 100, height: 150)
-                                            .cornerRadius(8)
-                                    case .failure(_):
-                                        Image(systemName: "book")
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fit)
-                                            .frame(width: 100, height: 150)
-                                            .foregroundColor(.gray)
-                                    case .empty:
-                                        ProgressView()
-                                            .frame(width: 100, height: 150)
-                                    @unknown default:
-                                        EmptyView()
-                                    }
-                                }.padding()
-                                VStack(alignment: .leading,spacing: 30) {
-                                    
-                                    Text("ISBN: \(book.isbn)")
-                                    
-                                    Text("Lending Date: \(request.lendingDate)")
-                                    Spacer()
-                                    
+            if let book = bookModel.book {
+                HStack {
+                    VStack(alignment: .leading){
+                        Text(book.book_name)
+                            .font(.largeTitle)
+                        
+                        HStack(spacing: 5) {
+                            AsyncImage(url: URL(string: book.cover_url)) { phase in
+                                switch phase {
+                                case .success(let image):
+                                    image
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fill)
+                                        .frame(width: 120, height: 120)
+                                        .cornerRadius(8)
+                                case .failure(_):
+                                    Image(systemName: "book")
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: 120, height: 120)
+                                        .foregroundColor(.gray)
+                                case .empty:
+                                    ProgressView()
+                                        .frame(width: 120, height: 120)
+                                @unknown default:
+                                    EmptyView()
                                 }
-                                .padding()
-                                VStack(alignment: .leading, spacing: 20){
-                                    // User details
-                                    Text("Requested by: \(request.requesterName)")
-                                    Text("User ID: \(request.requesterID)")
-                                    
-                                    // Dates
-                                    
-                                    Text("Return Date: \(request.returnDate)")
-                                    Spacer()
-                                    // Buttons for accepting and rejecting the request
-                                    HStack {
-                                        Button(action: {
-                                            // Action for accepting request
-                                        }) {
-                                            Text("Accept")
-                                                .padding()
-                                                .foregroundColor(.white)
-                                                .background(Color.green)
-                                                .cornerRadius(8)
-                                        }
-                                        Button(action: {
-                                            // Action for rejecting request
-                                        }) {
-                                            Text("Reject")
-                                                .padding()
-                                                .foregroundColor(.white)
-                                                .background(Color.red)
-                                                .cornerRadius(8)
-                                        }
-                                    }
-                                }//.padding()
+                            }.padding()
+                            VStack(alignment: .leading,spacing: 5) {
+                                
+                                Text("ISBN: \(book.isbn)")
+                                Text("Lending Date: \(request.lending_date)")
+                                Text("Return Date: \(request.due_date)")
+                                Spacer()
+                                
                                 
                             }
+                            .padding()
+                            VStack(alignment: .leading, spacing: 5){
+                                Text("Requested by: \(request.user_id)")
+                                Text("User ID: \(request.user_id)")
+                                
+                                Spacer()
+                                
+                                HStack {
+                                    Button(action: {
+                                        updateLoanStatus(status: "returned")
+                                    }) {
+                                        Text("Return")
+                                            .padding()
+                                            .foregroundColor(.white)
+                                            .background(Color.green)
+                                            .cornerRadius(8)
+                                    }
+                                    
+                                }
+                            }.padding()
+                            
+                        }
+                        
                     }
-                    
-                }
+                }.padding()
             }
-            
+        }
+        .onAppear {
+            bookModel.fetchBook(for: request.book_ref_id)
         }
         .padding()
-        .background(Color(Color(red: 0.94, green: 0.92, blue: 1)))
+        .background(Color(red: 0.94, green: 0.92, blue: 1))
         .cornerRadius(12)
-        .shadow(radius: 0)
-        
+        .shadow(radius: 0).frame(height: 300)
     }
+    private func updateLoanStatus(status: String) {
+            let db = Firestore.firestore()
+        db.collection("loans").document(request.id ?? "")
+                .updateData(["loan_status": status]) { error in
+                    if let error = error {
+                        print("Error updating document: \(error)")
+                    } else {
+                        print("Document successfully updated")
+                    }
+                }
+        }
 }
 
-struct BooksReturnRequestView_Previews: PreviewProvider {
-    static var previews: some View {
-        let books: [Book] = [
-            Book(author_name: "Author 1", book_name: "Book 1", category: "Category 1", cover_url: "cover1.png", isbn: "123456789", library_id: "Library 1", loan_id: "Loan 1", quantity: 1, thumbnail_url: "thumbnail1.png"),
-            Book(author_name: "Author 2", book_name: "Book 2", category: "Category 2", cover_url: "cover2.png", isbn: "987654321", library_id: "Library 2", loan_id: "Loan 2", quantity: 1, thumbnail_url: "thumbnail2.png"),
-            Book(author_name: "Author 3", book_name: "Book 3", category: "Category 3", cover_url: "cover3.png", isbn: "123456780", library_id: "Library 3", loan_id: "Loan 3", quantity: 1, thumbnail_url: "thumbnail3.png"),
-            Book(author_name: "Author 4", book_name: "Book 4", category: "Category 4", cover_url: "cover4.png", isbn: "987654322", library_id: "Library 4", loan_id: "Loan 4", quantity: 1, thumbnail_url: "thumbnail4.png"),
-            Book(author_name: "Author 5", book_name: "Book 5", category: "Category 5", cover_url: "cover5.png", isbn: "123456781", library_id: "Library 5", loan_id: "Loan 5", quantity: 1, thumbnail_url: "thumbnail5.png"),
-            Book(author_name: "Author 6", book_name: "Book 6", category: "Category 6", cover_url: "cover6.png", isbn: "987654323", library_id: "Library 6", loan_id: "Loan 6", quantity: 1, thumbnail_url: "thumbnail6.png"),
-            Book(author_name: "Author 7", book_name: "Book 7", category: "Category 7", cover_url: "cover7.png", isbn: "123456782", library_id: "Library 7", loan_id: "Loan 7", quantity: 1, thumbnail_url: "thumbnail7.png")
-        ]
-
-        let requests: [BooksRequest] = [
-            BooksRequest(id: UUID(), bookISBN: "123456789", requesterName: "John Doe", requesterID: "1234", lendingDate: "2024-05-01", returnDate: "2024-06-01"),
-            BooksRequest(id: UUID(), bookISBN: "987654321", requesterName: "Alice Smith", requesterID: "5678", lendingDate: "2024-05-02", returnDate: "2024-06-02"),
-            BooksRequest(id: UUID(), bookISBN: "123456780", requesterName: "Bob Johnson", requesterID: "91011", lendingDate: "2024-05-03", returnDate: "2024-06-03"),
-            BooksRequest(id: UUID(), bookISBN: "987654322", requesterName: "Emily Brown", requesterID: "121314", lendingDate: "2024-05-04", returnDate: "2024-06-04"),
-            BooksRequest(id: UUID(), bookISBN: "123456781", requesterName: "Michael Wilson", requesterID: "151617", lendingDate: "2024-05-05", returnDate: "2024-06-05"),
-            BooksRequest(id: UUID(), bookISBN: "987654323", requesterName: "Sophia Taylor", requesterID: "181920", lendingDate: "2024-05-06", returnDate: "2024-06-06"),
-            BooksRequest(id: UUID(), bookISBN: "123456782", requesterName: "Emma Garcia", requesterID: "212223", lendingDate: "2024-05-07", returnDate: "2024-06-07")
-        ]
-
-        return BooksReturnRequestView(requests: requests, books: books)
+class BookVModel: ObservableObject {
+    @Published var book: Book?
+    
+    func fetchBook(for bookRefID: String) {
+        let db = Firestore.firestore()
+        db.collection("books").document(bookRefID)
+            .getDocument { document, error in
+                if let error = error {
+                    print("Error fetching book: \(error)")
+                    return
+                }
+                
+                if let document = document, document.exists {
+                    do {
+                        let book = try document.data(as: Book.self)
+                        DispatchQueue.main.async {
+                            self.book = book
+                        }
+                    } catch {
+                        print("Error decoding book: \(error)")
+                    }
+                } else {
+                    print("Book does not exist")
+                }
+            }
     }
 }
