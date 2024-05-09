@@ -2,18 +2,31 @@ import SwiftUI
 import Charts
 import FirebaseAuth
 import Firebase
+import AVFoundation
 
 struct DashboardPage2: View {
    
+//    @State private var progress: CGFloat = 0.7
+//    @State private var numberOfUsers: Int = 0
+//    @State private var penaltyAmount: Int = 0
+//    @State private var totalQuantityText: Int = 0
+//    @State private var numberOfRequests: Int = 0
+//    @State private var membershipTypes: [(type: String, count: Int)] = []
+//    @State private var isActiveBookFine: Bool = false
+//    @State private var isActiveMembers: Bool = false
+//    @State private var TotalBooks: Bool = false
     @State private var progress: CGFloat = 0.7
-    @State private var numberOfUsers: Int = 0
-    @State private var penaltyAmount: Int = 0
-    @State private var totalQuantityText: Int = 0
-    @State private var numberOfRequests: Int = 0
-    @State private var membershipTypes: [(type: String, count: Int)] = []
-    @State private var isActiveBookFine: Bool = false
-    @State private var isActiveMembers: Bool = false
-    @State private var TotalBooks: Bool = false
+        @State private var numberOfUsers: Int = 0
+        @State private var penaltyAmount: Int = 0
+        @State private var totalQuantityText: Int = 0
+        @State private var numberOfRequests: Int = 0
+        @State private var membershipTypes: [(type: String, count: Int)] = []
+        @State private var isActiveBookFine: Bool = false
+        @State private var isActiveMembers: Bool = false
+        @State private var TotalBooks: Bool = false
+        @State private var readingContent: String = ""
+        @State private var isReading: Bool = false
+        let synthesizer = AVSpeechSynthesizer()
    
     var body: some View {
         HStack {
@@ -24,6 +37,16 @@ struct DashboardPage2: View {
                
                 ScrollView {
                     VStack(alignment: .leading) {
+                        HStack {
+                                                    Spacer()
+                                                    Button(action: {
+                                                        readAloud()
+                                                    }) {
+                                                        Image(systemName: "speaker.wave.2.fill")
+                                                            .font(.title)
+                                                            .padding()
+                                                    }
+                                                }
                         Text("Dashboard")
                             .font(
                                 Font.custom("SF Pro", size: 35)
@@ -570,7 +593,23 @@ struct DashboardPage2: View {
                 penaltyAmount = (totalPenaltyInt)
             }
     }
-   
+    func readAloud() {
+           isReading.toggle()
+           if isReading {
+               let content = """
+                   Fines Collected: \(penaltyAmount) rupees
+                   User Info: \(numberOfUsers) members
+                   Books List: \(totalQuantityText) books
+                   Requests Raised: \(numberOfRequests) requests
+                   """
+               readingContent = content
+               let utterance = AVSpeechUtterance(string: content)
+               utterance.voice = AVSpeechSynthesisVoice(language: "en-US")
+               synthesizer.speak(utterance)
+           } else {
+               synthesizer.stopSpeaking(at: .immediate)
+           }
+       }
    
 }
 
