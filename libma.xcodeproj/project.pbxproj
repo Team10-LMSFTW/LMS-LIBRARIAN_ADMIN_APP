@@ -13,6 +13,7 @@
 		54B994FF2BDAE34700FBCB01 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B994FE2BDAE34700FBCB01 /* TabBar.swift */; };
 		54C5304E2BE8EE91008298D9 /* Neumorphic in Frameworks */ = {isa = PBXBuildFile; productRef = 54C5304D2BE8EE91008298D9 /* Neumorphic */; };
 		54C530502BE9F182008298D9 /* Color.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 54C5304F2BE9F182008298D9 /* Color.xcassets */; };
+		54C530522BECCC81008298D9 /* ISBNPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C530512BECCC81008298D9 /* ISBNPage.swift */; };
 		8439381C2BDA10A50096E1D1 /* AdminViewGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8439381B2BDA10A50096E1D1 /* AdminViewGroup.swift */; };
 		8439381E2BDA10B40096E1D1 /* LibrarianViewGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8439381D2BDA10B40096E1D1 /* LibrarianViewGroup.swift */; };
 		843938202BDA12910096E1D1 /* ForgotPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8439381F2BDA12910096E1D1 /* ForgotPasswordView.swift */; };
@@ -76,6 +77,7 @@
 		544CEE952BE00EA90005A146 /* DashboardPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardPage.swift; sourceTree = "<group>"; };
 		54B994FE2BDAE34700FBCB01 /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
 		54C5304F2BE9F182008298D9 /* Color.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Color.xcassets; sourceTree = "<group>"; };
+		54C530512BECCC81008298D9 /* ISBNPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ISBNPage.swift; sourceTree = "<group>"; };
 		8439381B2BDA10A50096E1D1 /* AdminViewGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminViewGroup.swift; sourceTree = "<group>"; };
 		8439381D2BDA10B40096E1D1 /* LibrarianViewGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibrarianViewGroup.swift; sourceTree = "<group>"; };
 		8439381F2BDA12910096E1D1 /* ForgotPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordView.swift; sourceTree = "<group>"; };
@@ -172,6 +174,7 @@
 				986C0C062BDECE530030626B /* BooksInventoryView.swift */,
 				980DE2172BE1056E00149F3B /* InventoryBooksView.swift */,
 				986C0C042BDECB430030626B /* AddBookView.swift */,
+				54C530512BECCC81008298D9 /* ISBNPage.swift */,
 			);
 			path = ViewGroups;
 			sourceTree = "<group>";
@@ -443,6 +446,7 @@
 				984F48BD2BD91A1200B80A75 /* libmaApp.swift in Sources */,
 				843DD1062BE0E97E005196A1 /* SwiftUIView.swift in Sources */,
 				A215D6492BE88D9700152C7A /* BooksRequest.swift in Sources */,
+				54C530522BECCC81008298D9 /* ISBNPage.swift in Sources */,
 				542545AD2BE10B9500F02AF6 /* NotificationsPage.swift in Sources */,
 				A215D6412BE6604700152C7A /* CreateUserPage.swift in Sources */,
 				986C0C032BDECB060030626B /* DatamodelBooks.swift in Sources */,
