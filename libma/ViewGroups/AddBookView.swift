@@ -11,26 +11,41 @@ struct AddBookView: View {
     @State private var quantity = ""
     @State private var showingAlert = false
     @State private var totalquantity = ""
+    
+    @Environment(\.colorScheme) var colorScheme
 
     var body: some View {
-        Form {
-            Section(header: Text("Book Details")) {
-                TextField("Author Name", text: $authorName)
-                TextField("Book Name", text: $bookName)
-                TextField("Category", text: $category)
-                TextField("ISBN", text: $isbn)
-                TextField("Library ID", text: $libraryID)
-                TextField("Loan ID", text: $loanID)
-                TextField("Quantity", text: $totalquantity)
-                    .keyboardType(.numberPad)
+        VStack(spacing: 20) {
+            Text("Add New Book")
+                .font(.title).bold()
+                .foregroundColor(Color(colorScheme == .light ? UIColor(hex: "3B3D60") : UIColor(hex: "F5F5F6")))
+                .padding()
+            
+            VStack(alignment: .leading, spacing: 20) {
+                Text("Book Details")
+                    .font(.headline)
+                    .foregroundColor(Color(colorScheme == .light ? UIColor(hex: "3B3D60") : UIColor(hex: "F5F5F6")))
+                    .padding()
+                
+                VStack(spacing: 40) {
+                    TextField("Author Name", text: $authorName)
+                    TextField("Book Name", text: $bookName)
+                    TextField("Category", text: $category)
+                    TextField("ISBN", text: $isbn)
+                    TextField("Library ID", text: $libraryID)
+                    TextField("Loan ID", text: $loanID)
+                    TextField("Quantity", text: $totalquantity)
+                        .keyboardType(.numberPad)
+                }
+                .padding()
             }
             
-            Section {
-                Button("Add Book") {
-                    addBook()
-                }
+            Button("Add Book") {
+                addBook()
             }
+            .buttonStyle(PrimaryButtonStyle())
         }
+        .padding()
         .navigationTitle("Add Book")
         .alert(isPresented: $showingAlert) {
             Alert(title: Text("Success!!"), message: Text("Book added successfully"), dismissButton: .default(Text("OK")))
@@ -84,5 +99,17 @@ struct AddBookView: View {
 struct AddBookView_Previews: PreviewProvider {
     static var previews: some View {
         AddBookView()
+    }
+}
+
+struct PrimaryButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .padding()
+            .frame(maxWidth: .infinity)
+            .background(Color.blue)
+            .foregroundColor(.white)
+            .cornerRadius(8)
+            .padding()
     }
 }

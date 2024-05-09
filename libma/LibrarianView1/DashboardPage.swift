@@ -91,7 +91,7 @@ struct DashboardPage: View {
                                                 .foregroundColor(Color(colorScheme == .light ? UIColor(hex: "5E80D4") : UIColor(hex: "9B98DD")))
                                                 .bold()
                                                 .onAppear {
-                                                    fetchCategoryOfUsers()
+                                                    //fetchCategoryOfUsers()
                                                     fetchNumberOfUsers()
                                                     fetchPenaltyAmount()
                                                     fetchRequestCount()

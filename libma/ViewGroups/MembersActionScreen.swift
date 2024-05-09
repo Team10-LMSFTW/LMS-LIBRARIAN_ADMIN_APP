@@ -60,6 +60,8 @@ struct UserListView3: View {
     @State private var filterOptions: [String] = ["All Users", "Member", "Librarian", "Admin"]
     @State private var selectedFilter: String = "All Users"
     @State private var showFilterMenu: Bool = false
+    
+    @Environment(\.colorScheme) var colorScheme
 
     var filteredUsers: [UserData2] {
         let searchedUsers = searchText.isEmpty ? users : users.filter { user in
@@ -82,20 +84,22 @@ struct UserListView3: View {
 
     var body: some View {
         ZStack {
-            Color(hex: 0xEEEEEE)
-                .edgesIgnoringSafeArea(.all)
+            Color(colorScheme == .light ? UIColor(hex: "F1F2F7") : UIColor(hex: "323345"))
+                        .edgesIgnoringSafeArea(.all)
 
-            VStack {
+            VStack (spacing: 40) {
                 Text("Members List")
                     .font(.title)
+                    .foregroundColor(Color(colorScheme == .light ? UIColor(hex: "3B3D60") : UIColor(hex: "F5F5F6")))
                     .padding()
 
-                HStack {
+                HStack (spacing: 40) {
                     TextField("Search Users...", text: $searchText)
-                        .padding(.vertical, 9) // Adjust vertical padding to reduce the size
-                        .padding(.horizontal) // Maintain horizontal padding
-                        .background(Color.white)  // Add white background
-                        .cornerRadius(8) // Add corner radius for a rounded look
+                        .padding(.vertical, 9)
+                        .padding(.horizontal)
+                        .frame(width: 900)
+                        .background(Color(colorScheme == .light ? UIColor(hex: "DCDFE6") : UIColor(hex: "3B3D60")))
+                        .cornerRadius(8)
                         .overlay(
                             HStack {
                                 Spacer()
@@ -105,14 +109,14 @@ struct UserListView3: View {
                             }
                         )
 
-                    Spacer()
-
                     Button(action: {
                         showFilterMenu.toggle()
                     }) {
                         Text("Filter")
-                            .padding(.vertical, 4) // Adjust vertical padding to match the search bar
-                            .padding(.horizontal) // Maintain horizontal padding
+                            .foregroundColor(colorScheme == .light ? Color(UIColor(hex: "323345")) : Color(UIColor(hex: "F1F2F7")))
+                            .frame(width: 120)
+                            .padding(.vertical, 4)
+                            .padding(.horizontal)
                     }
                     .buttonStyle(BorderedButtonStyle())
                     .popover(isPresented: $showFilterMenu) {
@@ -129,24 +133,31 @@ struct UserListView3: View {
                         .padding()
                     }
                 }
-                .padding() // Add padding around the HStack
-
-
-                Table(filteredUsers) {
-                    TableColumn("Name") { user in
-                        Text("\(user.firstName ?? "N/A") \(user.lastName ?? "N/A")")
-                    }
-                    TableColumn("Category", value: \.nonOptionalCategoryType)
-                    TableColumn("Email", value: \.nonOptionalEmail)
-                    TableColumn("Library ID", value: \.nonOptionalLibraryID)
-                    TableColumn("Membership Type", value: \.nonOptionalMembershipType)
-                    TableColumn("Rating") { user in
-                        Text(user.rating.map { "\($0)" } ?? "N/A")
-                    }
-                }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .background(Color(red: 0.94, green: 0.92, blue: 1))
                 .padding()
+                
+                RoundedRectangle(cornerRadius: 20)
+                    .fill(colorScheme == .light ? Color(hex: "F1F2F7") : Color(hex: "323345"))
+                    .frame(maxWidth: 1120, maxHeight: .infinity)
+                    .shadow(color: colorScheme == .light ? Color.black.opacity(0.2) : Color.white.opacity(0.2), radius: 10, x: 5, y: 5)
+                    .shadow(color: colorScheme == .light ? Color.black.opacity(0.2) : Color.white.opacity(0.2), radius: 10, x: -5, y: -5)
+                    .softOuterShadow()
+                    .overlay (
+                        Table(filteredUsers) {
+                            TableColumn("Name") { user in
+                                Text("\(user.firstName ?? "N/A") \(user.lastName ?? "N/A")")
+                            }
+                            TableColumn("Category", value: \.nonOptionalCategoryType)
+                            TableColumn("Email", value: \.nonOptionalEmail)
+                            TableColumn("Library ID", value: \.nonOptionalLibraryID)
+                            TableColumn("Membership Type", value: \.nonOptionalMembershipType)
+                            TableColumn("Rating") { user in
+                                Text(user.rating.map { "\($0)" } ?? "N/A")
+                            }
+                        }
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            .background(Color(red: 0.94, green: 0.92, blue: 1))
+                            .padding()
+                    )
             }
         }
         .onAppear {

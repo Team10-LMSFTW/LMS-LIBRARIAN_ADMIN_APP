@@ -21,6 +21,8 @@ struct BookTableView: View {
     @State private var showFilterMenu: Bool = false
     @State private var recommendedBooks: [BookModel] = []
     
+    @Environment(\.colorScheme) var colorScheme
+    
     var filteredBooks: [BookModel] {
         let searchedBooks = searchText.isEmpty ? books : books.filter { book in
             let searchTermLower = searchText.lowercased()
@@ -38,88 +40,106 @@ struct BookTableView: View {
     }
     
     var body: some View {
-        VStack {
-            Text("Books List")
-                .font(.title)
-                .padding()
-            
-            HStack {
-                TextField("Search Books...", text: $searchText)
-                    .padding(.vertical, 9) // Adjust vertical padding to reduce the size
-                    .padding(.horizontal) // Maintain horizontal padding
-                    .background(Color(red: 0.9, green: 0.9, blue: 0.9)) // Add white background
-                    .cornerRadius(8) // Add corner radius for a rounded look
-                    .overlay(
-                        HStack {
-                            Spacer()
-                            Image(systemName: "magnifyingglass")
-                                .foregroundColor(.gray)
-                                .padding(.trailing, 8)
-                        }
-                    )
+        ZStack {
+            Color(colorScheme == .light ? UIColor(hex: "F1F2F7") : UIColor(hex: "323345"))
+                        .edgesIgnoringSafeArea(.all)
+            VStack (spacing: 40) {
+                Text("Books List")
+                    .font(.title)
+                    .foregroundColor(Color(colorScheme == .light ? UIColor(hex: "3B3D60") : UIColor(hex: "F5F5F6")))
+                    .padding()
                 
-                Spacer()
-                
-                Button(action: {
-                    showFilterMenu.toggle()
-                }) {
-                    Text("Filter")
-                        .padding(.vertical, 4) // Adjust vertical padding to match the search bar
-                        .padding(.horizontal) // Maintain horizontal padding
-                }
-                .buttonStyle(BorderedButtonStyle())
-                .popover(isPresented: $showFilterMenu) {
-                    VStack(alignment: .leading, spacing: 10) {
-                        ForEach(filterOptions, id: \.self) { option in
-                            Button(action: {
-                                selectedFilter = option
-                                showFilterMenu = false
-                            }) {
-                                Text(option)
+                HStack (spacing: 40) {
+                    Spacer()
+                    TextField("Search Books...", text: $searchText)
+                        .padding(.vertical, 9)
+                        .padding(.horizontal)
+                        .frame(width: 900)
+                        .background(Color(colorScheme == .light ? UIColor(hex: "DCDFE6") : UIColor(hex: "3B3D60")))
+                        .cornerRadius(8)
+                        .overlay(
+                            HStack {
+                                Spacer()
+                                Image(systemName: "magnifyingglass")
+                                    .foregroundColor(.gray)
+                                    .padding(.trailing, 8)
+                            }
+                        )
+                    
+                    Button(action: {
+                        showFilterMenu.toggle()
+                    }) {
+                        
+                        Text("Filter")
+                            .foregroundColor(colorScheme == .light ? Color(UIColor(hex: "323345")) : Color(UIColor(hex: "F1F2F7")))
+                            .frame(width: 120)
+                            .padding(.vertical, 4)
+                            .padding(.horizontal)
+                    }
+                    .buttonStyle(BorderedButtonStyle())
+                    .popover(isPresented: $showFilterMenu) {
+                        VStack(alignment: .leading, spacing: 10) {
+                            ForEach(filterOptions, id: \.self) { option in
+                                Button(action: {
+                                    selectedFilter = option
+                                    showFilterMenu = false
+                                }) {
+                                    Text(option)
+                                }
                             }
                         }
+                        .padding()
                     }
+                    Spacer()
+                }
+                .padding() // Add padding around the HStack
+                
+                RoundedRectangle(cornerRadius: 20)
+                    .fill(colorScheme == .light ? Color(hex: "F1F2F7") : Color(hex: "323345"))
+                    .frame(maxWidth: 1120, maxHeight: .infinity)
+                    .shadow(color: colorScheme == .light ? Color.black.opacity(0.2) : Color.white.opacity(0.2), radius: 10, x: 5, y: 5)
+                    .shadow(color: colorScheme == .light ? Color.black.opacity(0.2) : Color.white.opacity(0.2), radius: 10, x: -5, y: -5)
+                    .softOuterShadow()
+                    .overlay(
+                        Table(filteredBooks) {
+                            TableColumn("ISBN", value: \.isbn)
+                            TableColumn("Book Name", value: \.bookName)
+                            TableColumn("Quantity") { book in
+                                Text("\(book.quantity)") // Convert Int to String
+                            }
+                            TableColumn("Category", value: \.category)
+                            TableColumn("Library ID", value: \.libraryID)
+                        }
+                        .background(Color.clear)
+                        .padding()
+                    )
                     .padding()
-                }
+                                
+                // Recommended books section
+                //            VStack(alignment: .leading) {
+                //                Text("Recommended Books")
+                //                    .font(.headline)
+                //                    .padding()
+                //
+                //                Table(recommendedBooks) {
+                //                    TableColumn("ISBN", value: \.isbn)
+                //                    TableColumn("Book Name", value: \.bookName)
+                //                    TableColumn("Quantity") { book in
+                //                        Text("\(book.quantity)") // Convert Int to String
+                //                    }
+                //                    TableColumn("Category", value: \.category)
+                //                    TableColumn("Library ID", value: \.libraryID)
+                //                }
+                //                .frame(maxWidth: .infinity, maxHeight: 200)
+                //                .padding()
+                //            }
             }
-            .padding() // Add padding around the HStack
-            
-            Table(filteredBooks) {
-                TableColumn("ISBN", value: \.isbn)
-                TableColumn("Book Name", value: \.bookName)
-                TableColumn("Quantity") { book in
-                    Text("\(book.quantity)") // Convert Int to String
-                }
-                TableColumn("Category", value: \.category)
-                TableColumn("Library ID", value: \.libraryID)
-            }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .padding()
-            
-            // Recommended books section
-            //            VStack(alignment: .leading) {
-            //                Text("Recommended Books")
-            //                    .font(.headline)
-            //                    .padding()
-            //
-            //                Table(recommendedBooks) {
-            //                    TableColumn("ISBN", value: \.isbn)
-            //                    TableColumn("Book Name", value: \.bookName)
-            //                    TableColumn("Quantity") { book in
-            //                        Text("\(book.quantity)") // Convert Int to String
-            //                    }
-            //                    TableColumn("Category", value: \.category)
-            //                    TableColumn("Library ID", value: \.libraryID)
-            //                }
-            //                .frame(maxWidth: .infinity, maxHeight: 200)
-            //                .padding()
-            //            }
+            .frame(maxWidth: .infinity, alignment: .center)
+            .onAppear {
+                fetchData()
+                fetchFilterOptions()
+                //            getRecommendedBooks()
         }
-        .frame(maxWidth: .infinity, alignment: .center)
-        .onAppear {
-            fetchData()
-            fetchFilterOptions()
-            //            getRecommendedBooks()
         }
     }
     

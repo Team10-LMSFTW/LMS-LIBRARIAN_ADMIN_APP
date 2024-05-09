@@ -1,10 +1,3 @@
-//
-//  LoanView.swift
-//  libma
-//
-//  Created by admin on 02/05/24.
-//
-
 import SwiftUI
 import Firebase
 import FirebaseFirestoreSwift
@@ -26,60 +19,137 @@ struct LoanModel: Identifiable, Codable, Hashable {
 // Create a SwiftUI view to display the list of loans in a table format
 struct LoanView: View {
     @State private var loans: [LoanModel] = []
+    @State private var searchText: String = ""
+    @State private var selectedLoanStatus: String = "All Loans"
+    private let loanStatusOptions = ["All Loans", "Accepted", "Requested", "Rejected"]
+    @State private var showFilterMenu: Bool = false
+    
+    @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
-            VStack {
+        ZStack {
+            Color(colorScheme == .light ? UIColor(hex: "F1F2F7") : UIColor(hex: "323345"))
+                        .edgesIgnoringSafeArea(.all)
+            VStack (spacing: 40) {
                 Text("Loans List")
                     .font(.title)
+                    .foregroundColor(Color(colorScheme == .light ? UIColor(hex: "3B3D60") : UIColor(hex: "F5F5F6")))
                     .padding()
                 
-                Table(loans) {
-                    TableColumn("User First Name", value: \.firstName)
-                    TableColumn("Book Name", value: \.bookName)
-                    TableColumn("Book Ref ID", value: \.bookRefID)
-                    TableColumn("Loan Status", value: \.loanStatus)
-                    TableColumn("Lending Date") { loan in
-                        Text(formattedDate(from: loan.lendingDate))
-                    }
-                    TableColumn("Due Date") { loan in
-                        Text(formattedDate(from: loan.dueDate))
-                    }
-                    TableColumn("Overdue Days") { loan in
-                        let currentDate = Date()
-                        if currentDate > loan.dueDate.dateValue() {
-                            let calendar = Calendar.current
-                            let overdueDays = calendar.dateComponents([.day], from: loan.dueDate.dateValue(), to: currentDate).day ?? 0
-                            Text("\(overdueDays)")
-                        } else {
-                            Text("0")
-                        }
-                    }
-                    TableColumn("Penalty Amount") { loan in
-                        if loan.loanStatus == "accepted" {
-                            let currentDate = Date()
-                            if currentDate > loan.dueDate.dateValue() {
-                                let calendar = Calendar.current
-                                let overdueDays = calendar.dateComponents([.day], from: loan.dueDate.dateValue(), to: currentDate).day ?? 0
-                                let fineRate = 30 // Define your fine rate here
-                                let updatedPenalty = loan.penaltyAmount
-                                Text("\(updatedPenalty)")
-                            } else {
-                                Text("\(loan.penaltyAmount)")
+                HStack (spacing: 40) {
+                    TextField("Search Loans...", text: $searchText)
+                        .padding(.vertical, 9)
+                        .padding(.horizontal)
+                        .frame(width: 900)
+                        .background(Color(colorScheme == .light ? UIColor(hex: "DCDFE6") : UIColor(hex: "3B3D60")))
+                        .cornerRadius(8)
+                        .overlay(
+                            HStack {
+                                Spacer()
+                                Image(systemName: "magnifyingglass")
+                                    .foregroundColor(.gray)
+                                    .padding(.trailing, 8)
                             }
-                        } else {
-                            Text("N/A")
+                        )
+
+                    
+                    Button(action: {
+                        showFilterMenu.toggle()
+                    }) {
+                        Text("Filter")
+                            .foregroundColor(colorScheme == .light ? Color(UIColor(hex: "323345")) : Color(UIColor(hex: "F1F2F7")))
+                            .frame(width: 120)
+                            .padding(.vertical, 4)
+                            .padding(.horizontal)
+                    }
+                    .buttonStyle(BorderedButtonStyle())
+                    .popover(isPresented: $showFilterMenu) {
+                        VStack(alignment: .leading, spacing: 10) {
+                            ForEach(loanStatusOptions, id: \.self) { option in
+                                Button(action: {
+                                    selectedLoanStatus = option
+                                    showFilterMenu = false
+                                }) {
+                                    Text(option)
+                                }
+                            }
                         }
+                        .padding()
                     }
                 }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .padding()
+                .padding() // Add padding around the HStack
+                
+                RoundedRectangle(cornerRadius: 20)
+                    .fill(colorScheme == .light ? Color(hex: "F1F2F7") : Color(hex: "323345"))
+                    .frame(maxWidth: 1120, maxHeight: .infinity)
+                    .shadow(color: colorScheme == .light ? Color.black.opacity(0.2) : Color.white.opacity(0.2), radius: 10, x: 5, y: 5)
+                    .shadow(color: colorScheme == .light ? Color.black.opacity(0.2) : Color.white.opacity(0.2), radius: 10, x: -5, y: -5)
+                    .softOuterShadow()
+                    .overlay (
+                        Table(filteredLoans) {
+                            TableColumn("User First Name", value: \.firstName)
+                            TableColumn("Book Name", value: \.bookName)
+                            TableColumn("Book Ref ID", value: \.bookRefID)
+                            TableColumn("Loan Status", value: \.loanStatus)
+                            TableColumn("Lending Date") { loan in
+                                Text(formattedDate(from: loan.lendingDate))
+                            }
+                            TableColumn("Due Date") { loan in
+                                Text(formattedDate(from: loan.dueDate))
+                            }
+                            TableColumn("Overdue Days") { loan in
+                                let currentDate = Date()
+                                if currentDate > loan.dueDate.dateValue() {
+                                    let calendar = Calendar.current
+                                    let overdueDays = calendar.dateComponents([.day], from: loan.dueDate.dateValue(), to: currentDate).day ?? 0
+                                    Text("\(overdueDays)")
+                                } else {
+                                    Text("0")
+                                }
+                            }
+                            TableColumn("Penalty Amount") { loan in
+                                if loan.loanStatus == "accepted" {
+                                    let currentDate = Date()
+                                    if currentDate > loan.dueDate.dateValue() {
+                                        let calendar = Calendar.current
+                                        let overdueDays = calendar.dateComponents([.day], from: loan.dueDate.dateValue(), to: currentDate).day ?? 0
+                                        let fineRate = 30 // Define your fine rate here
+                                        let updatedPenalty = loan.penaltyAmount
+                                        Text("\(updatedPenalty)")
+                                    } else {
+                                        Text("\(loan.penaltyAmount)")
+                                    }
+                                } else {
+                                    Text("N/A")
+                                }
+                            }
+                        }
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            .padding()
+                    )
             }
-            .frame(maxWidth: .infinity, alignment: .center)
             .onAppear {
                 fetchData()
+        }
+        }
+    }
+    
+    private var filteredLoans: [LoanModel] {
+        let filteredByStatus = selectedLoanStatus == "All Loans" ? loans : loans.filter { $0.loanStatus == selectedLoanStatus.lowercased() }
+        
+        if searchText.isEmpty {
+            return filteredByStatus
+        } else {
+            return filteredByStatus.filter { loan in
+                loan.firstName.lowercased().contains(searchText.lowercased()) ||
+                loan.bookName.lowercased().contains(searchText.lowercased()) ||
+                loan.bookRefID.lowercased().contains(searchText.lowercased()) ||
+                loan.loanStatus.lowercased().contains(searchText.lowercased()) ||
+                loan.isbn.lowercased().contains(searchText.lowercased())
             }
         }
-    // Fetch data from Firebase Firestore
+    }
+    
     private func fetchData() {
         let db = Firestore.firestore()
         db.collection("loans")

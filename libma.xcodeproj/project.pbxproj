@@ -163,7 +163,6 @@
 			children = (
 				8439381B2BDA10A50096E1D1 /* AdminViewGroup.swift */,
 				8439381D2BDA10B40096E1D1 /* LibrarianViewGroup.swift */,
-				986C0C042BDECB430030626B /* AddBookView.swift */,
 				84C5BC302BE3C1A700CF2851 /* MembersActionScreen.swift */,
 				84C5BC342BE3C22700CF2851 /* AdminBooksInventory.swift */,
 				84C5BC362BE3C26300CF2851 /* LoanView.swift */,
@@ -172,6 +171,7 @@
 				84C5BC2F2BE38B5000CF2851 /* BooksRequests */,
 				986C0C062BDECE530030626B /* BooksInventoryView.swift */,
 				980DE2172BE1056E00149F3B /* InventoryBooksView.swift */,
+				986C0C042BDECB430030626B /* AddBookView.swift */,
 			);
 			path = ViewGroups;
 			sourceTree = "<group>";
@@ -187,10 +187,10 @@
 		84C5BC2F2BE38B5000CF2851 /* BooksRequests */ = {
 			isa = PBXGroup;
 			children = (
-				84C5BC292BE34D0500CF2851 /* BooksLendingRequestView.swift */,
 				84C5BC2B2BE37DD900CF2851 /* BooksRenewableRequestView.swift */,
 				A215D6442BE88C1700152C7A /* NewBookRequests.swift */,
 				A215D64A2BE88DF700152C7A /* BooksReturnRequestView.swift */,
+				84C5BC292BE34D0500CF2851 /* BooksLendingRequestView.swift */,
 				A215D64E2BE8940E00152C7A /* BooksDetailView.swift */,
 			);
 			path = BooksRequests;

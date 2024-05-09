@@ -3,195 +3,255 @@ import Firebase
 
 struct AdminFunctionsFinal: View {
     @State private var users: [UserData2] = []
+    @State private var searchText: String = ""
+    @State private var filterOptions: [String] = ["All Users", "Member", "Librarian", "Admin"]
+    @State private var selectedFilter: String = "All Users"
+    @State private var showFilterMenu: Bool = false
     @State private var selectedLibrary: String = ""
     @State private var fineAmount: String = ""
     @State private var libraryID: String = ""
-    @State private var libraries: [String] = [] // To store fetched library IDs
-    @State private var fineRate: Int = 0 // To store the new fine rate/ To store the new fine rate
-    @State private var showAlert: Bool = false // For showing alert
+    @State private var libraries: [String] = []
+    @State private var fineRate: Int = 0
+    @State private var showAlert: Bool = false
     @State private var adminEmail: String = ""
     @State private var fineRateInput: String = ""
     @State private var isCreateUserPagePresented = false
-
     
+    @Environment(\.colorScheme) var colorScheme
+
+    var filteredUsers: [UserData2] {
+        let searchedUsers = searchText.isEmpty ? users : users.filter { user in
+            let searchTermLower = searchText.lowercased()
+            return user.firstName?.lowercased().contains(searchTermLower) ?? false ||
+                user.lastName?.lowercased().contains(searchTermLower) ?? false ||
+                user.categoryType?.lowercased().contains(searchTermLower) ?? false ||
+                user.email?.lowercased().contains(searchTermLower) ?? false ||
+                user.libraryID?.lowercased().contains(searchTermLower) ?? false ||
+                user.membershipType?.lowercased().contains(searchTermLower) ?? false ||
+                (user.rating?.description.lowercased().contains(searchTermLower) ?? false)
+        }
+
+        if selectedFilter == "All Users" {
+            return searchedUsers
+        } else {
+            return searchedUsers.filter { $0.categoryType == selectedFilter }
+        }
+    }
+
     var body: some View {
-        VStack {
-            // Card 1: User List
-            Card1 {
-                VStack(alignment:.center) {
-                    HStack {
-                        Text("User List")
-                            .font(.title)
-                            .frame(maxWidth: .infinity, alignment: .center)
-                        
-                        Spacer()
-                        
-                        Button(action: {
-                            isCreateUserPagePresented.toggle()
-                        }) {
-                            Image(systemName: "plus")
-                                .resizable()
-                                .frame(width: 25, height: 25) // Set the size here
-                                .foregroundColor(.black)
-                                .padding()
-                        }
-                        .padding()
-                        .sheet(isPresented: $isCreateUserPagePresented) {
-                            NavigationView {
-                                CreateUserPage()
-                                    .navigationBarTitle("Create User", displayMode: .inline)
-                                    .navigationBarItems(leading: Button("Back") {
-                                        isCreateUserPagePresented.toggle()
-                                    })
-                            }
-                        }
-                    }
-                    
-                    
-                    // Table headers
-                    HStack (spacing: 160) {
-                        Text("Name")
-//                        Spacer()
-                        Text("Category")
-//                        Spacer()
-                        Text("Email")
-//                        Spacer()
-                        Text("Library ID")
-//                        Spacer()
-                        Text("Membership Type")
-//                        Spacer()
-                        Text("Rating")
-                    }
-                    .padding(.horizontal)
-                    .font(.headline)
-                    
-                    List(users) { user in
-                        HStack {
-                            VStack(alignment: .leading) {
-                                Text("\(user.firstName ?? "N/A") \(user.lastName ?? "N/A")")
-                            }
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            
-                            Spacer()
-                            
-                            Text(user.categoryType ?? "N/A")
-                                .frame(maxWidth: .infinity, alignment: .center)
-                            
-                            Spacer()
-                            
-                            Text(user.email ?? "N/A")
-                                .frame(maxWidth: .infinity, alignment: .center)
-                            
-                            Spacer()
-                            
-                            Text(user.libraryID ?? "N/A")
-                                .frame(maxWidth: .infinity, alignment: .center)
-                            
-                            Spacer()
-                            
-                            Text(user.membershipType ?? "N/A")
-                                .frame(maxWidth: .infinity, alignment: .center)
-                            
-                            Spacer()
-                            
-                            Text(user.rating.map { "\($0)" } ?? "N/A")
-                                .frame(maxWidth: .infinity, alignment: .trailing)
-                        }
-                        .padding(.horizontal)
-                    }
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .padding()
-                }
-            }
-            .frame(height: UIScreen.main.bounds.height * 0.5)
-            
-            // Cards 2 & 3: Fine Rates & Create Library
-            HStack {
-                // Card 2: Fine Rates
-                CardView(title: "Fine Rates", content: {
-                    VStack {
-                        // "Library ID" text
-                        Text("Library ID")
-                            .font(.headline)
-                            .padding(.top)
-                        
-                        // Dropdown Picker for Libraries
-                        Picker("Select Library", selection: $selectedLibrary) {
-                            ForEach(libraries, id: \.self) { library in
-                                Text(library)
-                            }
-                        }
-                        .pickerStyle(MenuPickerStyle())
-                        .accentColor(Color.blue) // Change the color of the picker
-                        .onAppear {
-                            fetchLibraryIDs()
-                        }
-                        
-                        // Text Field for New Fine Rate
-                        TextField("New Fine Rate", text: $fineAmount)
-                            .keyboardType(.numberPad)
-                            .padding()
-                        
-                        // Button to Update Fine Rate
-                        Button(action: {
-                            updateFineRate()
-                            showAlert = true // Show the alert when fine rate is updated
-                        }) {
-                            Text("Update Fine Rate")
-                                .foregroundColor(.white)
-                                .padding()
-                                .background(Color.blue)
-                                .cornerRadius(10)
-                        }
-                    }
-                    .padding()
-                    .frame(maxWidth: .infinity)
-                    .background(
-                        RoundedRectangle(cornerRadius: 20)
-                            .fill(.white)
-                            .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 5)
-                    )
-                })
-                .padding()
+        ZStack {
+            Color(colorScheme == .light ? UIColor(hex: "F1F2F7") : UIColor(hex: "323345"))
+                        .edgesIgnoringSafeArea(.all)
+            VStack {
                 
-                // Card 3: Create Library
-                CardView(title: "Create Library", content: {
-                    VStack {
-                        // Text Field for Admin Email
-                        TextField("Admin Email", text: $adminEmail)
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                RoundedRectangle(cornerRadius: 20)
+                    .fill(colorScheme == .light ? Color(hex: "F1F2F7") : Color(hex: "323345"))
+                    .frame(width: 1120, height: 550)
+                    .shadow(color: colorScheme == .light ? Color.black.opacity(0.2) : Color.white.opacity(0.2), radius: 10, x: 5, y: 5)
+                    .shadow(color: colorScheme == .light ? Color.black.opacity(0.2) : Color.black.opacity(0.1), radius: 10, x: -5, y: -5)
+                    .softOuterShadow()
+                    .overlay (
+                        VStack(alignment: .center) {
+                            HStack {  // work here for plus button
+                                Text("User List")
+                                    .font(Font.custom("SF Pro", size: 30).weight(.semibold))
+                                    .foregroundColor(Color(colorScheme == .light ? UIColor(hex: "3B3D60") : UIColor(hex: "F5F5F6")))
+                                    .padding()
+                            }
+                            
+                            HStack {
+                                TextField("Search Users...", text: $searchText)
+                                    .padding(.vertical, 9)
+                                    .padding(.horizontal)
+                                    .background(Color(colorScheme == .light ? UIColor(hex: "DCDFE6") : UIColor(hex: "3B3D60")))
+                                    .cornerRadius(8)
+                                    .overlay(
+                                        HStack {
+                                            Spacer()
+                                            Image(systemName: "magnifyingglass")
+                                                .foregroundColor(.gray)
+                                                .padding(.trailing, 8)
+                                        }
+                                    )
+                                
+                                Spacer()
+                                
+                                Button(action: {
+                                    showFilterMenu.toggle()
+                                }) {
+                                    Text("Filter")
+                                        .foregroundColor(colorScheme == .light ? Color(UIColor(hex: "323345")) : Color(UIColor(hex: "F1F2F7")))
+                                        .padding(.vertical, 4)
+                                        .padding(.horizontal)
+                                }
+                                .buttonStyle(BorderedButtonStyle())
+                                .popover(isPresented: $showFilterMenu) {
+                                    VStack(alignment: .leading, spacing: 10) {
+                                        ForEach(filterOptions, id: \.self) { option in
+                                            Button(action: {
+                                                selectedFilter = option
+                                                showFilterMenu = false
+                                            }) {
+                                                Text(option)
+                                            }
+                                        }
+                                    }
+                                    .padding()
+                                }
+                            }
                             .padding()
-                        
-                        // Text Field for Fine Rate
-                        TextField("Fine Rate", text: $fineRateInput)
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                            
+                            Table(filteredUsers) {
+                                TableColumn("Name") { user in
+                                    Text("\(user.firstName ?? "N/A") \(user.lastName ?? "N/A")")
+                                }
+                                TableColumn("Category", value: \.nonOptionalCategoryType)
+                                TableColumn("Email", value: \.nonOptionalEmail)
+                                TableColumn("Library ID", value: \.nonOptionalLibraryID)
+                                TableColumn("Membership Type", value: \.nonOptionalMembershipType)
+                                TableColumn("Rating") { user in
+                                    Text(user.rating.map { "\($0)" } ?? "N/A")
+                                }
+                            }
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            .background(Color(red: 0.94, green: 0.92, blue: 1))
                             .padding()
-                        
-                        // Button to Create Library
-                        Button(action: {
-                            createLibrary()
-                        }) {
-                            Text("Create Your Library")
-                                .foregroundColor(.white)
+                        }
+                    )
+
+                HStack (spacing: 40) {
+            
+                    RoundedRectangle(cornerRadius: 20)
+                        .fill(colorScheme == .light ? Color(hex: "F1F2F7") : Color(hex: "323345"))
+                        .frame(width: 520, height: 340)
+                        .shadow(color: colorScheme == .light ? Color.black.opacity(0.2) : Color.white.opacity(0.2), radius: 10, x: 5, y: 5)
+                        .shadow(color: colorScheme == .light ? Color.black.opacity(0.2) : Color.black.opacity(0.1), radius: 10, x: -5, y: -5)
+                        .softOuterShadow()
+                        .overlay(
+                            VStack {
+                                Text("Fine Rates")
+                                .font(Font.custom("SF Pro", size: 30).weight(.semibold))
+                                .foregroundColor(Color(colorScheme == .light ? UIColor(hex: "3B3D60") : UIColor(hex: "F5F5F6")))
                                 .padding()
-                                .background(Color.blue)
-                                .cornerRadius(10)
-                        }
-                        .padding()
-                        .alert(isPresented: $showAlert) {
-                            Alert(title: Text("Congratulations!"), message: Text("Your new Library is created"), dismissButton: .default(Text("OK")))
-                        }
-                    }
-                })
-                .padding()
-            }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .alert(isPresented: $showAlert) {
-                Alert(title: Text("Fine Rate Updated"), message: Text("The fine rate has been updated successfully for library ID: \(selectedLibrary)"), dismissButton: .default(Text("OK")))
-            }
-            .onAppear {
-                // Fetch data from Firebase Firestore initially
-                fetchData()
+                                
+                                VStack {
+                                    // "Library ID" text
+                                    Text("Library ID")
+                                        .font(.headline)
+                                        .padding(.top)
+                                    
+                                    // Dropdown Picker for Libraries
+                                    Picker("Select Library", selection: $selectedLibrary) {
+                                        ForEach(libraries, id: \.self) { library in
+                                            Text(library)
+                                        }
+                                    }
+                                    .pickerStyle(MenuPickerStyle())
+                                    .accentColor(Color.blue) // Change the color of the picker
+                                    .onAppear {
+                                        fetchLibraryIDs()
+                                    }
+                                    
+                                    // Text Field for New Fine Rate
+                                    TextField("New Fine Rate", text: $fineAmount)
+                                        .padding(.vertical, 9)
+                                        .padding(.horizontal)
+                                        .background(Color(colorScheme == .light ? UIColor(hex: "DCDFE6") : UIColor(hex: "3B3D60")))
+                                        .cornerRadius(8)
+                                        .keyboardType(.numberPad)
+                                        .padding()
+                                    
+                                    // Button to Update Fine Rate
+                                    Button(action: {
+                                        updateFineRate()
+                                        showAlert = true // Show the alert when fine rate is updated
+                                    }) {
+                                        Text("Update Fine Rate")
+                                            .foregroundColor(colorScheme == .light ? Color.white : Color.black).opacity(0.9)
+                                            .padding()
+                                            .background(Color(colorScheme == .light ? UIColor(hex: "3B3D60") : UIColor(hex: "7B7ED3")))
+                                            .cornerRadius(10)
+                                            .frame(width: 250)
+                                    }
+                                    .padding()
+                                }
+                                    .padding()
+                                    .frame(width: 500, height: 250)
+                                    .background(
+                                        RoundedRectangle(cornerRadius: 20)
+                                            .fill(colorScheme == .light ? Color(hex: "F1F2F7") : Color(hex: "323345"))
+                                            .softOuterShadow()
+                                )
+                            }
+                        )
+                    
+                    // Card 3: Create Library
+                    RoundedRectangle(cornerRadius: 20)
+                        .fill(colorScheme == .light ? Color(hex: "F1F2F7") : Color(hex: "323345"))
+                        .frame(width: 520, height: 340)
+                        .shadow(color: colorScheme == .light ? Color.black.opacity(0.2) : Color.white.opacity(0.2), radius: 10, x: 5, y: 5)
+                        .shadow(color: colorScheme == .light ? Color.black.opacity(0.2) : Color.black.opacity(0.1), radius: 10, x: -5, y: -5)
+                        .softOuterShadow()
+                        .overlay (
+                            VStack {
+                                Text("Create Libraray")
+                                .font(Font.custom("SF Pro", size: 30).weight(.semibold))
+                                .foregroundColor(Color(colorScheme == .light ? UIColor(hex: "3B3D60") : UIColor(hex: "F5F5F6")))
+                                .padding()
+                                
+                                VStack {
+                                    // Text Field for Admin Email
+                                    TextField("Admin Email", text: $adminEmail)
+                                        .padding(.vertical, 9)
+                                        .padding(.horizontal)
+                                        .background(Color(colorScheme == .light ? UIColor(hex: "DCDFE6") : UIColor(hex: "3B3D60")))
+                                        .cornerRadius(8)
+                                        .keyboardType(.numberPad)
+                                        .padding()
+                                    
+                                    // Text Field for Fine Rate
+                                    TextField("Fine Rate", text: $fineRateInput)
+                                        .padding(.vertical, 9)
+                                        .padding(.horizontal)
+                                        .background(Color(colorScheme == .light ? UIColor(hex: "DCDFE6") : UIColor(hex: "3B3D60")))
+                                        .cornerRadius(8)
+                                        .keyboardType(.numberPad)
+                                        .padding()
+                                    
+                                    // Button to Create Library
+                                    Button(action: {
+                                        createLibrary()
+                                    }) {
+                                        Text("Create Your Library")
+                                            .foregroundColor(colorScheme == .light ? Color.white : Color.black).opacity(0.9)
+                                            .padding()
+                                            .background(Color(colorScheme == .light ? UIColor(hex: "3B3D60") : UIColor(hex: "7B7ED3")))
+                                            .cornerRadius(10)
+                                            .frame(width: 250)
+                                    }
+                                    .padding()
+                                    .alert(isPresented: $showAlert) {
+                                        Alert(title: Text("Congratulations!"), message: Text("Your new Library is created"), dismissButton: .default(Text("OK")))
+                                    }
+                                }
+                                .padding()
+                                .frame(width: 500, height: 250)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 20)
+                                        .fill(colorScheme == .light ? Color(hex: "F1F2F7") : Color(hex: "323345"))
+                                        .softOuterShadow()
+                                    )
+                            }
+                    )
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .alert(isPresented: $showAlert) {
+                    Alert(title: Text("Fine Rate Updated"), message: Text("The fine rate has been updated successfully for library ID: \(selectedLibrary)"), dismissButton: .default(Text("OK")))
+                }
+                .onAppear {
+                    // Fetch data from Firebase Firestore initially
+                    fetchData()
+                }
             }
         }
     }
